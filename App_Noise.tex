@@ -1,0 +1,101 @@
+% \setcounter{figure}{0}
+% \setcounter{equation}{0}
+% \setcounter{table}{0}
+% \renewcommand{\theequation}{SI-\arabic{equation}}
+% \renewcommand{\thefigure}{SI-\arabic{figure}}\renewcommand{\figurename}{Figure}
+% \renewcommand{\thetable}{SI-\arabic{table}}
+% \setcounter{section}{0}
+% \renewcommand{\thesection}{SI-\Alph{section}}
+% \setcounter{subsection}{0}
+% \renewcommand{\thesubsection}{SI-\arabic{subsection}}
+% \setcounter{subsubsection}{0}
+% \renewcommand{\thesubsubsection}{SI-\arabic{subsubsection}}
+
+\section{Appendix: Noise in transcriptional regulation}
+
+\subsection{\alabel{noise:corr_time} The correlation time}
+The time-average of an observable $A\br{t}$\cite{Frenkel2002} is defined as
+\begin{align}
+\elabel{si:time_av_mean}
+A_T=\frac{1}{T}\int_0^T dt A\br{t}
+\end{align}
+and the variance of the time-averaged mean $\sigma^2_{A_T}$ is
+\begin{align}
+\sigma^2_{A_T}&\br{T}=\avg{A^2_T}-\br{\frac{1}{T}\int \avg{A\br{t}}dt}^2\\
+&=\frac{1}{T^2}\int_0^T  \int_0^T dt dt' \avg{A\br{t}A\br{t'}}-\avg{A_T}^2\\
+\elabel{si:time_av_var2}
+&=\frac{1}{T^2}\int_0^T dt \int_{-t}^{T-t} d\tau \avg{A\br{0}A\br{t'-t}}-\avg{A_T}^2\\
+\elabel{si:time_av_var3}
+&=\frac{1}{T^2}\int_0^T dt\int_{-t}^{T-t} d\tau \avg{A\br{0}A\br{\tau}}-\avg{A}^2,
+\end{align}
+where for \eref{si:time_av_var2} the process is assumed to be stationary and we define $\tau=t'-t$.
+The correlation function for this observable $A\br{t}$ is defined as
+\begin{align}
+\elabel{si:time_corr_ens}
+C\br{t,t'}&=\avg{\br{A\br{t'}-\avg{A}}\br{A\br{t}-\avg{A}}}\\
+\elabel{si:time_corr_ens_1}
+C\br{\tau}&=\avg{\br{A\br{\tau}-\avg{A}}\br{A\br{0}-\avg{A}}}\\
+\elabel{si:time_corr_ens_2}
+&=\avg{A\br{0}A\br{\tau}}-\avg{A}^2
+\end{align}
+
+Substitution of \eref{si:time_corr_ens_2} into \eref{si:time_av_var3} leads to
+\begin{align}
+\sigma^2_{A_T}\br{T}&=\frac{1}{T^2}\int_0^T dt \int_{-t}^{T-t} d\tau C\br{\tau}+\frac{1}{T}\int_0^T \avg{A}^2-\avg{A}^2\\
+\elabel{si:time_av_var4}
+&=\frac{1}{T^2}\int_0^T dt \int_{-t}^{T-t} d\tau C\br{\tau}.
+\end{align}
+In the limit of small $T$ and large $T$ a solution for \eref{si:time_av_var4} can be obtained
+\begin{align}
+\elabel{si:limT_0_corr}
+&\sigma^2_{A_T}\br{0}=C\br{0}=\sigma_A^2\\
+\elabel{si:limT_infty_corr}
+&\lim_{T\to\infty}\approx \lim_{T\gg \tau_A}=\sigma^2_{A_T}\br{T\gg \tau_A}=\frac{1}{T^2}\int_0^T dt \int_{-\infty}^{\infty} d\tau
+C\br{\tau}\nonumber\\
+&\quad\qquad\qquad=\frac{2\sigma_A^2\tau_A}{T},
+\end{align}
+where we used the fact that $\lim_{\tau\gg\tau_A} C\br{\tau}=0$. We introduced the correlation time $\tau_A$ in \eref{si:limT_infty_corr}
+which is commonly defined as
+\begin{align}
+\elabel{si:corr_time}
+\tau_A\equiv \frac{1}{\sigma^2_A}\int_0^\infty C\br{\tau} d\tau
+\end{align}
+As an example, for a process $A\br{t}$ with exponential waiting times, $C\br{\tau}\propto e^{-k \tau}$ and $\int C\br{\tau}d\tau \propto
+k^{-1} \sim \tau_A$.
+
+The power spectrum ($P_A\br{\omega}$) and correlation function are related through the Fourier Transform
+\begin{align}
+\elabel{si:rel_pow_lap}
+C_A\br{\tau}&=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty d\omega P_A\br{\omega}e^{i\omega\tau}\\
+P_A\br{\omega}&=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty d\tau C_A\br{\tau}e^{-i\omega\tau}
+\end{align}
+such that
+\begin{align}
+C_A\br{0}&=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty d\omega P_A\br{\omega}=\sigma_A^2\\
+P_A\br{0}&=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty d\tau C_A\br{\tau}\equiv 2\sigma_A^2\tau_A=T\sigma^2_{A_T}
+\end{align}
+where $\tau_A$ is the correlation time (see \eref{si:corr_time}).
+
+Next, we note the relation between the Laplace transform and the Fourier transform
+\begin{align}
+\elabel{si:FT_of_corr}
+{\cal F}&\br{C_A\br{\tau}}=P_A\br{\omega}\\
+&={\rm Re}\sqbr{{\cal L}\br{C_A\br{t}}}+{\rm Re}\sqbr{{\cal L}\br{C_A\br{t}}^{\dagger}}\\
+&={\rm Re}\sqbr{\hat{C}_A\br{s=i\omega}}+{\rm Re}\sqbr{\hat{C}_A\br{s=-i\omega}}\\
+&=2{\rm Re}\sqbr{\hat{C}_A\br{s=i\omega}}.
+\end{align}
+The correlation time is therefore related to the Laplace transform of the correlation function by
+\begin{align}
+\elabel{si:laplace_corr_func_corr_time}
+&\sigma_A^2\tau_A=P_A\br{0}\\
+&={\rm Re}\sqbr{\hat{C}\br{s=i\omega}}_{\omega=0}+{\rm Re}\sqbr{\hat{C}\br{s=-i\omega}}_{\omega=0}\\
+&=2{\rm Re}\sqbr{\hat{C}\br{s=i\omega}}_{\omega=0}
+\end{align}
+
+Lastly, we provide a straightforward relation between the integral of an arbitrary function and the Laplace transform of this function
+\begin{align}
+\elabel{si:int_vs_lap}
+\hat{A}\br{s=0}=\int_0^\infty A\br{t}
+\end{align}
+
+\subsection{\alabel{noise:backward_eqn} The backward smolochowski equation}

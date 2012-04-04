@@ -1,0 +1,316 @@
+\section{The fundamental limit on noise in transcriptional regulation}
+
+\subsection{Introduction}
+As was motivated in the introduction, the time a promoter is occupied by a transcription factor can vary strong over time. We want to find out how this variance depends on the parameters such as the binding affinities to the promoter and the DNA, the decay rate from the DNA and the diffusion constants. We define our variance as follows. We measure the time a promoter site is occupied over a time $T$, where $T$ is much larger than the correlation time $\tau_c$. If we repeat this measurement many times, the variance in our collection of measurements is given by (\aref{noise:corr_time})
+\begin{equation}
+ \sigma_{\rm n, \tau_{\rm int}}^2 = \frac{2 \sigma_{\rm n}^2 \,\tau_{\rm c}}{T}
+\end{equation}
+where $\sigma_n^2$ is the variance of an instantaneous measurement. The variance of an instantanious measurement for a binomial process (the promoter has only two states) is known to be $\bar{n}(1-\bar{n})$, with $\bar{n}$ the average occupancy. Therefore we only need to find the correlation time. 
+
+We will first derive the correlation function, from which we can obtain the correlation time. With this correlation time in hand, we obtain general relations for the noise in the promoter occupancy, concentration fluctuations around the site and the lower limits on the variance. We continue with obtaining specific expressions in different geometries. First for a system where particles can only move on the DNA (1D only), secondly for DNA in a well mixed solution and end with a system where TF's are placed next to the DNA when they fall off.
+
+
+\subsection{Methods}
+
+\subsubsection{The correlation function}
+Here we derive the auto-correlation function for a switching process in Laplace space as was done by de Ronde et al. \cite{DeRonde2012}. We start with writing down the general expression for the correlation function of a switch
+\begin{eqnarray}
+ C(\tau) & \equiv & < (n(\tau) - \bar{n})(n(0) - \bar{n}) > \\
+  	& = & \bar{n}(p_{*|*}-\bar{n}).
+ \elabel{corr_func}
+\end{eqnarray}
+The function $n(t)$ depicts the promoter state and is either one or zero dependent on wether the promoter is occupied or not. In the first line we used that we are looking for the dynamics in a stationary system and thus shift the time such that only one function depends on time. In the second line we introduced the condinional probability that given the promoter was bound at $\tau=0$, what is the probability that it is bound at a later time $\tau$. This conditional probability is equal to
+\begin{equation}
+ p_{*|*} = 1 - \mathscr{S}_{\rm rev}(\tau|*)
+\end{equation}
+where $\mathscr{S}(t|*)$ is the reversible survival probability of a free promoter given that it was bound at $\tau=0$. The promoter can undergo multiple rounds of rebindings during the time $\tau$. We can describe this revirsible process in term of an irreversible one via the convolution \cite{Agmon1990}
+\begin{equation}
+ \mathscr{S}_{\rm rev}(t|*) = k_- \int_0^t [1-\mathscr{S}_{\rm rev}(t'|*)]\mathscr{S}_{\rm irr}(t-t'|\sigma)dt'.
+ \elabel{rev_conv}
+\end{equation}
+The first factor under the integral gives the probability that the promoter is occupied at time $t'$. After which it decays for the last time with a rate $k_-$, and remains unoccupied until $t$ with a probability $\mathscr{S}_{\rm irr}(t-t'|\sigma)$. After decay, a TF is placed at contact (denoted by $\sigma$ in $\mathscr{S}_{\rm irr}$) with the promoter. Integrating over all intermediate times $t'$, gives us the probability that a promoter in unoccupied at time $t$. 
+
+For the irreversible survival probability with one TF at contact with the promoter we propose the form
+\begin{equation}
+ \mathscr{S}_{\rm irr}(t|\sigma) = \mathscr{S}_{\rm irr}(t|{\rm eq}) S(t|\sigma)
+\end{equation}
+where $\mathscr{S}_{\rm irr}(t|{\rm eq})$ is the survival probability of a free promoter site surrounded by an equilibrated sollution of TF's. $S(t|\sigma)$ is the survival probability with just one TF placed on the promoter site. This form implies that after a TF has dissociated from the promoter, all the other TF's are equilibrated. This is a good approximation when the average decay time $1/k_-$ is long enough for another particle decayed earlier to equilibrate. 
+
+$\mathscr{S}_{\rm irr}(t|{\rm eq})$ can be found by solving the differential equation
+\begin{equation}
+ \pdiff{\mathscr{S}_{\rm irr}(t|{\rm eq})}{t} = \bar{\xi} \, k(t) \, \mathscr{S}_{\rm irr}(t|{\rm eq}).
+\end{equation}
+which states that TF's bind with a rate $k_{{\rm irr}}$ given that the promoter site is still unoccupied. $\bar{\xi}$ is the average concentrtion of TF's on the DNA. Solving the equation yields
+\begin{equation}
+ \mathscr{S}_{\rm irr}(t|{\rm eq}) = e^{-\bar{\xi}\int_0^t k_{{\rm irr}}(t') dt'}.
+\end{equation}
+The rate at which TF's bind to a sink (ak. never occupied) in an equilibrated system is found to be (\aref{noise:backward_eqn})
+\begin{equation}
+ k_{\rm rad}(t) = k_+ \, S_{\rm rad}(t|\sigma).
+ \elabel{krad}
+\end{equation}
+
+Now, Laplace transforming \eref{rev_conv} and solving for $\hat{\mathscr{S}}_{{\rm rev}}$, plugging the result into \eref{corr_func}
+
+
+\begin{equation}
+ \hat{C_n}(s) = \sigma_n^2 \, \frac{\bar{n} \hat{\mathscr{S}}_{\rm rad}(s|eq)}{1-(1-\bar{n})s\hat{\mathscr{S}}_{\rm rad}(s|eq)}
+ \elabel{LapCorr}
+\end{equation}
+where $\hat{\Gamma}_{\rm rad}(s|eq)$ is the Laplace transform of the survival probability of a free receptor in an equilibrated solution of transcription factors with an irreversible binding reaction. This survival probability in the time domain is given by \cite{Agmon1990}
+\begin{equation}
+ \mathscr{S}_{\rm rad}(t|eq) = e^{-\bar{c} \int_0^t k_{\rm rad}(t')dt'}
+ \elabel{Seq}
+\end{equation}
+and the reaction rate with a single promoter site in an equilibrated system of TF is
+\begin{equation}
+ k_{\rm rad}(t) = k_+ \, S_{\rm rad}(t|\sigma).
+\end{equation}
+In order to Laplace transform $\mathscr{S}_{\rm rad}(s|eq)$, we expand \eref{Seq}
+\begin{equation}
+ \mathscr{S}_{\rm rad}(t|eq) = 1 - \bar{c} \int_0^t k_{\rm rad}(t')dt' + \frac{1}{2} \left( \bar{c} \int_0^t k_{\rm rad}(t')dt' \right)^2 + \ldots
+ \elabel{ApproxLowC}
+\end{equation}
+and throw away all terms of second order and higher. Let's stop to think about what this approximation means. If we differentiate the above to time, we find that the rate at which TF's bind to the promoter is equal to the rate of the radiation boundary condition (\eref{krad}). Put differently, this approximations assumes the promoter is never occupied, and TF's arrriving from the bulk can allways bind. 
+
+Laplace transforming we get
+\begin{eqnarray}
+ \hat{\mathscr{S}}_{\rm rad}(s|eq) & = & s^{-1} - \bar{c} s^{-1} \hat{k}_{\rm rad}(s) + \ldots \\
+  & \approx & s^{-1} \left( 1 + c \hat{k}_{\rm rad}(s)\right)^{-1}.
+\elabel{Geq}
+\end{eqnarray}
+Substituting this low concentration limit into the expression for the correlation function (\eref{LapCorr}), we obtain after simplifying
+\begin{equation}
+ \lim_{c \rightarrow 0} \hat{C_n}(s) = \frac{\bar{n} \sigma_n^2}{\bar{n} s + k_+ \bar{c} \, s \hat{S}(s|\sigma)}.
+\end{equation}
+The correlation time of the process is found by taking the $s \rightarrow 0$ limit
+\begin{eqnarray}
+ \lim_{s \rightarrow 0} \hat{C_n}(s) = \int_0^\infty C_n(t) dt = \sigma_n^2 \, \tau_c.
+\end{eqnarray}
+In the low concentration limit the correlation time is
+\begin{equation}
+ \lim_{c \rightarrow 0, s \rightarrow 0} \hat{C_n}(s) = \frac{\bar{n} \sigma_n^2}{k_+ \bar{c} \, S(\infty|\sigma)} = \frac{\sigma_n^2 \tau_c^*}{S(\infty|\sigma)}.
+ \elabel{CT1}
+\end{equation}
+We used the rule that $\lim_{s \rightarrow 0} s \hat{f}(s) = \lim_{t \rightarrow \infty} f(t)$ for the survival probability. $\tau_c^*$ is the fast correlation time defined as $\tau_c^* = k_+ \hat{c} + k_-$.
+
+To summarize, given the long time limit of $\hat{k}_{\rm rad}(t)$, we have the correlation time.
+
+\subsubsection{Calculating the noise}
+Given the correlation time of the noise in the promoter is
+\begin{equation}
+ \left( \frac{\delta n}{\bar{n}} \right)^2 = \frac{\bar{n}(1-\bar{n})}{\bar{n}^2\frac{T}{\tau_c}}.
+ \elabel{EqProNoise}
+\end{equation}
+From this we can find the noise in the concentration around the promoter via
+\begin{equation}
+ \delta c = \left|\frac{\partial c}{\partial n}\right| \delta n \quad {\rm with} \quad \bar{n} = \frac{k_+ c}{k_+ c + k_-}
+\end{equation}
+giving us
+\begin{equation}
+ \delta c = \frac{c}{(1-\bar{n})\bar{n}}\delta n.
+ \elabel{EqConNoise}
+\end{equation}
+For later reference we note that
+\begin{equation}
+ \frac{\partial \bar{n}}{\partial \bar{c}} = \frac{\bar{n}(1-\bar{n})}{\bar{c}}
+ \elabel{EqProNoiseII}
+\end{equation}
+
+For some processes, such as diffusion along a line or on a plane, the correlation time diverges to infinity, and the promoter won't be able to make true independent measurements. As a result, the noise perceived by a promoter would be infinite given the definition in \eref{EqProNoise}. Therefore, for these kind of processes, as in the paper of Gasper, we adopt a different definition
+\begin{equation}
+  \left( \frac{\delta n}{\bar{n}} \right)^2 = \left. \frac{1}{\bar{n}^2} \lim_{t \rightarrow \infty} C_n(t)  \right|_{t = T}.
+\end{equation}
+So the noise decays as a function of the integration time $T$, as the long time behaviour of the correlation function.
+
+
+\subsection{Noise in different environments}
+
+\subsubsection{1D diffusion only}
+The Green's function of an unbounded 1D domain with an irreversible sink at the origin is given by
+\begin{multline}
+ p(x,t|x_0) = \frac{1}{\sqrt{4 \pi D_1 t}}e^{\frac{-(x-x_0)^2}{4 D_1 t}} - \frac{k_+}{4 D_1}e^{\frac{k_+}{2 D_1}(|x|+|x_0|)+\frac{k_+^2 t}{4 D_1}} \\
+\mathrm{erfc}\left( \frac{|x|+|x_0|}{\sqrt{4 D_1 t}}+\frac{k_+}{2 D_1}\sqrt{D_1 t} \right)
+\end{multline}
+and in Laplace space
+\begin{equation}
+ \hat{p}(x,s|x_0) = \frac{1}{2 D_1 q}e^{-q|x-x_0|} - \frac{k_+}{4 D^2}\frac{e^{-q(|x|+|x_0|)}}{q(q+\frac{k_+}{2 D_1})}, \quad q=\sqrt{\frac{s}{D_1}}.
+\end{equation}
+with the survival probability in Laplace space:
+\begin{equation}
+ \hat{S}(s|x_0) = \frac{1}{D_1 q^2}(1 - \frac{k_+}{2 D_1}\frac{e^{-q|x_0|}}{q+\frac{k_+}{2 D_1}})
+ \elabel{LSx0}
+\end{equation}
+Inserting this in \eref{Geq}, we find
+\begin{equation}
+ \lim_{c \rightarrow 0} \hat{\mathscr{S}}_{\rm rad}(s|eq) \approx \left( s + \frac{2 c D_1 k_+ \sqrt{\frac{s}{D_1}}}{k_+ + 2 D_1 \sqrt{\frac{s}{D_1}}} \right)^{-1}
+\end{equation}
+Plugging this result in the expression for the correlation function (\eref{LapCorr}) we get
+\begin{equation}
+  \hat{C_n}(s) = \sigma_n^2 \, \frac{\bar{n} \, \left( k_+ + \sqrt{4 D_1 s} \right) \sigma^2 }{k_+ \bar{n} s + c k_+ \sqrt{4 D_1 s} + \bar{n} s \sqrt{4 D_1 s}}
+  \elabel{LapCorr1D}
+\end{equation}
+To obtain the correlation time we take the limit $s \rightarrow 0$. The above expression diverges to $+\infty$ such that $\tau_c$ is infinite for a 1D system. Particles diffusing in an infinite 1D domain can't escape, and therefore the receptor is unable to make independent measurements.
+To lowest order, the expansion in s reads
+\begin{equation}
+ \hat{C_n}(s) \approx \frac{\bar{n}^2(1-\bar{n})}{\bar{\xi} \sqrt{4 D_1 s}}
+\end{equation}
+Transforming this back to the time domain, we see in the limit of large t
+\begin{equation}
+ \lim_{t \rightarrow \infty} \hat{C_n}(t) \approx \frac{\bar{n}^2(1-\bar{n})}{\bar{\xi} \sqrt{4 \pi D_1 t}}
+\end{equation}
+and the correlation function of the concentration in the large time limit is
+\begin{equation}
+ \lim_{t \rightarrow \infty} \hat{C_{\xi}}(t) = \lim_{t \rightarrow \infty} \left| \frac{\partial n}{\partial \xi} \right|^{-2} \hat{C_n}(t) = \frac{\bar{\xi}}{(1 - \bar{n}) \sqrt{4 \pi D_1 t}}.
+\end{equation}
+Using the alternative definition of the noise (\eref{EqProNoiseII}), we find
+\begin{equation}
+ \left( \frac{\delta n}{\bar{n}} \right)^2 =  \frac{(1-\bar{n})}{\bar{\xi} \sqrt{4 \pi D_1 t}} \quad \text{and} \quad \left( \frac{\delta \xi}{\bar{\xi}} \right)^2 = \frac{1}{ \bar{\xi} (1 - \bar{n}) \sqrt{4 \pi D_1 t}}.
+\end{equation}
+We see that the noise decreases only with the square root of the measurement time. This is due to the fact that a particle never escapes from the promoter: it returns with probability 1.
+
+\subsubsection{1D diffusion with exchange to a perfectly mixed bulk}
+Here we imagine a system where particles diffuse along an infinite strand of DNA and can fall off with a uniform rate $k_d$. When they fall off they are placed at a random position in the bulk. The survival probability for a particle initially at the DNA is given by \eref{LSx0}, where, due to the uniform decay, the Laplace variable $s$ is shifted by $k_d$: $q \rightarrow \sqrt{(s+k_d)/D}$. If we plug this into the correlation function (\eref{LapCorr1D}) and take the limit $s \rightarrow 0$, we arrive at
+\begin{equation}
+ \hat{C_n}(s) = \sigma_n^2 \, \bar{n} \, \frac{k_+ + k_D}{k_+ \bar{\xi} k_D} = \sigma_n^2 \, \frac{k_+ + k_D}{k_D (k_+ \bar{\xi} + k_-)}, \quad k_D = \sqrt{4 D_1 k_d}.
+ \elabel{LapCorr25D}
+\end{equation}
+The correlation time is thus
+\begin{equation}
+ \tau_c = \frac{k_+ + k_D}{k_D (k_+ \bar{\xi} + k_-)}
+\end{equation}
+and we can define the renormalized rates $k_{\rm on}$ and $k_{\rm off}$ as
+\begin{equation}
+ \frac{1}{k_{\rm on}} = \frac{1}{k_+} + \frac{1}{\sqrt{4 D_1 k_d}}, \quad \frac{1}{k_{\rm off}} = \frac{1}{k_-} + \frac{K_{\rm eq}}{\sqrt{4 D_1 k_d}}, \quad K_{\rm eq} = \frac{k_+}{k_-}.
+\end{equation}
+Here $k_+$ and $k_-$ are the intrinsic association and dissociation rates of the promoter site respectively. For comparison with the Bialek paper we write the low $\omega$ limit of the power spectrum as
+\begin{equation}
+ S_n(\omega \rightarrow 0) = \frac{2 \bar{n}(1-\bar{n})^2}{k_-} + \frac{2\bar{n}^2(1-\bar{n})}{\bar{\xi} k_D}.
+ \elabel{SnWMJ}
+\end{equation}
+\eref{EqProNoise} gives us the noise in the receptor
+\begin{eqnarray}
+ \left( \frac{\delta n}{\bar{n}} \right)^2 & = & 2 \bar{n}(1-\bar{n})\left[\left( \frac{1}{\bar{n} k_D T \bar{\xi}} \right)+\frac{(1-\bar{n})}{k_- T \bar{n}^2} \right] \\
+ & = & \frac{2 \sigma_n^2}{T \bar{\xi} \bar{n}} \, \frac{1}{k_{\rm on}}
+ \elabel{NPWMJ}
+\end{eqnarray}
+and the noise in the concentration at the receptor is (\eref{EqConNoise})
+\begin{eqnarray}
+ \left( \frac{\delta \xi}{\bar{\xi}} \right)^2 & = & \frac{2}{\bar{n}(1-\bar{n})} \left( \frac{\bar{n}}{k_D T \bar{\xi}} + \frac{1-\bar{n}}{k_- T}  \right) \\
+  & = & \frac{1}{T \bar{\xi} (1 - \bar{n})} \, \frac{1}{k_{\rm on}}
+ \elabel{NCWMJ}
+\end{eqnarray}
+where again $k_D = \sqrt{4 D_1 k_d}$. For comparison with the pure 3D case, we end with the noise in the 'equivalent concentration' $\bar{c}$
+\begin{eqnarray}
+  \left( \frac{\delta c}{\bar{c}} \right)^2 & = & \frac{2}{\bar{n}(1-\bar{n})} \left( \frac{k_d}{k_a} \, \frac{\bar{n}}{k_D T \bar{c}} + \frac{1-\bar{n}}{k_- T}  \right) \\
+ & = & \frac{2}{\bar{n}(1-\bar{n})} \left( \frac{\beta \Lambda^2 D_1}{\alpha 4 \pi D_3} \, \frac{\bar{n}}{k_D T \bar{c}} + \frac{1-\bar{n}}{k_- T}  \right)
+ \elabel{NBWMJ}
+\end{eqnarray}
+where $\alpha$ and $\beta$ are defined in \erefstwo{EqAlpha}{EqBeta}. We can find the lower bound for the noise, a.k. the noise due to diffusion only, by removing all the terms with $k_-$ in \erefsrange{SnWMJ}{NBWMJ}.
+
+
+\subsubsection{1D diffusion with exchange to the bulk}
+Now we want to evaluate the noise in the occupancy of a promoter site when particles are not placed at a random position after falling from the DNA, but are placed at contact with it. A TF starting at the promoter site switches between sliding along the DNA and making excursions in the cytoplasm. The TF slides with a small diffusion constant $D_1$ and has the possibility of irreversibly binding to the promoter. After falling from the DNA, the TF diffuses around in the cytoplasm with a larger diffusion constant $D_3$, and, because it is essentially a 2D problem, will always rebinds with the DNA. To find the survival probability for this problem, we start with writing down the differential equations describing the full system
+\setlength{\jot}{12pt}
+\begin{eqnarray*}
+ \frac{\partial \xi}{\partial t} & = & D_1 \frac{\partial^2\xi(z,t)}{\partial^2 z} - k_+ \xi(z,t) \delta(z - z_0) - k_d \xi(z,t) + k_a c(z, |\mathbf r \mathrm| = \sigma, t) \\
+ \frac{\partial c}{\partial t} & = & D_3 \nabla^2 c(z, \mathbf r \mathrm, t) - \left[ k_a c(z, \bf r \it, t) - k_d \xi(z,t) \right] \frac{\delta(|\mathbf r \mathrm| - \sigma)}{2 \pi \sigma} 
+\end{eqnarray*}
+Here $\xi$(z, t) is the probability density of the TF sliding along the DNA, which we model as an infinite long rod along the z-axis. Probability flows irreversibly into the sink, positioned at $z_0$, with a rate $k_+$. The particle can fall from the DNA into the cytoplasm with a uniform rate $k_d$, and rebinds again with a rate $k_a$. Excursions in the cytoplasm are described by $c$(z, \bf R \rm, t). First we Laplace transform with respect to time
+\begin{eqnarray*}
+ s \, \hat{\xi} - \delta(z - z_0) & = & D_1 \frac{\partial^2\hat{\xi}(z,s)}{\partial^2 z} - k_+ \hat{\xi}(z,s) \delta(z - z_0) - k_d \hat{\xi}(z,s) + k_a \hat{c}(z, |\mathbf r \mathrm| = \sigma , s) \\
+ s \, \hat{c} & = & D_3 \nabla^2 \hat{c}(z, \mathbf r \mathrm, s) - \left[ k_a \hat{c}(z, \mathbf r \mathrm, s) - k_d \hat{\xi}(z,s) \right] \frac{\delta(|\mathbf r \mathrm| - \sigma)}{2 \pi \sigma},
+\end{eqnarray*}
+where we explicitly included the initial condition of one particle placed in contact with the promoter site on the DNA.
+Now we Fourier transform with respect to space
+\begin{eqnarray}
+ s \, \tilde{\xi}(q, s) - 1 & = & - D_1 q^2 \tilde{\xi}(q,s) - k_+ \tilde{\xi}(z_0,s) - k_d \tilde{\xi}(q,s) + k_a \tilde{c}(q, s) \elabel{FDE_dna} \\
+ s \, \tilde{c} & = & - D_3 (q^2 + k^2) \tilde{c}(q, \mathbf r \mathrm, s) - \left[ k_a \tilde{c}(q, s) - k_d \tilde{\xi}(q,s) \right] J_{0}(k \sigma). 
+ \elabel{FDE_bulk}
+\end{eqnarray}
+Here $q$ is the spatial Fourier variable conjugate to $z$, and $\bf k \rm$ is conjugate to $\bf R \bf$. We assumed the promoter to be at the origin: $z_0 = 0$. Observe that the bulk density $\tilde{c}$ appears as a function of $q$ only in the equation for $\tilde{\xi}$. In order to solve for $\tilde{\xi}$, we first solve the second equation for $\tilde{c}(q,\bf k \rm, s)$, 
+\begin{equation}
+ \tilde{c}(q,\bf k \rm, s) = \frac{k_d \tilde{\xi}(q,s) - k_a\tilde{c}(q,s)}{s + D_3(q^2 + k^2)} J_{0}(k \sigma ),
+\end{equation}
+and Fourier back-transform both sides in $\bf k \rm$, along the z-axis $(\delta(\bf R \rm))$
+\begin{eqnarray}
+ \tilde{c}(q,\bf R\rm=0, s) & = & \int \frac{d^2 k}{(2 \pi)^2} \tilde{c}(q,\bf k \rm, s) \\
+				 & = & \frac{k_d \tilde{\xi}(q,s) - k_a\tilde{c}(q,s)}{2 \pi D_3} \, K_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right).
+\end{eqnarray}
+$\sigma$ is the sum of the DNA and TF radii. Solving the above for $\tilde{c}(q,s)$, and substituting it into \eref{FDE_dna}, we can solve for $\tilde{\xi}(q,s)$. Again, back-transforming this equation in $q$ at the promoter site, we find
+\begin{equation}
+ \tilde{\xi}(z_0, s) = \int \frac{d\,q}{2 \pi} \frac{1-k_+ \tilde{\xi}(z_0, s)}{s + D_1 q^2+k_d F^{-1}(q,s)}
+ \elabel{FDE_dna2}
+\end{equation}
+where
+\begin{equation}
+F(q,s) = 1 + \frac{k_a}{2 \pi D_3} \, K_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right).
+\end{equation}
+Finally, we can solve \eref{FDE_dna2} for $\tilde{\xi}(z_0, s)$ to obtain the probability density at the promoter site in Laplace space. In the limit $s \rightarrow 0$ our expression becomes
+\begin{equation}
+ \lim_{s \rightarrow 0} \tilde{\xi}(z_0, s) = \frac{I(\alpha,\beta)}{\pi \Lambda D_1 + k_+ \, I(\alpha,\beta)}
+\end{equation}
+where
+\begin{gather}
+ I(\alpha,\beta) = \int_0^{\infty} \frac{dt}{t^2 + \beta[1 + \alpha \, K_0(t)]^{-1}} \\
+ \alpha = \frac{k_a}{2 \pi D_3} \elabel{EqAlpha} \\
+ \beta = \frac{\sigma^2 k_d}{D_1} \elabel{EqBeta}.
+\end{gather}
+
+We use the $s \rightarrow 0$ limit in $\tilde{\xi}$ to find the long time limit of the survival probability, from which we  obtain the correlation time via \eref{CT1}. 
+\begin{equation}
+  \lim_{t \rightarrow \infty}S(t|\sigma) = 1 - k_+ \, \int_0^{\infty} \xi(z_0, t) dt = 1 - \lim_{s \rightarrow 0} k_+ \, \tilde{\xi}(z_0, s) = \frac{\frac{\pi \Lambda D_1}{I(\alpha,\beta)}}{\frac{\pi \Lambda D_1}{I(\alpha,\beta)} + k_+}.
+\end{equation}
+
+From this we infer the diffusion limited rate constant
+\begin{equation}
+ k_D = \frac{\pi \Lambda D_1}{I(\alpha,\beta)}
+ \elabel{kDFullJ}
+\end{equation}
+and the correlation time
+\begin{equation}
+ \tau_c = \frac{k_+ + k_D}{(k_+ \bar{\xi} + k_-) k_D} = \frac{k_+ + \frac{\pi \Lambda D_1}{I(\alpha,\beta)}}{(k_+ \bar{\xi} + k_-) \frac{\pi \Lambda D_1}{I(\alpha,\beta)}}.
+\end{equation}
+The low frequency limit of the power spectrum, the noise in the promoter and the concentration around the promoter are as defined in \erefsrange{SnWMJ}{NBWMJ}, where $k_D$ is now given by \eref{kDFullJ}.
+
+
+\subsection{Obtaining the correlation time by normalizing the reaction rates}
+As was shown by van Zon et al. \cite{VanZon2006}, we can describe our spatially resolved model by a well stirred model if we re-normalize the intrinsic binding and unbinding rates of the promoter $k_+$ and $k_-$ respectively. The idea is that the binding events of TF's to the promoter can be divided in to two separate classes. Either the TF comes from the bulk without any prior knowledge of the position of the promoter, or the TF had just before decayed from the promoter and started it's trajectory in contact with it. The renormalized reaction rates (events per unit of time) $k'_{\rm on}$ and $k'_{\rm off}$ for the well stirred model are found by decreasing the intrinsic rates with all the binding events which are due to a spatial correlation between the TF's and the promoter:
+\begin{equation}
+ k'_{\rm on} = \frac{k_+}{1 + N_{\rm rb}} \quad \text{and} \quad k'_{\rm off} = \frac{k_-}{1 + N_{\rm rb}}.
+\end{equation}
+Here $N_{\rm rb}$ is the average number of rebindings before a TF escapes given that is starts in contact with the promoter. The off rate $k_{\rm off}$ is obtained by demanding that the average occupancy of the promoter is unchanged by the renormalization. $N_{\rm rb}$ is calculated straightforwardly via
+\begin{equation}
+ N_{\rm rb} = \sum_{n=1}^{\infty} n \left( P_{\rm rebind} \right)^n P_{\rm escape} = \frac{1-P_{\rm escape}}{P_{\rm escape}},
+\end{equation}
+where $P_{\rm rebind}^n$ and $P_{\rm escape}$ are the splitting probabilities for either escaping or rebinding of a TF at contact with the promoter. The probability of a TF escaping is given by the $t \rightarrow \infty$ limit of the survival probability of a particle starting at contact 
+\begin{equation}
+ P_{\rm escape} = \lim_{t \rightarrow \infty} S(t|\sigma) = S(\infty|\sigma).
+\end{equation}
+The average number of bindings of a particle with the promoter before it escapes again is thus
+\begin{equation}
+ N_b = 1 + N_{\rm rb} = 1 + \frac{1 - P_{\rm escape}}{P_{\rm escape}} = P_{\rm escape}^{-1} = S(\infty|\sigma)^{-1},
+\end{equation}
+and the renormalized rates are
+\begin{equation}
+ k'_{\rm on} = k_+ S(t \rightarrow \infty|\sigma) \quad \text{and} \quad  k'_{\rm off} = k_- S(\infty|\sigma).
+ \elabel{RenRates}
+\end{equation}
+The above on-rate is the rate at which TF's bind to the promoter in a system where none of the TF's have prior knowledge of the position of the promoter. Put differently, particles are placed at infinity after falling from the promoter. 
+
+The correlation time for this system is
+\begin{equation}
+ \tau_c = \frac{1}{k'_{\rm on} \bar{c} + k_{\rm off}} = \frac{1}{ (k_+ \bar{c} + k_- ) S(\infty|\sigma) } = \frac{\tau_c^*}{S(\infty|\sigma)}.
+\end{equation}
+This expression for the correlation time is equivalent to that found in \eref{CT1} using the method my de Ronde et al. Thus, in the low concentration limit of non-interacting TF's, the methods of van Zon and de Ronde to obtain the correlation time are equivalent.
+
+\subsection{Why is the steady state on-rate equal to the uncorrelated on-rate?}
+
+
+From Agmon \cite{Agmon1990} eq. (4.6), we learn that our $k'_{on} \, \bar{c}$ in \eref{RenRates} is equal to the reciproce of the average lifetime of a single receptor in an infinite system in equilibrium.
+
+Now, from \cite{Agmon1990}, we learn that the probability flux into the promoter given that the TF concentration was equilibrated at t=0 is given by
+\begin{equation}
+ k(t) = k_+ S(t|\sigma).
+\end{equation}
+Thus by re-normalizing the rates, we have mapped or spatially resolved system onto an infinite system in steady state.

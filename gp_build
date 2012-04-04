@@ -1,0 +1,69 @@
+#!/bin/bash
+
+plot=$1
+
+prefix="/usr/share/texmf-texlive/fonts/type1/bluesky/cm"
+
+fontfile1="$prefix/cmmib10.pfb"
+fontfile2="$prefix/cmti12.pfb"
+fontfile3="$prefix/cmbx12.pfb"
+
+lines1=\
+"
+set style line 1 ps 1 pt 7 lt 1 lc rgb 'gray10'
+set style line 2 ps 1 pt 6 lt 1 lc rgb 'gray30'
+set style line 3 ps 1 pt 7 lt 1 lc rgb 'gray50'
+set style line 4 ps 1 pt 6 lt 1 lc rgb 'gray70'
+set style line 5 ps 1 pt 7 lt 1 lc rgb 'gray90'
+set style line 6 ps 1 pt 7 lt 1 lc rgb '#FF0000'
+set style line 7 ps 1 pt 6 lt 1 lc rgb '#FF040E'
+set style line 8 ps 1 pt 7 lt 1 lc rgb '#FF6868'
+set style line 9 ps 0.4 pt 6 lt 1 lc rgb '#FFA9A5'
+set style line 10 ps 1 pt 7 lt 1 lc rgb '#FFE9E5'
+"
+
+lines2=\
+"set style line 11 lw 2 lt 1 lc rgb 'gray10'
+set style line 12 lw 2 lt 2 lc rgb 'gray30'
+set style line 13 lw 2 lt 1 lc rgb 'gray50'
+set style line 14 lw 2 lt 2 lc rgb 'gray70'
+set style line 15 lw 2 lt 1 lc rgb 'gray90'
+set style line 16 lw 2 lt 1 lc rgb '#FF0000'
+set style line 17 lw 2 lt 2 lc rgb '#FF040E'
+set style line 18 lw 2 lt 1 lc rgb '#FF6868'
+set style line 19 lw 2 lt 2 lc rgb '#FFA9A5'
+set style line 20 lw 2 lt 1 lc rgb '#FFE9E5'
+"
+
+if [[ $plot -eq 1 ]]
+then
+
+gnuplot << EOF -persist
+
+set terminal postscript eps enhanced color "CMSS10, 12"\
+fontfile "$fontfile1" fontfile "$fontfile2" fontfile "$fontfile3"
+set out "NoisePlot.eps"
+
+#$lines2
+
+#set yrange [-2:2]
+set xrange [0:1]
+
+#set ytics 2 format "%g"
+#set xtics 2 format "%g"
+set xlabel "n"
+set ylabel "S_{n}(0)"
+#set key outside Left samplen 1 spacing 1.2 width -0.5
+
+#set arrow nohead from -6,0 to 0,0 ls 14
+
+#plot "./Results.dat"
+plot "./NoiseResult.dat" using 2:4:(sqrt(\$3)):(sqrt(\$5)) with xyerrorbars title "Promoter power spectrum",\
+"./NoisePlot_ana.dat" with lines notitle
+#"./Result.dat" using 2:4 with lines notitle,\
+#"./RecAverage.dat" using 2:(10*\$4):(sqrt(\$3)):(10*sqrt(\$5)) with xyerrorbars notitle
+
+EOF
+
+fi
+

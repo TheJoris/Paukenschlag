@@ -1,0 +1,156 @@
+%basic packages
+%\usepackage[pdftex]{graphicx, color}
+%\usepackage{rotating}
+%\usepackage{subfigure}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% More complex packages
+\usepackage{ifthen,calc}
+
+\def\longrightharpoonup{\relbar\joinrel\rightharpoonup}
+\def\longleftharpoondown{\leftharpoondown\joinrel\relbar}
+
+\def\longrightleftharpoons{
+  \mathop{
+    \vcenter{
+      \hbox{
+      \ooalign{
+        \raise1pt\hbox{$\longrightharpoonup\joinrel$}\crcr
+	  \lower1pt\hbox{$\longleftharpoondown\joinrel$}
+	  }
+      }
+    }
+  }
+}
+
+\newcommand{\rates}[2]{\displaystyle
+  \mathrel{\longrightleftharpoons^{#1\mathstrut}_{#2}}}
+
+%ifnot documentclass is revtex4 then else uncomment
+% \def\affiliation#1{\gdef\@affiliation{#1}} \gdef\@affiliation{}
+% \def\email#1{\gdef\@email{#1}}
+% \gdef\@email{}
+\newcommand{\aref}[1]{App.~\ref{app:#1}}
+\newcommand{\arefs}[1]{Apps.~\ref{app:#1}}
+\newcommand{\alabel}[1]{\label{app:#1}}
+\newcommand{\sref}[1]{Sec.~\ref{sec:#1}}
+\newcommand{\srefs}[1]{Secs.~\ref{sec:#1}}
+\newcommand{\slabel}[1]{\label{sec:#1}}
+\newcommand{\ssref}[1]{Par.~\ref{ssec:#1}}
+\newcommand{\ssrefs}[1]{Pars.~\ref{ssec:#1}}
+\newcommand{\sslabel}[1]{\label{ssec:#1}}
+\newcommand{\tref}[1]{Table.~\ref{table:#1}}
+\newcommand{\trefs}[1]{Tables.~\ref{table:#1}}
+\newcommand{\tlabel}[1]{\label{table:#1}}
+\newcommand{\fref}[1]{Fig.~\ref{fig:#1}}
+\newcommand{\frefs}[1]{Figs.~\ref{fig:#1}}
+\newcommand{\flabel}[1]{\label{fig:#1}}
+\newcommand{\eref}[1]{Eq.~\ref{eqn:#1}}
+\newcommand{\erefs}[1]{Eqs.~\ref{eqn:#1}}
+\newcommand{\erefstwo}[2]{Eqs.~\ref{eqn:#1}~and~\ref{eqn:#2}}
+\newcommand{\erefsrange}[2]{Eqs.~\ref{eqn:#1}-\ref{eqn:#2}}
+\newcommand{\elabel}[1]{\label{eqn:#1}}
+
+%shortened basic commands
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\beqs}{\begin{subequations}}
+\newcommand{\beqnn}{\begin{equation*}}
+\newcommand{\beqn}{\begin{eqnarray}}
+\newcommand{\beqnnn}{\begin{eqnarray*}}
+\newcommand{\bml}{\begin{multline}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\eeqs}{\end{subequations}}
+\newcommand{\eeqnn}{\end{equation*}}
+\newcommand{\eeqn}{\end{eqnarray}}
+\newcommand{\eeqnnn}{\end{eqnarray*}}
+\newcommand{\eml}{\end{multline}}
+\newcommand{\pd}{\partial}
+\newcommand{\lamda}{\lambda}
+\newcommand{\el}{\ell}
+\newcommand{\Null}{\O}
+\newcommand{\eps}{\epsilon}
+\newcommand{\dg}{\dagger}
+\newcommand{\dagg}{\dagger}
+\newcommand{\AMOLF}{FOM Institute for Atomic and Molecular Physics, Science
+Park 104, 1098 XG, Amsterdam}
+\def\tt{\texttt}
+%calligraphic letters
+\newcommand{\call}[1]{ {\cal #1}}
+
+%added commands
+\newcommand{\avg}[1]{\langle{#1}\rangle}
+\newcommand{\ket}[1]{|{#1}\rangle}
+\newcommand{\bra}[1]{\langle{#1}|}
+\newcommand{\braket}[2]{\langle{#1}\vert{#2}\rangle}
+\newcommand{\ip}[2]{\langle{#1}|{#2}\rangle}
+\newcommand{\br}[1]{\left ( #1\right )}
+\newcommand{\abs}[1]{\left\vert{#1}\right\vert}
+\newcommand{\sqbr}[1]{\left [ #1\right ]}
+\newcommand{\acco}[1]{\left \lbrace #1\right \rbrace}
+\newcommand{\andd}{\text{ and }}
+\newcommand{\diff}[2]{\frac{d #1}{d #2}}
+\newcommand{\pdiff}[2]{\frac{\pd #1}{\pd #2}}
+\newcommand{\avgabs}[1]{\avg{\abs{#1}}}
+\newcommand{\avgabssq}[1]{\avg{\abs{#1}^2}}
+\newcommand{\erfc}[1]{{\rm erfc}\br{#1}}
+
+%text in math env
+
+%added figures
+\newcommand{\capt}[1]{\vspace{0.5cm}\caption{#1}}
+%correct spacing for math operators
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\sgn}{sgn}
+%vectors
+%bold
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+%arrow
+%\newcommand{\vect}[1]{\vec{#1}}
+%macro
+%\ifthenelse{\value{boldvector} = 1} {\newcommand{\vect}[1]{\boldsymbol{#1}}} {\newcommand{\vect}[1]{\vec{#1}}}
+
+%matrix
+\newcommand{\mat}[1]{\mathbf{#1}}
+%underline
+%\newcommand{\mat}[1]{\underline{\underline{{#1}}}}
+
+%posters
+\newcommand{\emailposter}[2]{\tt{#1}\tt{@}\tt{#2}}
+
+%%%% Headers %%%%%
+%removes number for subsection number
+%\renewcommand*\thesubsection{\arabic{subsection}}
+
+
+%% %%%%% example of if then in latex %%%%%%
+%% \ifthenelse{\value{col} = 1}{\linespread{1}}{}
+
+%% %%%%% example of while do in latex %%%%%%
+%% \newcounter{mycounter}
+%%   \whiledo{\value{mycounter}<X}{%
+%%     \stepcounter{mycounter}%
+%%     \begin{figure}[htbp]%
+%%     \includegraphics[width=\textwidth,angle=-90]{figurename.pdf}%
+%%     \caption{figure caption}%
+%%     \end{figure}%
+%%       }%
+%% }
+
+%% %%%%% complicated combined example %%%%%%%%
+%% \newcounter{mycounter}
+%% \newcommand*\insertfig[2]{%
+%%   \setcounter{mycounter}{#1-1}%
+%%   \whiledo{\value{mycounter}<#2}{%
+%%     \stepcounter{mycounter}%
+%%     \begin{figure}[htbp]%
+%%     \includegraphics[width=\textwidth,
+%%     angle=-90]{figurename.pdf}%
+%%     \caption{caption name}
+%%     \end{figure}%
+%%     \ifthenelse{ \value{mycounter} = 5 }
+%% 	       {\clearpage}{\quad}
+%%   }%
+%% }
+
