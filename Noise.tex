@@ -33,24 +33,32 @@ The first factor under the integral gives the probability that the promoter is o
 For the irreversible survival probability with one TF at contact with the promoter we propose the form
 \begin{equation}
  \mathscr{S}_{\rm irr}(t|\sigma) = \mathscr{S}_{\rm irr}(t|{\rm eq}) S(t|\sigma)
+ \elabel{Def_Ssi}
 \end{equation}
 where $\mathscr{S}_{\rm irr}(t|{\rm eq})$ is the survival probability of a free promoter site surrounded by an equilibrated sollution of TF's. $S(t|\sigma)$ is the survival probability with just one TF placed on the promoter site. This form implies that after a TF has dissociated from the promoter, all the other TF's are equilibrated. This is a good approximation when the average decay time $1/k_-$ is long enough for another particle decayed earlier to equilibrate. 
 
 $\mathscr{S}_{\rm irr}(t|{\rm eq})$ can be found by solving the differential equation
 \begin{equation}
  \pdiff{\mathscr{S}_{\rm irr}(t|{\rm eq})}{t} = \bar{\xi} \, k(t) \, \mathscr{S}_{\rm irr}(t|{\rm eq}).
+ \elabel{DE_Seq}
 \end{equation}
-which states that TF's bind with a rate $k_{{\rm irr}}$ given that the promoter site is still unoccupied. $\bar{\xi}$ is the average concentrtion of TF's on the DNA. Solving the equation yields
+which states that the rate at which TF's bind to the promoter is equal to the rate $k_{{\rm irr}}(t)$ at with they would  bind to a sink (which is never occupied) times the probability that the promoter is still unoccupied. $\bar{\xi}$ is the average concentrtion of TF's on the DNA. Solving the equation yields
 \begin{equation}
- \mathscr{S}_{\rm irr}(t|{\rm eq}) = e^{-\bar{\xi}\int_0^t k_{{\rm irr}}(t') dt'}.
+ \mathscr{S}_{\rm irr}(t|{\rm eq}) = e^{-\bar{\xi}\int_0^t k_{{\rm irr}}(t') dt'},
 \end{equation}
-The rate at which TF's bind to a sink (ak. never occupied) in an equilibrated system is found to be (\aref{noise:backward_eqn})
+and $k_{{\rm irr}}(t)$ is, using the backward Smolochowski equation, equal to (\aref{noise:backward_eqn})
 \begin{equation}
  k_{\rm rad}(t) = k_+ \, S_{\rm rad}(t|\sigma).
  \elabel{krad}
 \end{equation}
+Before diving into the Laplace domain, we give a relation which will prove to be very usefull. Namely, from \erefstwo{DE_Seq}{Def_Ssi}, it is clear that
+\begin{eqnarray}
+ \pdiff{\mathscr{S}_{\rm irr}(t|{\rm eq})}{t} & = & -\bar{\xi} k_+ \, S_{\rm rad}(t|\sigma) \, \mathscr{S}_{\rm irr}(t|{\rm eq}) \\
+ & = & -\bar{\xi} k_+ \, \mathscr{S}_{\rm irr}(t|\sigma).
+ \elabel{SeqSsi}
+\end{eqnarray}
 
-Now, Laplace transforming \eref{rev_conv} and solving for $\hat{\mathscr{S}}_{{\rm rev}}$, plugging the result into \eref{corr_func}
+We now Laplace transform Eqs. \ref{eqn:corr_func}, \ref{eqn:rev_conv} and \ref{eqn:SeqSsi} solve for $\hat{\mathscr{S}}_{{\rm rev}}$. Plugging this result into the Laplace transform of \eref{corr_func}
 
 
 \begin{equation}
