@@ -92,10 +92,40 @@ The correlation time is therefore related to the Laplace transform of the correl
 &=2{\rm Re}\sqbr{\hat{C}\br{s=i\omega}}_{\omega=0}
 \end{align}
 
-Lastly, we provide a straightforward relation between the integral of an arbitrary function and the Laplace transform of this function
+\subsection{\alabel{noise:limits_Laplace} Limits in Laplace space}
+Here we show important quantities in the time domain of a certian function, by taking limits in the Laplace domain. We can find the time integral of an arbitrary function by taking the limit
 \begin{align}
+\lim_{s \rightarrow 0} \hat{A}(s) = \int_0^\infty A(t) dt.
 \elabel{si:int_vs_lap}
-\hat{A}\br{s=0}=\int_0^\infty A\br{t}
+\end{align}
+The long time limit of a function is given by
+\begin{align}
+\lim_{s \rightarrow 0} s \, \hat{A}(s) = \lim_{t \rightarrow \infty} A(t).
+\elabel{si:longt_in_lap}
+\end{align}
+In the same spirit
+\begin{align}
+\lim_{s \rightarrow 0} s^2 \, \hat{A}(s) = \lim_{t \rightarrow \infty} \partial_t A(t).
+\elabel{si:longt_in_lap2}
 \end{align}
 
-\subsection{\alabel{noise:backward_eqn} The backward smolochowski equation}
+\subsection{\alabel{noise:backward_eqn} The backward Smoluchowski equation}
+\ldots
+
+\subsection{\alabel{noise:Seq_approx} Approximating the $\mathscr{S}_{\rm irr}(t|{\rm eq})$ function}
+We want to approximate the equation for $\mathscr{S}_{\rm irr}(t|{\rm eq})$
+\begin{equation}
+ \mathscr{S}_{\rm irr}(t|{\rm eq}) = e^{-\bar{\xi}\int_0^t k_{{\rm irr}}(t') dt'},
+\end{equation}
+such that it can be Laplace transformed, and has correct behaviour in the long time limit. We will use the approximation in the limit of small $s$, and thus for large $t$. Because the argument of the exponential will diverge for large $t$, a small argument expansion will not work. We can, however, make a large time approximation by replacing $k_{{\rm irr}}(t)$ with $k_{{\rm irr}}(t \rightarrow \infty)$. Since a particle starting at the promoter will be able to escape, the large time limit of $k_{{\rm irr}}>0$. The survival probability becomes  
+\begin{equation}
+ \lim_{t \rightarrow \infty} \mathscr{S}_{\rm irr}(t|{\rm eq}) = e^{-\bar{\xi} k_{{\rm irr},\infty}\,t}.
+\end{equation}
+Laplace transforming gives
+\begin{equation}
+ \lim_{s \rightarrow 0} \hat{\mathscr{S}}_{\rm rad}(s|eq) = \frac{1}{s} \, \frac{1}{1 + \bar{\xi} \hat{k}_{\rm rad}(s)}.
+\end{equation}
+
+\subsection{\aref{noise:delta_int} Performing the integral over $\delta{r-\sigma}$}
+
+
