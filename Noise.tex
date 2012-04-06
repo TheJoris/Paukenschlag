@@ -86,7 +86,7 @@ Using the approximation \eref{Seq_approx}, the correlation time becomes (\aref{n
 \end{equation}
 where $\tau_c^*$ is the correlation time for the fast proces, $\tau_c^* = k_+ \hat{c} + k_-$.
 
-To summarize, given the long time limit of $\hat{S}(t|\sigma)$, we have the correlation time.
+To summarize, given the long time limit of $S(t|\sigma)$, we have the correlation time.
 
 \subsubsection{Calculating the noise}
 Given the correlation time of the noise in the promoter is
@@ -205,12 +205,12 @@ where $\alpha$ and $\beta$ are defined in \erefstwo{EqAlpha}{EqBeta}. We can fin
 Now we want to evaluate the noise in the occupancy of a promoter site when particles are not placed at a random position after falling from the DNA, but are placed at contact with it. A TF starting at the promoter site switches between sliding along the DNA and making excursions in the cytoplasm. The TF slides with a small diffusion constant $D_1$ and has the possibility of irreversibly binding to the promoter. After falling from the DNA, the TF diffuses around in the cytoplasm with a larger diffusion constant $D_3$, and, because it is essentially a 2D problem, will always rebinds with the DNA. To find the survival probability for this problem, we start with writing down the differential equations describing the full system
 \setlength{\jot}{12pt}
 \begin{eqnarray*}
- \frac{\partial \xi}{\partial t} & = & D_1 \frac{\partial^2\xi(z,t)}{\partial^2 z} - k_+ \xi(z,t) \delta(z - z_0) - k_d \xi(z,t) + k_a c(z, |\mathbf r \mathrm| = \sigma, t) \\
+ \frac{\partial \xi}{\partial t} & = & D_1 \frac{\partial^2\xi(z,t)}{\partial^2 z} - k_+ \xi(z,t) \delta(z - z_0) - k_d \xi(z,t) + k_a c(z, |{\bf r}| = \sigma, t) \\
  \frac{\partial c}{\partial t} & = & D_3 \nabla^2 c(z, \mathbf r \mathrm, t) - \left[ k_a c(z, \bf r \it, t) - k_d \xi(z,t) \right] \frac{\delta(|\mathbf r \mathrm| - \sigma)}{2 \pi \sigma}.
 \end{eqnarray*}
-Here $\xi$(z, t) is the probability density of the TF sliding along the DNA, which we model as an infinite long rod along the z-axis with a radius $\sigma$. Probability flows irreversibly into the sink, positioned at $z_0$, with a rate $k_+$. The particle can fall from the DNA into the cytoplasm with a uniform rate $k_d$, and is placed at a distance $\sigma$ from the DNA. The particle can rebind again with a rate $k_a$. Excursions in the cytoplasm are described by $c$(z, \bf R \rm, t). First we Laplace transform with respect to time
+Here $\xi$(z, t) is the probability density of the TF sliding along the DNA, which we model as an infinite long rod along the z-axis with a radius $\sigma$. Probability flows irreversibly into the sink, positioned at $z_0$, with a rate $k_+$. The particle can fall from the DNA into the cytoplasm with a uniform rate $k_d$, and is placed at a distance $\sigma$ from the DNA. The particle can rebind again with a rate $k_a$. Excursions in the cytoplasm are described by $c$(z, {\bf r}, t). First we Laplace transform with respect to time
 \begin{eqnarray*}
- s \, \hat{\xi} - \delta(z - z_0) & = & D_1 \frac{\partial^2\hat{\xi}(z,s)}{\partial^2 z} - k_+ \hat{\xi}(z,s) \delta(z - z_0) - k_d \hat{\xi}(z,s) + k_a \hat{c}(z, |\mathbf r \mathrm| = \sigma , s) \\
+ s \, \hat{\xi} - \delta(z - z_0) & = & D_1 \frac{\partial^2\hat{\xi}(z,s)}{\partial^2 z} - k_+ \hat{\xi}(z,s) \delta(z - z_0) - k_d \hat{\xi}(z,s) + k_a \hat{c}(z, |{\bf r}| = \sigma, s) \\
  s \, \hat{c} & = & D_3 \nabla^2 \hat{c}(z, \mathbf r \mathrm, s) - \left[ k_a \hat{c}(z, \mathbf r \mathrm, s) - k_d \hat{\xi}(z,s) \right] \frac{\delta(|\mathbf r \mathrm| - \sigma)}{2 \pi \sigma},
 \end{eqnarray*}
 where we explicitly included the initial condition of one particle placed in contact with the promoter site on the DNA.
@@ -220,16 +220,16 @@ Now we Fourier transform with respect to space (\aref{noise:delta_int})
  s \, \tilde{c} & = & - D_3 (q^2 + k^2) \tilde{c}(q, \mathbf r \mathrm, s) - \left[ k_a \tilde{c}(q, s) - k_d \tilde{\xi}(q,s) \right] J_{0}(k \sigma). 
  \elabel{FDE_bulk}
 \end{eqnarray}
-Here $q$ is the spatial Fourier variable conjugate to $z$, and $\bf k \rm$ is conjugate to $\bf R \bf$. We assumed the promoter to be at the origin: $z_0 = 0$. Observe that the bulk density $\tilde{c}$ appears as a function of $q$ only in the equation for $\tilde{\xi}$. In order to solve for $\tilde{\xi}$, we first solve the second equation for $\tilde{c}(q,\bf k \rm, s)$, 
+Here $q$ is the spatial Fourier variable conjugate to $z$, and $\bf k \rm$ is conjugate to $\bf R \bf$. We assumed the promoter and intitial position both to be at the origin: $z_0 = 0$. Observe that the bulk density $\tilde{c}$ appears as a function of $q$ only in the equation for $\tilde{\xi}$. In order to solve for $\tilde{\xi}$, we first solve the second equation for $\tilde{c}(q,\bf k \rm, s)$, 
 \begin{equation}
  \tilde{c}(q,\bf k \rm, s) = \frac{k_d \tilde{\xi}(q,s) - k_a\tilde{c}(q,s)}{s + D_3(q^2 + k^2)} J_{0}(k \sigma ),
 \end{equation}
-and Fourier back-transform both sides in $\bf k \rm$, along the z-axis $(\delta(\bf R \rm))$
+and Fourier back-transform both sides in ${\bf k}$
 \begin{eqnarray}
- \tilde{c}(q,\bf R\rm=0, s) & = & \int \frac{d^2 k}{(2 \pi)^2} \tilde{c}(q,\bf k \rm, s) \\
-				 & = & \frac{k_d \tilde{\xi}(q,s) - k_a\tilde{c}(q,s)}{2 \pi D_3} \, K_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right).
+ \tilde{c}(q, s) & = & \int \frac{d^2 k}{(2 \pi)^2} \tilde{c}(q,\bf k \rm, s) \\
+ & = & \frac{k_d \tilde{\xi}(q,s) - k_a\tilde{c}(q,s)}{2 \pi D_3} \, K_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right).
 \end{eqnarray}
-$\sigma$ is the sum of the DNA and TF radii. Solving the above for $\tilde{c}(q,s)$, and substituting it into \eref{FDE_dna}, we can solve for $\tilde{\xi}(q,s)$. Again, back-transforming this equation in $q$ at the promoter site, we find
+Solving the above for $\tilde{c}(q,s)$, and substituting it into \eref{FDE_dna}, we can solve for $\tilde{\xi}(q,s)$. Again, back-transforming this equation in $q$ at the promoter site, we find
 \begin{equation}
  \tilde{\xi}(z_0, s) = \int \frac{d\,q}{2 \pi} \frac{1-k_+ \tilde{\xi}(z_0, s)}{s + D_1 q^2+k_d F^{-1}(q,s)}
  \elabel{FDE_dna2}

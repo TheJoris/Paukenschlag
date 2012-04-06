@@ -92,6 +92,7 @@ The correlation time is therefore related to the Laplace transform of the correl
 &=2{\rm Re}\sqbr{\hat{C}\br{s=i\omega}}_{\omega=0}
 \end{align}
 
+
 \subsection{\alabel{noise:limits_Laplace} Limits in Laplace space}
 Here we show important quantities in the time domain of a certian function, by taking limits in the Laplace domain. We can find the time integral of an arbitrary function by taking the limit
 \begin{align}
@@ -109,11 +110,52 @@ In the same spirit
 \elabel{si:longt_in_lap2}
 \end{align}
 
+
 \subsection{\alabel{noise:backward_eqn} The backward Smoluchowski equation}
-\ldots
+Here we prove that the flux into a sink $k(t)$ with a radiation boundary condition, in an equilibrated sytem of particles, is given by
+\begin{equation}
+ k(t) = k_+ \, S(t|\sigma).
+ \elabel{bsm_k}
+\end{equation}
+To start, we show how to obtain the backward Kolmogorov equation from the forward Smoluchowski equation. The forward equation is defined as
+\begin{eqnarray}
+ \pdiff{p(\vect{r},t|\vect{r_0})}{t} & = & r^{1-d} \pdiff{}{r} D r^{d-1} e^{-V(r)} \pdiff{}{r} e^{V(r)} p(\vect{r},t|\vect{r_0}) \\
+ & = & \mathscr{L}_{\vect{r}} p(\vect{r},t|\vect{r_0})
+\end{eqnarray}
+where $\mathscr{L}_{\vect{r}}$ is the 'diffusion operator' acting on the coordinate $\vect{r}$. Because $p$ is a Green's function, we can write
+\begin{multline}
+\pdiff{p(\vect{r},t|\vect{r_0})}{t} = \int d\vect{r}' \left(\pdiff{}{t} p(\vect{r},t-t'|\vect{r}') \right) p(\vect{r}',t'|\vect{r_0}) \\
+ = \int d\vect{r}' \left( - \pdiff{}{t'} p(\vect{r},t - t'|\vect{r}') p(\vect{r}',t'|\vect{r_0}) \right) + p(\vect{r},t - t'|\vect{r}') \left( \pdiff{}{t'} p(\vect{r}',t'|\vect{r_0}) \right) 
+\end{multline}
+where, in the second line, we let the time derivative act on $t'$. Furthermore we let it act on both Green's functions and compensate with the second term. Because $p(\vect{r},t|\vect{r_0})$ describes a Markov process, it doesn't depend on the intermediate time $t'$, so the first term cancels. Invoking the diffusion equation for the time operator in the remaining term we get
+\begin{eqnarray}
+ \pdiff{p(\vect{r},t|\vect{r_0})}{t} & = & \int d\vect{r}' p(\vect{r},t - t'|\vect{r}') \left[ \mathscr{L}_{\vect{r}'}^{\phantom{\dag}} p(\vect{r}',t'|\vect{r_0}) \right] \\
+ & = & \int d\vect{r}' \left[ \mathscr{L}_{\vect{r'}}^{\dag} p(\vect{r},t - t'|\vect{r}') \right] \, p(\vect{r}',t'|\vect{r_0}). \elabel{bsm_1}
+\end{eqnarray}
+In the second line we applied integration by parts twice and threw away the boundary terms. If we let the arbitrary timepoint $t'$ go to zero in \eref{bsm_1}, the second Green's function changes into $\delta(\vect{r}-\vect{r}')$ and the integral vanisches. The result is the backward Kolmogorov equation
+\begin{eqnarray}
+ \pdiff{p(\vect{r},t|\vect{r_0})}{t} & = & \mathscr{L}_{\vect{r_0}}^{\dag} p(\vect{r},t|\vect{r_0}) \\
+ & = & r_0^{1-d} e^{V(r_0)} \pdiff{}{r_0} D r_0^{d-1} e^{-V(r_0)} \pdiff{}{r_0} p(\vect{r},t|\vect{r_0})
+ \elabel{backward_eqn}
+\end{eqnarray}
+Integrating both sides to $\vect{r}$ we get
+\begin{equation}
+ \pdiff{S(t|\vect{r_0})}{t} = \mathscr{L}_{\vect{r_0}}^{\dag} S(t|\vect{r_0}).
+ \elabel{S_eqn}
+\end{equation}
+To prove \eref{bsm_k}, we show that the initial condition and the time derivative of both the influx and the survival probability $S(t|\sigma)$ are the same. The influx at a radiation boundary from an equilibrium is
+\begin{equation}
+ k(t) = k_+ \left. \int d\vect{r_0} p(\vect{r},t|\vect{r_0}) \right|_{r=\sigma}.
+\end{equation}
+The time derivative of the influx obeys
+\begin{eqnarray}
+ \pdiff{}{t} \left. \int d\vect{r_0} p(\vect{r},t|\vect{r_0}) \right|_{r=\sigma} & = & \mathscr{L}_{\vect{r}} \left. \int d\vect{r_0} p(\vect{r},t|\vect{r_0}) \right|_{r=\sigma}.
+\end{eqnarray}
+When we evaluate \eref{S_eqn} at $r_0=\sigma$, we see, using the backward equation, that the time derivatives of both quantaties obey the same differential equation and are thus equivalent. In the limit $t \rightarrow 0$, both $p$ and $S$ equal 1. Therefore \eref{bsm_k} must hold.
+
 
 \subsection{\alabel{noise:Seq_approx} Approximating the $\mathscr{S}_{\rm irr}(t|{\rm eq})$ function}
-We want to approximate the equation for $\mathscr{S}_{\rm irr}(t|{\rm eq})$
+We want to approximate the equation
 \begin{equation}
  \mathscr{S}_{\rm irr}(t|{\rm eq}) = e^{-\bar{\xi}\int_0^t k_{{\rm irr}}(t') dt'},
 \end{equation}
@@ -121,11 +163,19 @@ such that it can be Laplace transformed, and has correct behaviour in the long t
 \begin{equation}
  \lim_{t \rightarrow \infty} \mathscr{S}_{\rm irr}(t|{\rm eq}) = e^{-\bar{\xi} k_{{\rm irr},\infty}\,t}.
 \end{equation}
-Laplace transforming gives
+and Laplace transforming gives
 \begin{equation}
  \lim_{s \rightarrow 0} \hat{\mathscr{S}}_{\rm rad}(s|eq) = \frac{1}{s} \, \frac{1}{1 + \bar{\xi} \hat{k}_{\rm rad}(s)}.
 \end{equation}
 
-\subsection{\aref{noise:delta_int} Performing the integral over $\delta{r-\sigma}$}
 
-
+\subsection{\alabel{noise:delta_int} Performing the integral over $\delta(r-\sigma)$}
+We want evaluate the fourier transform of the delta function used in solving \eref{FDE_bulk}
+\begin{multline}
+ \mathscr{F}\left\lbrace \hat{f}(r,z) \frac{\delta(|\mathbf r \mathrm| - \sigma)}{2 \pi \sigma} \right\rbrace 
+ = \int_0^{\infty} \int_0^{2 \pi} r\,dr \, d\theta f(r,z) e^{i {\bf k \cdot r}} \frac{\delta(|\mathbf r \mathrm| - \sigma)}{2 \pi \sigma} \\
+ = \int_0^{\infty} r\,dr f(r,z) \int_0^{2 \pi} d\theta \left( e^{i k r \, {\rm cos}(\theta - \theta')} \right) \frac{\delta(|\mathbf r \mathrm| - \sigma)}{2 \pi \sigma} \\
+ = \int_0^{\infty} r\,dr f(r,z) \left( 2 \pi {\rm J_0}(k r) \right) \frac{\delta(|\mathbf r \mathrm| - \sigma)}{2 \pi \sigma} 
+ = f(\sigma, z) {\rm J_0}(k \sigma)
+\end{multline}
+The first equality is the defenition of the Fourier integral in the plane perpendicular to the DNA. In the second line we write out the innerproduct, where the angle bewteen {\bf k} and {\bf r} is shifted w.r.t. $\theta$. Since we integrate the full circle this shift cancels, and we get a Bessel function of the first kind. The integral over $r$ amount to replacing every accorance of $r$ with $\sigma$.
