@@ -96,17 +96,17 @@ The correlation time is therefore related to the Laplace transform of the correl
 \subsection{\alabel{noise:limits_Laplace} Limits in Laplace space}
 Here we show important quantities in the time domain of a certian function, by taking limits in the Laplace domain. We can find the time integral of an arbitrary function by taking the limit
 \begin{align}
-\lim_{s \rightarrow 0} \hat{A}(s) = \int_0^\infty A(t) dt.
+\lim_{s \to 0} \hat{A}(s) = \int_0^\infty A(t) dt.
 \elabel{si:int_vs_lap}
 \end{align}
 The long time limit of a function is given by
 \begin{align}
-\lim_{s \rightarrow 0} s \, \hat{A}(s) = \lim_{t \rightarrow \infty} A(t).
+\lim_{s \to 0} s \, \hat{A}(s) = \lim_{t \to \infty} A(t).
 \elabel{si:longt_in_lap}
 \end{align}
 And, in the same spirit
 \begin{align}
-\lim_{s \rightarrow 0} s^2 \, \hat{A}(s) = \lim_{t \rightarrow \infty} \partial_t A(t).
+\lim_{s \to 0} s^2 \, \hat{A}(s) = \lim_{t \to \infty} \partial_t A(t).
 \elabel{si:longt_in_lap2}
 \end{align}
 
@@ -152,7 +152,7 @@ The time derivative of the influx obeys
 \begin{eqnarray}
  \pdiff{}{t} \left. \int d\vect{r_0} p(\vect{r},t|\vect{r_0}) \right|_{r=\sigma} & = & \mathscr{L}_{\vect{r}} \left. \int d\vect{r_0} p(\vect{r},t|\vect{r_0}) \right|_{r=\sigma}.
 \end{eqnarray}
-When we evaluate \eref{S_eqn} at $r_0=\sigma$, we see, using the Kolmogorov equation, that the time derivatives of both quantaties obey the same differential equation. Furthermore, in the limit $t \rightarrow 0$, both \eref{bsm_3} and \eref{bsm_k} equal. We conclude that \eref{bsm_k} must hold.
+When we evaluate \eref{S_eqn} at $r_0=\sigma$, we see, using the Kolmogorov equation, that the time derivatives of both quantaties obey the same differential equation. Furthermore, in the limit $t \to 0$, both \eref{bsm_3} and \eref{bsm_k} equal. We conclude that \eref{bsm_k} must hold.
 
 
 \subsection{\alabel{noise:Seq_approx} Approximating the $\mathscr{S}_{\rm irr}(t|{\rm eq})$ function}
@@ -160,13 +160,26 @@ We want to approximate the equation
 \begin{equation}
  \mathscr{S}_{\rm irr}(t|{\rm eq}) = e^{-\bar{\xi}\int_0^t k_{{\rm irr}}(t') dt'},
 \end{equation}
-such that it can be Laplace transformed, and has correct behaviour in the long time limit. We will use the approximation in the limit of small $s$, and thus in large $t$. Because the argument of the exponential will diverge for large $t$, a small argument expansion will not work. We can, however, make a large time approximation by replacing $k_{{\rm irr}}(t)$ with $k_{{\rm irr}}(t \rightarrow \infty)$. Since a particle starting at the promoter is able to escape, $S(t|\sigma)$ approaches a constant value at large $t$. Therefore, the system reaches a steady-state limit $k_{{\rm irr}}>0$. The survival probability becomes  
+such that it can be Laplace transformed, and has correct behaviour in the long time limit. We will use the approximation in the limit of small $s$, and thus in large $t$. Because the argument of the exponential will diverge for large $t$, a small argument expansion will not work. We can, however, make a large time approximation by replacing $k_{{\rm irr}}(t)$ with $k_{{\rm irr}}(t \to \infty)$. Since a particle starting at the promoter is able to escape, $S(t|\sigma)$ approaches a constant value at large $t$. Therefore, the system reaches a steady-state limit $k_{{\rm irr}}>0$. The survival probability becomes  
 \begin{equation}
- \lim_{t \rightarrow \infty} \mathscr{S}_{\rm irr}(t|{\rm eq}) = e^{-\bar{\xi} k_{{\rm irr},\infty}\,t}.
+ \lim_{t \to \infty} \mathscr{S}_{\rm irr}(t|{\rm eq}) = e^{-\bar{\xi} k_{{\rm irr},\infty}\,t}.
 \end{equation}
 and Laplace transforming gives
 \begin{equation}
- \lim_{s \rightarrow 0} \hat{\mathscr{S}}_{\rm rad}(s|eq) = \frac{1}{s} \, \frac{1}{1 + \bar{\xi} \hat{k}_{\rm rad}(s)}.
+ \lim_{s \to 0} \hat{\mathscr{S}}_{\rm rad}(s|eq) = \frac{1}{s} \, \frac{1}{1 + \bar{\xi} \hat{k}_{\rm rad}(s)}.
+\end{equation}
+
+
+\subsection{Relating promoter state noise to fluctuations in concentration}
+The noise in the concentration around the promoter on the DNA, is related to fluctuations in the promoter state, via 
+\begin{equation}
+ \delta \xi = \left|\frac{\partial \xi}{\partial n}\right| \delta n \quad \Rightarrow \quad  \delta \xi = \frac{\bar{\xi}}{(1-\bar{n})\bar{n}}\delta n,
+ \elabel{EqxiNoise}
+\end{equation}
+and fluctuations in the bulk, using detailed balance, via
+\begin{equation}
+ \bar{\xi} k_d = \bar{c} k_a \quad \Rightarrow \quad \delta c = \frac{k_a}{k_d} \, \frac{\bar{c}}{(1-\bar{n})\bar{n}}\delta n.
+ \elabel{EqcNoise}
 \end{equation}
 
 
@@ -180,3 +193,8 @@ We want evaluate the fourier transform of the delta function used in solving \er
  = f(\sigma, z) {\rm J_0}(k \sigma)
 \end{multline}
 The first equality is the defenition of the Fourier integral in the plane perpendicular to the DNA. In the second line we write out the innerproduct, where the angle bewteen {\bf k} and {\bf r} is shifted w.r.t. $\theta$. Since we integrate the full circle this shift cancels, and we get a Bessel function of the first kind. The integral over $r$ amount to replacing every accurance of $r$ with $\sigma$.
+
+\subsection{Leggacy}
+\begin{equation}
+ \lim_{c \to 0} \hat{\mathscr{S}}_{\rm irr}(s|eq) \approx \frac{1}{s} \left( 1 + \frac{2 c D_1 k_+ \sqrt{\frac{s}{D_1}}}{k_+ + 2 D_1 \sqrt{\frac{s}{D_1}}} \right)^{-1}
+\end{equation}
