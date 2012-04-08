@@ -3,11 +3,12 @@
 \subsection{Introduction}
 As was motivated in the introduction, the time a promoter is occupied by a transcription factor can vary strong over time. We want to find out how this variance depends on the parameters such as the binding affinities to the promoter and the DNA, the decay rate from the DNA and the diffusion constants. We define our variance as follows. We measure the time a promoter site is occupied over a time $T$, where $T$ is much larger than the correlation time $\tau_c$. If we repeat this measurement many times, the variance in our collection of measurements is given by (\aref{noise:corr_time})
 \begin{equation}
- \sigma_{\rm n, \tau_{\rm int}}^2 = \frac{2 \sigma_{\rm n}^2 \,\tau_{\rm c}}{T}
+ \left( \delta n \right)^2 \equiv \sigma_{\rm n, T}^2 = \frac{2 \sigma_{\rm n}^2 \,\tau_{\rm c}}{T}
+ \elabel{std_devT}
 \end{equation}
 where $\sigma_n^2$ is the variance of an instantaneous measurement. The variance of an instantanious measurement for a binomial process (the promoter has only two states) is known to be $\bar{n}(1-\bar{n})$, with $\bar{n}$ the average occupancy. Therefore we only need to find the correlation time. 
 
-We will first derive the correlation function, from which we can obtain the correlation time. With this correlation time in hand, we obtain general relations for the noise in the promoter occupancy, concentration fluctuations around the site and the lower limits on the variance. We continue with obtaining specific expressions in different geometries. First for a system where particles can only move on the DNA (1D only), secondly for DNA in a well mixed solution and end with a system where TF's are placed next to the DNA when they fall off.
+We will first derive the correlation function, from which we can obtain the correlation time. With this correlation time in hand, we obtain general relations for the noise in the promoter occupancy, concentration fluctuations around the promoter and the lower limit set by the diffusive arrival. We continue with obtaining expressions in different geometries. First for a system where particles can only move on the DNA (1D only), secondly for DNA in a well mixed solution and end with a system where TF's can perform multiple rebinding with the DNA before binding to the promoter.
 
 
 \subsection{Methods}
@@ -15,15 +16,15 @@ We will first derive the correlation function, from which we can obtain the corr
 \subsubsection{The correlation function}
 Here we derive the auto-correlation function for a switching process in Laplace space as was done by de Ronde et al. \cite{DeRonde2012}. We start with writing down the general expression for the correlation function of a switch
 \begin{eqnarray}
- C(\tau) & \equiv & < (n(\tau) - \bar{n})(n(0) - \bar{n}) > \\
-  	& = & \bar{n}(p_{*|*}(\tau)-\bar{n}).
+ C(\tau) & \equiv & \left\langle (n(\tau) - \bar{n})(n(0) - \bar{n}) \right\rangle \\
+  	& = & \bar{n} \left( p_{*|*}(\tau)-\bar{n} \right).
  \elabel{corr_func}
 \end{eqnarray}
-The function $n(t)$ depicts the promoter state and is either one or zero dependent on wether the promoter is occupied or not. In the first line we used that we are looking for the dynamics in a stationary system and thus shift the time such that only one function depends on time. In the second line we introduced the condinional probability that given the promoter was bound at $\tau=0$, what is the probability that it is bound at a later time $\tau$. This conditional probability is equal to
+The function $n(t)$ depicts the promoter state and is either one when the promoter is occupied and zero when it is free. In the first line we used that, for a stationary system, we can shift the time such that only one function depends on time. In the second line we introduced the condinional probability that given the promoter was bound at $t=0$, what is the probability that it is bound at a later time $\tau$. This conditional probability is equal to
 \begin{equation}
  p_{*|*} = 1 - \mathscr{S}_{\rm rev}(\tau|*)
 \end{equation}
-where $\mathscr{S}(t|*)$ is the reversible survival probability of a free promoter given that it was bound at $\tau=0$. The promoter can undergo multiple rounds of rebindings during the time $\tau$. We can describe this revirsible process in term of an irreversible one via the convolution \cite{Agmon1990}
+where $\mathscr{S}(t|*)$ is the reversible survival probability of a free promoter given that it started in the bound state. The promoter can undergo multiple rounds of binding and unbinding during the time $\tau$. We can describe this revirsible process in term of an irreversible one via the convolution \cite{Agmon1990}
 \begin{equation}
  \mathscr{S}_{\rm rev}(t|*) = k_- \int_0^t [1-\mathscr{S}_{\rm rev}(t'|*)]\mathscr{S}_{\rm irr}(t-t'|\sigma)dt'.
  \elabel{rev_conv}
@@ -61,7 +62,7 @@ Before diving into the Laplace domain, we give a relation which will prove to be
 
 We start by Laplace transforming \eref{rev_conv} and solve it for $\mathscr{S}_{\rm rev}$. By using the Laplace transformed \erefstwo{corr_func}{SeqSsi}, we can express the correlation function as a function of $\hat{\mathscr{S}}_{\rm irr}(s|{\rm eq})$ only
 \begin{equation}
- \hat{C_n}(s) = \sigma_n^2 \, \frac{\bar{n} \hat{\mathscr{S}}_{\rm rad}(s|eq)}{1-(1-\bar{n})s\hat{\mathscr{S}}_{\rm rad}(s|eq)}.
+ \hat{C_n}(s) = \sigma_n^2 \, \frac{\bar{n} \hat{\mathscr{S}}_{\rm irr}(s|eq)}{1-(1-\bar{n})s\hat{\mathscr{S}}_{\rm irr}(s|eq)}.
  \elabel{LapCorr}
 \end{equation}
 Since we can not directly Laplace transform the exponential in \eref{Seq}, we hypothesize the following form as an approximation (\aref{noise:Seq_approx})
@@ -79,39 +80,29 @@ The correlation time of the process is found by taking the $s \rightarrow 0$ lim
 \begin{eqnarray}
  \lim_{s \rightarrow 0} \hat{C_n}(s) = \int_0^\infty C_n(t) dt = \sigma_n^2 \, \tau_c.
 \end{eqnarray}
-Using the approximation \eref{Seq_approx}, the correlation time becomes (\aref{noise:limits_Laplace})
+Using the approximation in \eref{Seq_approx}, the general expression for the correlation time becomes (\aref{noise:limits_Laplace})
 \begin{equation}
  \lim_{c \rightarrow 0, s \rightarrow 0} \hat{C_n}(s) = \frac{\bar{n} \sigma_n^2}{k_+ \bar{c} \, S(\infty|\sigma)} = \frac{\sigma_n^2 \tau_c^*}{S(\infty|\sigma)},
  \elabel{CT1}
 \end{equation}
-where $\tau_c^*$ is the correlation time for the fast proces, $\tau_c^* = k_+ \hat{c} + k_-$.
+where $\tau_c^*$ is the correlation time for the fast proces, $\tau_c^* = k_+ \hat{c} + k_-$. To summarize, given the large time limit of $S(t|\sigma)$, we have the correlation time.
 
-To summarize, given the long time limit of $S(t|\sigma)$, we have the correlation time.
 
 \subsubsection{Calculating the noise}
-Given the correlation time of the noise in the promoter is
+We define the noise in the receptor state, using \erefstwo{std_devT}{CT1}, as
 \begin{equation}
- \left( \frac{\delta n}{\bar{n}} \right)^2 = \frac{\bar{n}(1-\bar{n})}{\bar{n}^2\frac{T}{\tau_c}}.
+ \left( \frac{\delta n}{\bar{n}} \right)^2 = \frac{\sigma_n^2}{\bar{n}^2} \, \frac{\tau_c}{T} = \frac{\sigma_n^2}{\bar{n}^2} \frac{\tau_c^*}{T} \frac{1}{S(\infty|\sigma)}.
  \elabel{EqProNoise}
 \end{equation}
-From this we can find the noise in the concentration around the promoter via
+We can relate the noise in the promoter state to the noise in concentration around the promoter via 
 \begin{equation}
- \delta c = \left|\frac{\partial c}{\partial n}\right| \delta n \quad {\rm with} \quad \bar{n} = \frac{k_+ c}{k_+ c + k_-}
-\end{equation}
-giving us
-\begin{equation}
- \delta c = \frac{c}{(1-\bar{n})\bar{n}}\delta n.
+ \delta c = \left|\frac{\partial c}{\partial n}\right| \delta n \quad \Rightarrow \quad  \delta c = \frac{c}{(1-\bar{n})\bar{n}}\delta n.
  \elabel{EqConNoise}
 \end{equation}
-For later reference we note that
-\begin{equation}
- \frac{\partial \bar{n}}{\partial \bar{c}} = \frac{\bar{n}(1-\bar{n})}{\bar{c}}
- \elabel{EqProNoiseII}
-\end{equation}
-
 For some processes, such as diffusion along a line or on a plane, the correlation time diverges to infinity, and the promoter won't be able to make true independent measurements. As a result, the noise perceived by a promoter would be infinite given the definition in \eref{EqProNoise}. Therefore, for these kind of processes, as in the paper of Gasper, we adopt a different definition
 \begin{equation}
   \left( \frac{\delta n}{\bar{n}} \right)^2 = \left. \frac{1}{\bar{n}^2} \lim_{t \rightarrow \infty} C_n(t)  \right|_{t = T}.
+  \elabel{EqProNoiseII}
 \end{equation}
 So the noise decays as a function of the integration time $T$, as the long time behaviour of the correlation function.
 
