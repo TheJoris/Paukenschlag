@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1.0
-lastDocument=Noise.tex
+lastDocument=App_Noise.tex
 masterDocument=
 name=MasterThesis
 pkg_extIsRegExp=false
@@ -50,10 +50,10 @@ ReadWrite=true
 
 [item:App_Noise.tex]
 archive=true
-column=14
+column=223
 encoding=UTF-8
 highlight=LaTeX
-line=199
+line=166
 mode=LaTeX
 open=true
 order=2
@@ -149,8 +149,8 @@ open=false
 order=-1
 
 [view-settings,view=0,item:App_Noise.tex]
-CursorColumn=14
-CursorLine=199
+CursorColumn=223
+CursorLine=166
 
 [view-settings,view=0,item:Noise.tex]
 CursorColumn=2

@@ -160,11 +160,15 @@ We want to approximate the equation
 \begin{equation}
  \mathscr{S}_{\rm irr}(t|{\rm eq}) = e^{-\bar{\xi}\int_0^t k_{{\rm irr}}(t') dt'},
 \end{equation}
-such that it can be Laplace transformed, and has correct behaviour in the long time limit. We will use the approximation in the limit of small $s$, and thus in large $t$. Because the argument of the exponential will diverge for large $t$, a small argument expansion will not work. We can, however, make a large time approximation by replacing $k_{{\rm irr}}(t)$ with $k_{{\rm irr}}(t \to \infty)$. Since a particle starting at the promoter is able to escape, $S(t|\sigma)$ approaches a constant value at large $t$. Therefore, the system reaches a steady-state limit $k_{{\rm irr}}>0$. The survival probability becomes  
+such that it can be Laplace transformed, and has correct behaviour in the long time limit. We will use the approximation in the limit of small $s$, and thus for large $t$. Because the argument of the exponential will diverge for large $t$, a small argument expansion will not work. We can, however, make a large time approximation by replacing the time dependent rate coefficient $k_{{\rm irr}}(t)$ with the steady-state rate coefficient
 \begin{equation}
- \lim_{t \to \infty} \mathscr{S}_{\rm irr}(t|{\rm eq}) = e^{-\bar{\xi} k_{{\rm irr},\infty}\,t}.
+ k_{\rm ss} = \lim_{t \to \infty} k_{{\rm irr}}(t).
 \end{equation}
-and Laplace transforming gives
+Since a particle starting at the promoter is able to escape, $S(t|\sigma)$ approaches a constant value for large $t$. Therefore, the system reaches a steady-state limit $k_{{\rm ss}} > 0$. The survival probability becomes  
+\begin{equation}
+ \lim_{t \to \infty} \mathscr{S}_{\rm irr}(t|{\rm eq}) = e^{-\bar{\xi} k_{{\rm irr},\infty}\,t},
+\end{equation}
+and Laplace transforming it gives
 \begin{equation}
  \lim_{s \to 0} \hat{\mathscr{S}}_{\rm rad}(s|eq) = \frac{1}{s} \, \frac{1}{1 + \bar{\xi} \hat{k}_{\rm rad}(s)}.
 \end{equation}
