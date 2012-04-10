@@ -94,7 +94,7 @@ The correlation time is therefore related to the Laplace transform of the correl
 
 
 \subsection{\alabel{noise:limits_Laplace} Limits in Laplace space}
-Here we show important quantities in the time domain of a certian function, by taking limits in the Laplace domain. We can find the time integral of an arbitrary function by taking the limit
+Here we show how we can obtain the large time limits of a function, given it's sollution in Laplace space. First, we can find the time integral of an arbitrary function by taking the limit
 \begin{align}
 \lim_{s \to 0} \hat{A}(s) = \int_0^\infty A(t) dt.
 \elabel{si:int_vs_lap}
@@ -156,21 +156,39 @@ When we evaluate \eref{S_eqn} at $r_0=\sigma$, we see, using the Kolmogorov equa
 
 
 \subsection{\alabel{noise:Seq_approx} Approximating the $\mathscr{S}_{\rm irr}(t|{\rm eq})$ function}
-We want to approximate the equation
+We want to approximate the survival probability of a promoter in equilibrium sollution
 \begin{equation}
- \mathscr{S}_{\rm irr}(t|{\rm eq}) = e^{-\bar{\xi}\int_0^t k_{{\rm irr}}(t') dt'},
+ \mathscr{S}_{\rm irr}(t|{\rm eq}) = {\rm exp}\left(-c \int_0^t k_{{\rm irr}}(t') dt'\right) = {\rm exp}\left(-c k_+ \int_0^t S(t'|\sigma) dt'\right)
+ \elabel{Seq_app}
 \end{equation}
-such that it can be Laplace transformed, and has correct behaviour in the long time limit. We will use the approximation in the limit of small $s$, and thus for large $t$. Because the argument of the exponential will diverge for large $t$, a small argument expansion will not work. We can, however, make a large time approximation by replacing the time dependent rate coefficient $k_{{\rm irr}}(t)$ with the steady-state rate coefficient
+such that it can be Laplace transformed, and has correct behaviour in the limit $s\to0$. A small $s$ limit amounts to a large $t$ limit in the time domain, and because the argument of the exponential will diverge for large $t$, a small argument expansion will not work. The reason for the divergence is because $S(t|\sigma)$ approaches a constant value in the limit $t\to\infty$, and the integral divereges. Therefore, the argument in the exponential scales as a linear function of $t$ to highest order. Written for large times, \eref{Seq_app} is
 \begin{equation}
- k_{\rm ss} = \lim_{t \to \infty} k_{{\rm irr}}(t).
+ \mathscr{S}_{\rm irr}(t|{\rm eq}) \sim {\rm exp}\left(-c \left[ \alpha_1 t + \alpha_2 t^{\beta_2} + \ldots \right] \right),
 \end{equation}
-Since a particle starting at the promoter is able to escape, $S(t|\sigma)$ approaches a constant value for large $t$. Therefore, the system reaches a steady-state limit $k_{{\rm ss}} > 0$. The survival probability becomes  
+where the powers $\beta_2$ and higher, are smaller than unity. For a low concentration $c$, the highest order in $t$ wil dominate. Specifically, if we change coordinates $c\,t\to x$, we get
 \begin{equation}
- \lim_{t \to \infty} \mathscr{S}_{\rm irr}(t|{\rm eq}) = e^{-\bar{\xi} k_{{\rm irr},\infty}\,t},
+ \mathscr{S}_{\rm irr}(t|{\rm eq}) \sim {\rm exp}\left(-\left[ \alpha_1 x + \alpha_2 c^{1-\beta_2} x^{\beta_2} + \ldots \right] \right).
 \end{equation}
-and Laplace transforming it gives
+and in the limit $c\to0$, only the term linear in $t$ remains. We end with
 \begin{equation}
- \lim_{s \to 0} \hat{\mathscr{S}}_{\rm rad}(s|eq) = \frac{1}{s} \, \frac{1}{1 + \bar{\xi} \hat{k}_{\rm rad}(s)}.
+ \lim_{c\to0} \mathscr{S}_{\rm irr}(t|{\rm eq}) = {\rm exp}\left(-c k_+ S(\infty|\sigma) \, t \right).
+\end{equation}
+Finally, Laplace transforming this, we get
+\begin{equation}
+ \lim_{c \to 0} \hat{\mathscr{S}}_{\rm rad}(s|eq) = \frac{1}{s + c \hat{k}_{\rm rad}(\infty)}.
+\end{equation}
+In the limit of small $s$, we write the more general form used in the main text
+\begin{equation}
+ \lim_{c \to 0} \hat{\mathscr{S}}_{\rm rad}(s|eq) = \frac{1}{s} \, \frac{1}{1 + c \hat{k}_{\rm rad}(s)}.
+\end{equation}
+
+Note that, by using this approximation, we assume the influx into the promoter to be in the steady state for all times. Therefore, the average reaction rate $k_{\rm ss}$ with the promoter in this limit, defined as
+\begin{equation}
+ \frac{1}{c k_{\rm ss}} = \int_0^\infty \mathscr{S}_{\rm irr}(t|{\rm eq}) = \hat{\mathscr{S}}_{\rm irr}(0|{\rm eq}) = \frac{1}{c k_+ S(\infty|\sigma)},
+\end{equation}
+is equal to the $t\to\infty$ limit of the dime dependent rate coefficient, 
+\begin{equation}
+ k_{\infty} = \lim_{t \to \infty} k_{{\rm irr}}(t) = k_+ S(\infty|\sigma).
 \end{equation}
 
 
@@ -201,4 +219,32 @@ The first equality is the defenition of the Fourier integral in the plane perpen
 \subsection{Leggacy}
 \begin{equation}
  \lim_{c \to 0} \hat{\mathscr{S}}_{\rm irr}(s|eq) \approx \frac{1}{s} \left( 1 + \frac{2 c D_1 k_+ \sqrt{\frac{s}{D_1}}}{k_+ + 2 D_1 \sqrt{\frac{s}{D_1}}} \right)^{-1}
+\end{equation}
+
+The Green's function, in an unbounded domain, with an irreversible sink and the initial condition both at the origin, is given by
+\begin{multline}
+ p(z,t|z_0=0) = \frac{1}{\sqrt{4 \pi D_1 t}}e^{\frac{-z^2}{4 D_1 t}} - \frac{k_+}{4 D_1}e^{\frac{k_+}{2 D_1}(|z|)+\frac{k_+^2 t}{4 D_1}} \\
+\mathrm{erfc}\left( \frac{|z|}{\sqrt{4 D_1 t}}+\frac{k_+}{2 D_1}\sqrt{D_1 t} \right).
+\end{multline}
+Transforming this to Laplace space
+\begin{equation}
+ \hat{p}(z,s|\sigma) = \frac{1}{2 D_1 q}e^{-q|z|} - \frac{k_+}{4 D^2}\frac{e^{-q|z|}}{q(q+\frac{k_+}{2 D_1})}, \quad q=\sqrt{\frac{s}{D_1}}.
+\end{equation}
+If we plug this into the correlation function (\eref{LapCorr1D}) and take the limit $s \to 0$, we arrive at
+\begin{equation}
+ \hat{C_n}(s) = \sigma_n^2 \, \bar{n} \, \frac{k_+ + k_D}{k_+ \bar{\xi} k_D} = \sigma_n^2 \, \frac{k_+ + k_D}{k_D (k_+ \bar{\xi} + k_-)}, \quad k_D = \sqrt{4 D_1 k_d}.
+ \elabel{LapCorr25D}
+\end{equation}
+The correlation time is thus
+\begin{equation}
+ \tau_c = \frac{k_+ + k_D}{k_D (k_+ \bar{\xi} + k_-)}
+\end{equation}
+and we can define the renormalized rates $k_{\rm on}$ and $k_{\rm off}$ as
+\begin{equation}
+ \frac{1}{k_{\rm on}} = \frac{1}{k_+} + \frac{1}{\sqrt{4 D_1 k_d}}, \quad \frac{1}{k_{\rm off}} = \frac{1}{k_-} + \frac{K_{\rm eq}}{\sqrt{4 D_1 k_d}}, \quad K_{\rm eq} = \frac{k_+}{k_-}.
+\end{equation}
+Here $k_+$ and $k_-$ are the intrinsic association and dissociation rates of the promoter site respectively. 
+and the correlation time
+\begin{equation}
+ \tau_c = \frac{k_+ + k_D}{(k_+ \bar{\xi} + k_-) k_D} = \frac{k_+ + \frac{\pi D_1}{\sigma I(\alpha,\beta)}}{(k_+ \bar{\xi} + k_-) \frac{\pi D_1}{\sigma I(\alpha,\beta)}}.
 \end{equation}
