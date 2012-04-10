@@ -165,7 +165,7 @@ such that it can be Laplace transformed, and has correct behaviour in the limit 
 \begin{equation}
  \mathscr{S}_{\rm irr}(t|{\rm eq}) \sim {\rm exp}\left(-c \left[ \alpha_1 t + \alpha_2 t^{\beta_2} + \ldots \right] \right),
 \end{equation}
-where the powers $\beta_2$ and higher, are smaller than unity. For a low concentration $c$, the highest order in $t$ wil dominate. Specifically, if we change coordinates $c\,t\to x$, we get
+where the powers $\beta_2$ and higher, are smaller than one. For a low concentration $c$, the highest order in $t$ will dominate. Specifically, if we change coordinates $c\,t\to x$, we get
 \begin{equation}
  \mathscr{S}_{\rm irr}(t|{\rm eq}) \sim {\rm exp}\left(-\left[ \alpha_1 x + \alpha_2 c^{1-\beta_2} x^{\beta_2} + \ldots \right] \right).
 \end{equation}
@@ -173,6 +173,8 @@ and in the limit $c\to0$, only the term linear in $t$ remains. We end with
 \begin{equation}
  \lim_{c\to0} \mathscr{S}_{\rm irr}(t|{\rm eq}) = {\rm exp}\left(-c k_+ S(\infty|\sigma) \, t \right).
 \end{equation}
+Another way to appreciate this approximation, is to observe that the time at which the steady-state is reached is independent of the concentration. When we lower the concentration, the time at which the promoter is almost certainly occupied, increases. Therefore, in the low concentration limit, the time interval in which the system was not in steady-state yet, compared to the total time, becomes insignificantly small.
+
 Finally, Laplace transforming this, we get
 \begin{equation}
  \lim_{c \to 0} \hat{\mathscr{S}}_{\rm rad}(s|eq) = \frac{1}{s + c \hat{k}_{\rm rad}(\infty)}.
@@ -182,11 +184,11 @@ In the limit of small $s$, we write the more general form used in the main text
  \lim_{c \to 0} \hat{\mathscr{S}}_{\rm rad}(s|eq) = \frac{1}{s} \, \frac{1}{1 + c \hat{k}_{\rm rad}(s)}.
 \end{equation}
 
-Note that, by using this approximation, we assume the influx into the promoter to be in the steady state for all times. Therefore, the average reaction rate $k_{\rm ss}$ with the promoter in this limit, defined as
+Note that, by using this approximation, we assume the influx into the promoter to be in steady-state for all times. Therefore, the average reaction rate $k_{\rm ss}$, defined as
 \begin{equation}
  \frac{1}{c k_{\rm ss}} = \int_0^\infty \mathscr{S}_{\rm irr}(t|{\rm eq}) = \hat{\mathscr{S}}_{\rm irr}(0|{\rm eq}) = \frac{1}{c k_+ S(\infty|\sigma)},
 \end{equation}
-is equal to the $t\to\infty$ limit of the dime dependent rate coefficient, 
+is equal to the $t\to\infty$ limit of the time dependent rate coefficient, 
 \begin{equation}
  k_{\infty} = \lim_{t \to \infty} k_{{\rm irr}}(t) = k_+ S(\infty|\sigma).
 \end{equation}
