@@ -23,26 +23,38 @@ set style line 10 ps 1 pt 7 lt 1 lc rgb '#FFE9E5'
 "
 
 lines2=\
-"set style line 11 lw 2 lt 1 lc rgb 'gray10'
+"
+set style line 11 lw 2 lt 1 lc rgb 'gray10'
 set style line 12 lw 2 lt 2 lc rgb 'gray30'
 set style line 13 lw 2 lt 1 lc rgb 'gray50'
 set style line 14 lw 2 lt 2 lc rgb 'gray70'
 set style line 15 lw 2 lt 1 lc rgb 'gray90'
-set style line 16 lw 2 lt 1 lc rgb '#FF0000'
+set style line 16 lw 4 lt 1 lc rgb '#FF0000'
 set style line 17 lw 2 lt 2 lc rgb '#FF040E'
-set style line 18 lw 2 lt 1 lc rgb '#FF6868'
-set style line 19 lw 2 lt 2 lc rgb '#FFA9A5'
+set style line 18 lw 2 lt 1 lc rgb '#006868'
+set style line 19 lw 4 lt 1 lc rgb '#68FFAA'
 set style line 20 lw 2 lt 1 lc rgb '#FFE9E5'
 "
+
+# Linetype library:
+# 1 - solid line __________
+# 2 - dashed as __ __ __ __
+# 3 - dashed as _ _ _ _ _ _
+# 4 - dashed as ...........
+# 5 - dashed as __.__.__.__
+# 6 - dashed as _._._._._._
 
 if [[ $plot -eq 1 ]]
 then
 
+$lines1
+$lines2
+
 gnuplot << EOF -persist
 
-set terminal postscript eps enhanced color "CMSS10, 12"\
+set terminal postscript eps enhanced color "CMSS10, 15"\
 fontfile "$fontfile1" fontfile "$fontfile2" fontfile "$fontfile3"
-set out "NoisePlot.eps"
+set out "NoisePlotFull.eps"
 
 #$lines2
 
@@ -58,12 +70,110 @@ set ylabel "S_{n}(0)"
 #set arrow nohead from -6,0 to 0,0 ls 14
 
 #plot "./Results.dat"
-plot "./NoiseResult.dat" using 2:4:(sqrt(\$3)):(sqrt(\$5)) with xyerrorbars title "Promoter power spectrum",\
-"./NoisePlot_ana.dat" with lines notitle
+plot "./NoiseResult.dat" using 2:4:(sqrt(\$3)):(sqrt(\$5)) with xyerrorbars ls 18 title "Simulated",\
+"./NoisePlotJ_ana.dat" with lines ls 16 notitle,\
+"./NoisePlotB_ana.dat" with lines ls 13 title "Analytical Gasper"
 #"./Result.dat" using 2:4 with lines notitle,\
 #"./RecAverage.dat" using 2:(10*\$4):(sqrt(\$3)):(10*sqrt(\$5)) with xyerrorbars notitle
 
 EOF
 
+epstopdf NoisePlotFull.eps
 fi
 
+
+if [[ $plot -eq 2 ]]
+then
+
+gnuplot << EOF -persist
+
+$lines1
+$lines2
+
+set terminal postscript eps enhanced color "CMSS10, 15"\
+fontfile "$fontfile1" fontfile "$fontfile2" fontfile "$fontfile3"
+set out "PowerPlot.eps"
+
+set log xy
+
+#set yrange [-2:2]
+#set xrange [0:1]
+
+#set ytics 2 format "%g"
+#set xtics 2 format "%g"
+set xlabel "{/Symbol w}"
+set ylabel "P_{n}({/Symbol w})"
+set rmargin 4
+#set key outside Left samplen 1 spacing 1.2 width -0.5
+
+#set arrow nohead from -6,0 to 0,0 ls 14
+
+plot "./PowerPlotExt_ana.dat" with lines ls 16 title "Extrinsic analytical",\
+"./PowerPlotInt_ana.dat" with lines ls 19 title "Intrinsic analytical",\
+"./PowerPlotTot_sim.dat" with lines ls 11 title "Simulated"
+
+EOF
+
+epstopdf PowerPlot.eps
+fi
+
+
+if [[ $plot -eq 3 ]]
+then
+
+gnuplot << EOF -persist
+
+$lines1
+$lines2
+
+set terminal postscript eps enhanced color "CMSS10, 15"\
+fontfile "$fontfile1" fontfile "$fontfile2" fontfile "$fontfile3"
+set out "PowerPlot2.eps"
+
+set size 1,1
+set origin 0,0
+#set nokey
+set multiplot
+
+set log xy
+
+set size 1,1
+set origin 0,0
+
+set format y "10^{%L}"
+set format x "10^{%L}"
+
+#set yrange [-2:2]
+#set xrange [0:1]
+
+#set ytics 2 format "%g"
+#set xtics 2 format "%g"
+set xlabel "{/Symbol w}"
+set ylabel "P_{n}({/Symbol w})"
+set rmargin 4
+#set key outside Left samplen 1 spacing 1.2 width -0.5
+
+#set arrow nohead from -6,0 to 0,0 ls 14
+
+plot "./PowerPlotExt_ana.dat" with lines ls 16 title "Extrinsic analytical",\
+"./PowerPlotInt_ana.dat" with lines ls 19 title "Intrinsic analytical",\
+"./PowerPlotTot_sim.dat" with lines ls 11 title "Simulated"
+
+set size 0.4,0.4
+set origin .12,.1
+#set noytic
+#set noxtic
+set xtic (1e-1,1e4,1e10)
+set ytic (1e0,1e-10,1e-20)
+set noxlabel
+set noylabel
+set nokey
+
+plot "./PowerPlotExt2_ana.dat" with lines ls 16 title "Extrinsic analytical",\
+"./PowerPlotInt2_ana.dat" with lines ls 19 title "Intrinsic analytical",\
+"./PowerPlotTot2_sim.dat" with lines ls 11 title "Simulated"
+
+EOF
+
+epstopdf PowerPlot2.eps
+fi

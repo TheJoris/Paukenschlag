@@ -185,7 +185,9 @@ and the noise in the 'equivalent concentration' of the cytoplasm $c$
 
 
 \subsubsection{1D diffusion with exchange to the bulk}
-Now we want to evaluate the noise in the occupancy of a promoter site when particles are not placed at a random position after falling from the DNA, but are placed at contact with it. A TF starting at the promoter site switches between sliding along the DNA and making excursions in the cytoplasm. The TF slides with a small diffusion constant $D_1$ and has the possibility of irreversibly binding to the promoter. After falling from the DNA, the TF diffuses around in the cytoplasm with a larger diffusion constant $D_3$, and, because it is essentially a 2D problem, will always rebinds with the DNA. To find the survival probability for this problem, we start with writing down the differential equations describing the full system
+Now we want to evaluate the noise in the occupancy of a promoter site when particles are not placed at a random position after falling from the DNA, but are placed at contact with it. A TF starting at the promoter site switches between sliding along the DNA and making excursions in the cytoplasm. The TF slides with a small diffusion constant $D_1$ and has the possibility of irreversibly binding to the promoter. After falling from the DNA, the TF diffuses around in the cytoplasm with a larger diffusion constant $D_3$, and, because it is essentially a 2D problem, will always rebinds with the DNA. Our derivation of the noise is very similar to that followed by Tka$\check{\rm c}$ik \cite{Tkacik2009}.
+
+To find the survival probability for this problem, we start with writing down the differential equations describing the full system
 \setlength{\jot}{12pt}
 \begin{eqnarray*}
  \frac{\partial \xi}{\partial t} & = & D_1 \frac{\partial^2\xi(z,t)}{\partial^2 z} - k_+ \xi(z,t) \delta(z - z_0) - k_d \xi(z,t) + k_a c(z, |{\bf r}| = \sigma, t) \\
@@ -250,10 +252,46 @@ and the noise in the 'equivalent concentration' of the cytoplasm $c$
 \begin{eqnarray}
  \elabel{NoiseCFull} 
  \left( \frac{\delta c}{\bar{c}} \right)^2 & = & \frac{2}{\bar{n}(1-\bar{n})} \left( \frac{k_d}{k_a} \, \frac{\bar{n} \sigma I(\alpha,\beta)}{\pi D_1 T \bar{c}} + \frac{1-\bar{n}}{k_- T}  \right) \\
- & = & 
+ & = & \frac{2}{\bar{n}(1-\bar{n})} \left( \frac{\beta I(\alpha,\beta)}{2 \pi^2 \alpha} \, \frac{\bar{n}}{D_3 T \bar{c}} \, \frac{1}{\sigma} + \frac{1-\bar{n}}{k_- T}  \right).
 \end{eqnarray}
+In the last line we changed the binding and unbinding rates of the DNA with the dimensionless variables $\alpha$ and $\beta$.
 
-\subsection{Obtaining the correlation time by normalizing the reaction rates}
+
+\subsection{Comparing results with simulation}
+
+\subsubsection{System setup and parameters}
+We check our final result \eref{NoiseProFull}, by comparing it with simulations done using \GFRD. The simulation setup consists of a box with periodic bounday conditions with a size $L=1\mu m$. Inside is a rod, resembling the DNA, which spans the box and contains one promoter site at it's middle. The system is initialized with TF$_0=10$ randomly placed transcription factors in the bulk. TF's can bind non-specifically to the rod, diffuse one dimensionally and either react with the promoter if it is close, or fall off again. Parameters are set according to results in \cite{Elf2007a}. We set the diffusion constant in the bulk, $D_3=3 \mu m^2/s$, and the diffusion constant on the DNA $D_1=0.05 \mu m^2/s$. The decay rate from the DNA, which sets the average DNA residence time, is $k_d=1ms^{-1}$. The association rate with the DNA is set to a high value, $k_a=10\mu m^2/s$, such that the DNA search becomes diffusion limited. The radius of TF and DNA together is $\sigma=4.4nm$. For the dissociaten rate from the promoter we chose $k_-=0.1 1/ms$. We change the association rate $k_+$, from $5\cdot10^{-5} m/s$ upto $2\cdot10^{-2} m/s$, to compare it's effect on the noise with \eref{NoiseProFull}. 
+
+\subsubsection{Simulation results}
+We use \GFRD to generate trajectories of the promoter switching between the occupied or unoccupied state. The easiest way to obtain information from it is by taking the power spectrum of these trajectories. \cite{Tkacik2009,VanZon2006}. In \fref{PowerPlotA} we show the power spectrum of a 3000s long lasting trajectory of the promoter state. It can be devidend into three regimes. The low frequency regime, which is the result of slow processes in the system, is well described by a Poissonian switch. This means that the switching of the promoter on these timescales is induced by TF's which have no prior knowledge of the position of the promoter site. The TF which dissociated from the promoter before, had prior knowledge but escaped, leaving an equilibrated system. The very short timescales, are also dominated by Poissonian processes. These are rebindings of TF's which had no time to diffuse, and the rebind time is set by $k_+$ only. The intermediated regime, is dominated by particles which diffused but remained close to the promoter, before rebinding. This is not a Poisson process, and our theory doesn't match.
+
+We can obtain the correlation time by taking the low frequency limit of the power spectrum
+\begin{equation}
+ \lim_{\omega\to0} P_n(\omega) = 2 \sigma_n^2 \tau_c.
+ \elabel{PowPro}
+\end{equation}
+Apart from the factor 2, this is equal to the integral over the correlation function \eref{CT1}, and we will compare our simulatin results with this expression. The result is shown in \fref{NoisePlotFull}. 
+
+
+
+\begin{figure}
+\includegraphics[clip]{PowerPlot2}
+\caption{\flabel{PowerPlotA} Power spectrum of the promoter state switching generated with simulation (black). Here $k_+=0.16mm/s$, and other parameters are set as described ealier. The colored lines give the power spectra of a Poissonian switch (\eref{PoissonPow}) with a correlation time given by (Red line) \erefstwo{Sinfty}{kDFullJ} or (Green line) $\tau_c^*=k_+ \bar{\xi}+k_-$. The overlap between simulation and theory shows that both at long (low frequency) and short (high frequency) timescales, the switching of a promoter is a Poisson process. The reason is, that on long timescales, their are no TF's spatially correlated with the promoter, and all the binding events come from a well mixed bulk. These bindings are all poisson events because the particles have no prior knowledge of the possition of the promoter. On short timescales, a particle rebinds so quickly, that it had no time to diffuse, and the rebind time is based on the intrisic rate $k_+$ only. The inset shows a power spectrum with a high association rate $k_+=19 mm/s$. 
+}
+\end{figure}
+
+\begin{figure}
+\includegraphics[clip]{NoisePlotFull}
+\caption{\flabel{NoisePlotFull} Low frequency limit of the power spectrum (\eref{PowPro}) for a promoter site on the DNA, compared with simulations and the result of Tka$\check{\rm c}$ik.
+}
+\end{figure}
+
+
+\subsection{A comparison with the paper of Tka$\check{\bf c}$ik \cite{Tkacik2009}}
+
+
+
+\subsection{Obtaining the correlation time by renormalizing the reaction rates}
 As was shown by van Zon et al. \cite{VanZon2006}, we can describe our spatially resolved model by a well stirred model if we re-normalize the intrinsic binding and unbinding rates of the promoter $k_+$ and $k_-$ respectively. The idea is that the binding events of TF's to the promoter can be divided in to two separate classes. Either the TF comes from the bulk without any prior knowledge of the position of the promoter, or the TF had just before decayed from the promoter and started it's trajectory in contact with it. The renormalized reaction rates (events per unit of time) $k'_{\rm on}$ and $k'_{\rm off}$ for the well stirred model are found by decreasing the intrinsic rates with all the binding events which are due to a spatial correlation between the TF's and the promoter:
 \begin{equation}
  k'_{\rm on} = \frac{k_+}{1 + N_{\rm rb}} \quad \text{and} \quad k'_{\rm off} = \frac{k_-}{1 + N_{\rm rb}}.
@@ -262,7 +300,7 @@ Here $N_{\rm rb}$ is the average number of rebindings before a TF escapes given 
 \begin{equation}
  N_{\rm rb} = \sum_{n=1}^{\infty} n \left( P_{\rm rebind} \right)^n P_{\rm escape} = \frac{1-P_{\rm escape}}{P_{\rm escape}},
 \end{equation}
-where $P_{\rm rebind}^n$ and $P_{\rm escape}$ are the splitting probabilities for either escaping or rebinding of a TF at contact with the promoter. The probability of a TF escaping is given by the $t \to \infty$ limit of the survival probability of a particle starting at contact 
+where $P_{\rm rebind}$ and $P_{\rm escape}$ are the splitting probabilities for either escaping or rebinding of a TF at contact with the promoter. The probability of a TF escaping is given by the $t \to \infty$ limit of the survival probability of a particle starting at contact 
 \begin{equation}
  P_{\rm escape} = \lim_{t \to \infty} S(t|\sigma) = S(\infty|\sigma).
 \end{equation}
@@ -272,24 +310,24 @@ The average number of bindings of a particle with the promoter before it escapes
 \end{equation}
 and the renormalized rates are
 \begin{equation}
- k'_{\rm on} = k_+ S(t \to \infty|\sigma) \quad \text{and} \quad  k'_{\rm off} = k_- S(\infty|\sigma).
+ k'_{\rm on} = k_+ S(\infty|\sigma) \quad \text{and} \quad  k'_{\rm off} = k_- S(\infty|\sigma).
  \elabel{RenRates}
 \end{equation}
 The above on-rate is the rate at which TF's bind to the promoter in a system where none of the TF's have prior knowledge of the position of the promoter. Put differently, particles are placed at infinity after falling from the promoter. 
 
 The correlation time for this system is
 \begin{equation}
- \tau_c = \frac{1}{k'_{\rm on} \bar{c} + k_{\rm off}} = \frac{1}{ (k_+ \bar{c} + k_- ) S(\infty|\sigma) } = \frac{\tau_c^*}{S(\infty|\sigma)}.
+ \tau_c = \frac{1}{k'_{\rm on} \bar{c} + k'_{\rm off}} = \frac{1}{ (k_+ \bar{c} + k_- ) S(\infty|\sigma) } = \frac{\tau_c^*}{S(\infty|\sigma)}.
 \end{equation}
-This expression for the correlation time is equivalent to that found in \eref{CT1} using the method my de Ronde et al. Thus, in the low concentration limit of non-interacting TF's, the methods of van Zon and de Ronde to obtain the correlation time are equivalent.
+This expression for the correlation time is equivalent to that found in \eref{CT1} using the method by de Ronde et al. Thus, in the low concentration limit of non-interacting TF's, the methods of van Zon and de Ronde to obtain the correlation time are equivalent.
 
-\subsection{Why is the steady state on-rate equal to the uncorrelated on-rate?}
+\subsubsection{Why the methods are the same}
+One important difference between the two methods, is that in the method of van Zon, a TF following a rebinding trajectory, will allways find an unoccupied promoter when it returns. Their is no interuption by the other particles from the equilibrium. De Ronde, a priori, does allow this event by writing the survival probability as a product of either binding from the bulk or rebinding. However, by using the low concentration approximation \eref{Seq_approx}, we throw away the possibility of interuptions on short time scales. We used the large time limit in \aref{noise:Seq_approx}, to show the system is by approximation allways in steady state. By the same arguments, we can show that for small times, the possibility of interuptions are neglectable
+\begin{eqnarray}
+ \lim_{c\to0} \pdiff{}{t} \mathscr{S}_{\rm irr}(t|\sigma) & = & \lim_{c\to0} \mathscr{S}_{\rm irr}(t|{\rm eq}) \left( \pdiff{}{t}S(t|\sigma) \right)+\left( \pdiff{}{t} \mathscr{S}_{\rm irr}(t|{\rm eq}) \right) S(t|\sigma) \nonumber \\
+ & = & \lim_{c\to0} \mathscr{S}_{\rm irr}(t|\sigma) \left( \frac{1}{S(t|\sigma)} \pdiff{}{t} S(t|\sigma) - \bar{c} k(t) \right) \\
+ & = & \pdiff{}{t} S(t|\sigma).
+\end{eqnarray}
+With 'small time' we mean the timescale in which rebindings occur.
 
-
-From Agmon \cite{Agmon1990} eq. (4.6), we learn that our $k'_{on} \, \bar{c}$ in \eref{RenRates} is equal to the reciproce of the average lifetime of a single receptor in an infinite system in equilibrium.
-
-Now, from \cite{Agmon1990}, we learn that the probability flux into the promoter given that the TF concentration was equilibrated at t=0 is given by
-\begin{equation}
- k(t) = k_+ S(t|\sigma).
-\end{equation}
-Thus by re-normalizing the rates, we have mapped or spatially resolved system onto an infinite system in steady state.
+\subsubsection*{Soll ich euch ein lied beibringen?}

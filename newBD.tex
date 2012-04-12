@@ -1,8 +1,8 @@
-\section{On a new and simple Brownian Dynamics algorithm for $^{\rm{e}} \rm{GFRD}$}
+\section{On a new and simple Brownian Dynamics algorithm for \GFRD}
 
 \subsection{Motivation}
 
-The old Brownian Dynamics (BD) algorithm implemented in $^{\rm{e}} \rm{GFRD}$ \cite{Morelli2008a} required integrals hard or even impossible to obtain for certain geometries, and in particular for the case of two particles diffusing in a two dimensional space. To circumvent these problems we introduce a small 'reaction volume' around each particle (or surface). When a particle moves into this volume, it will react with a probability such that the flux from the geminate pair to the complex and vice versa fulfill a detailed balance relation. It turns out that by introducing the reaction volume we relieve ourselves from computing any difficult integrals, while preserving the advantages of the old algorithm such as detailed balance even for large time steps and computational simplicity.
+The old Brownian Dynamics (BD) algorithm implemented in \GFRD \cite{Morelli2008a} required integrals hard or even impossible to obtain for certain geometries, and in particular for the case of two particles diffusing in a two dimensional space. To circumvent these problems we introduce a small 'reaction volume' around each particle (or surface). When a particle moves into this volume, it will react with a probability such that the flux from the geminate pair to the complex and vice versa fulfill a detailed balance relation. It turns out that by introducing the reaction volume we relieve ourselves from computing any difficult integrals, while preserving the advantages of the old algorithm such as detailed balance even for large time steps and computational simplicity.
 
 \subsection{Introduction}
 
@@ -148,7 +148,7 @@ In the limit of small acceptance probabilities, the average number of moves per 
 
 In the backstep, the product particles from the dissociated complex, after being placed in their reaction volume, have to make a step with the free propegator in order for detailed balance to hold. This is because they made a diffusion step in the forward move prior to forming a complex. In the forwars step either only one particle made a move and reacted, or both particles moved and the second particle reacted. In the limit of small acceptance probabilities, the first and second particle will initiate a reaction with equal probability, and the average number of moves made before reaction is one and a half (1.5). Therefore, in the backstep, we let one particle move and the other one with a 50 percent probability.
 
-\subsection{Choosing the timestep for a multi domain in $^{\rm{e}} \rm{GFRD}$}
+\subsection{Choosing the timestep for a multi domain in \GFRD}
 
 Given a multi domain containing multiple particles and possibly a surface, we want to choose a timestep as large as possible while taking into account the following constraints:
 \begin{equation}
