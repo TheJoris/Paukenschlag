@@ -210,6 +210,7 @@ Here $q$ is the spatial Fourier variable conjugate to $z$, and $\bf k \rm$ is co
 \end{equation}
 and Fourier back-transform both sides in ${\bf k}$
 \begin{eqnarray}
+ \elabel{FourierBackC}
  \tilde{c}(q, s) & = & \int \frac{d^2 k}{(2 \pi)^2} \tilde{c}(q,\bf k \rm, s) \\
  & = & \frac{k_d \tilde{\xi}(q,s) - k_a\tilde{c}(q,s)}{2 \pi D_3} \, K_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right).
 \end{eqnarray}
@@ -260,34 +261,47 @@ In the last line we changed the binding and unbinding rates of the DNA with the 
 \subsection{Comparing results with simulation}
 
 \subsubsection{System setup and parameters}
-We check our final result \eref{NoiseProFull}, by comparing it with simulations done using \GFRD. The simulation setup consists of a box with periodic bounday conditions with a size $L=1\mu m$. Inside is a rod, resembling the DNA, which spans the box and contains one promoter site at it's middle. The system is initialized with TF$_0=10$ randomly placed transcription factors in the bulk. TF's can bind non-specifically to the rod, diffuse one dimensionally and either react with the promoter if it is close, or fall off again. Parameters are set according to results in \cite{Elf2007a}. We set the diffusion constant in the bulk, $D_3=3 \mu m^2/s$, and the diffusion constant on the DNA $D_1=0.05 \mu m^2/s$. The decay rate from the DNA, which sets the average DNA residence time, is $k_d=1ms^{-1}$. The association rate with the DNA is set to a high value, $k_a=10\mu m^2/s$, such that the DNA search becomes diffusion limited. The radius of TF and DNA together is $\sigma=4.4nm$. For the dissociaten rate from the promoter we chose $k_-=0.1 1/ms$. We change the association rate $k_+$, from $5\cdot10^{-5} m/s$ upto $2\cdot10^{-2} m/s$, to compare it's effect on the noise with \eref{NoiseProFull}. 
+We check our final result, \eref{NoiseProFull}, by comparing it with simulations done using \GFRD. The simulation setup consists of a box with periodic bounday conditions with a size $L=1\mu m$. Inside is a rod, resembling the DNA, which spans the box and contains one promoter site at it's middle. The system is initialized with TF$_0=10$ randomly placed transcription factors in the bulk. TF's can bind non-specifically to the rod, diffuse one dimensionally and either react with the promoter if it is close, or fall off again. Parameters are set according to results in \cite{Elf2007a}. We set the diffusion constant in the bulk, $D_3=3 \mu m^2/s$, and the diffusion constant on the DNA $D_1=0.05 \mu m^2/s$. The decay rate from the DNA, which sets the average DNA residence time, is $k_d=1ms^{-1}$. The association rate with the DNA is set to a high value, $k_a=10\mu m^2/s$, such that the DNA search becomes diffusion limited. The radius of TF and DNA together is $\sigma=4.4nm$. For the dissociaten rate from the promoter we chose $k_-=0.1 1/ms$. We change the association rate $k_+$, from $5\cdot10^{-5} m/s$ upto $2\cdot10^{-2} m/s$, to compare it's effect on the noise with \eref{NoiseProFull}. 
 
 \subsubsection{Simulation results}
-We use \GFRD to generate trajectories of the promoter switching between the occupied or unoccupied state. The easiest way to obtain information from it is by taking the power spectrum of these trajectories. \cite{Tkacik2009,VanZon2006}. In \fref{PowerPlotA} we show the power spectrum of a 3000s long lasting trajectory of the promoter state. It can be devidend into three regimes. The low frequency regime, which is the result of slow processes in the system, is well described by a Poissonian switch. This means that the switching of the promoter on these timescales is induced by TF's which have no prior knowledge of the position of the promoter site. The TF which dissociated from the promoter before, had prior knowledge but escaped, leaving an equilibrated system. The very short timescales, are also dominated by Poissonian processes. These are rebindings of TF's which had no time to diffuse, and the rebind time is set by $k_+$ only. The intermediated regime, is dominated by particles which diffused but remained close to the promoter, before rebinding. This is not a Poisson process, and our theory doesn't match.
+We use \GFRD to generate trajectories of the promoter switching between the occupied or unoccupied state. The easiest way to obtain information from it is by taking the power spectrum of these trajectories. \cite{Tkacik2009,VanZon2006}. In \fref{PowerPlotA} we show the power spectrum of a 3000s long lasting trajectory of the promoter state. It can be devidend into three regimes. The low frequency regime, which is the result of slow processes in the system, is well described by a Poissonian switch. This means that the switching of the promoter on these timescales is induced by TF's which have no prior knowledge of the position of the promoter site. The TF which dissociated from the promoter before, had prior knowledge but escaped, leaving an equilibrated system. The very short timescales, are also dominated by Poissonian processes. These are rebindings of TF's which had no time to diffuse, and the rebind time is set by $k_+$ only. The intermediated regime is dominated by particle trajectories which diffused but remained close to the promoter, before rebinding. This is not a Poisson process, and the Poisson theory doesn't match.
+
+\begin{figure}
+\includegraphics[clip]{PowerPlot2}
+\caption{\flabel{PowerPlotA} Power spectrum of the promoter state switching generated with simulation (black). Here $k_+=0.16mm/s$, and other parameters are set as described ealier. The colored lines give the power spectra of a Poissonian switch (\eref{PoissonPow}) with a correlation time given by (Red line) \erefstwo{Sinfty}{kDFullJ} or (Green line) $\tau_c^*=k_+ \bar{\xi}+k_-$. The overlap between simulation and theory shows that both at long (low frequency) and short (high frequency) timescales, the switching of a promoter is a Poisson process. The reason is, that on long timescales, their are no TF's spatially correlated with the promoter, and all the binding events come from a well mixed bulk. These bindings are all poisson events because the particles have no prior knowledge of the possition of the promoter. On short timescales, a particle rebinds so quickly, that it had no time to diffuse, and the rebind time is based on the intrisic rate $k_+$ only. The inset shows a power spectrum with a much higher association rate $k_+=19 mm/s$. 
+}
+\end{figure}
 
 We can obtain the correlation time by taking the low frequency limit of the power spectrum
 \begin{equation}
  \lim_{\omega\to0} P_n(\omega) = 2 \sigma_n^2 \tau_c.
  \elabel{PowPro}
 \end{equation}
-Apart from the factor 2, this is equal to the integral over the correlation function \eref{CT1}, and we will compare our simulatin results with this expression. The result is shown in \fref{NoisePlotFull}. 
-
-
-
-\begin{figure}
-\includegraphics[clip]{PowerPlot2}
-\caption{\flabel{PowerPlotA} Power spectrum of the promoter state switching generated with simulation (black). Here $k_+=0.16mm/s$, and other parameters are set as described ealier. The colored lines give the power spectra of a Poissonian switch (\eref{PoissonPow}) with a correlation time given by (Red line) \erefstwo{Sinfty}{kDFullJ} or (Green line) $\tau_c^*=k_+ \bar{\xi}+k_-$. The overlap between simulation and theory shows that both at long (low frequency) and short (high frequency) timescales, the switching of a promoter is a Poisson process. The reason is, that on long timescales, their are no TF's spatially correlated with the promoter, and all the binding events come from a well mixed bulk. These bindings are all poisson events because the particles have no prior knowledge of the possition of the promoter. On short timescales, a particle rebinds so quickly, that it had no time to diffuse, and the rebind time is based on the intrisic rate $k_+$ only. The inset shows a power spectrum with a high association rate $k_+=19 mm/s$. 
-}
-\end{figure}
+Apart from the factor 2, this is equal to the integral over the correlation function \eref{CT1}, and we will compare our simulation results with this expression. We plot the dependence of the noise as a function of the average occupance $\bar{n}$, where we change $\bar{n}$ by varying the intrinsic association rate $k_+$. The result is shown in \fref{NoisePlotFull}. The theory matches simulation very well up to $\bar{n}\sim0.8$. For higher value's of $\bar{n}$, it is harder to measure the plataue value at the low frequency limit of the power spectrum, as shown in the inset of \fref{PowerPlotA}. Furthermore, for higher $k_+$ values, the low concentration approximation (\aref{noise:Seq_approx}) breaks down, and they offset might be causes by interactions with other particles during the rebind trajectory.
 
 \begin{figure}
 \includegraphics[clip]{NoisePlotFull}
-\caption{\flabel{NoisePlotFull} Low frequency limit of the power spectrum (\eref{PowPro}) for a promoter site on the DNA, compared with simulations and the result of Tka$\check{\rm c}$ik.
+\caption{\flabel{NoisePlotFull} Low frequency limit of the power spectrum (\eref{PowPro}) for a promoter site on the DNA, compared with simulations and the result found in \cite{Tkacik2009}.
 }
 \end{figure}
 
 
 \subsection{A comparison with the paper of Tka$\check{\bf c}$ik \cite{Tkacik2009}}
+In an earlier paper, Tka$\check{\bf c}$ik derives the noise for the same systems, but by a very different method. In short, he starts with the differential equations governing the fluctuations $\delta n$ in the promoter state. Fourier transforming the equations, and solving for $\delta n$, these fluctuations are related to the power spectrum by the fluctuation dissipation theorem. We will discuss the differences in the results for the full system only. The difference for the other simpler systems is analogous to those in the full system. Their final result for the noise in the promoter state is (Eq. 68 in \cite{Tkacik2009}) 
+\begin{equation}
+ \elabel{NoiseProTka}
+ \left( \frac{\delta n}{\bar{n}} \right)^2 = 2 \bar{n}(1-\bar{n})\left[ (1 -\bar{n}) \, \frac{\sigma I(\alpha,\beta)}{\bar{n} \pi^2 D_1 T \bar{\xi}} + \frac{1-\bar{n}}{k_- T \bar{n}^2} \right]
+\end{equation}
+where $I(\alpha,\beta)$ is given by
+\begin{equation}
+ \elabel{IntProTka}
+ I(\alpha,\beta) = \int_0^{\infty} \frac{dt}{t^2 + 2/\pi^{2} \, \beta[2 + \alpha \, {\rm log}(1 + t^{-2})]^{-1}}.
+\end{equation}
+The first important difference is the extra factor $(1-\bar{n})$ in the diffusion term. This makes the noise symmetric in $\bar{n}$, which is clearly wrong as shown in \fref{NoisePlotFull}. Only for small values of $\bar{n}$, when $(1-\bar{n})\sim 1$, the result matches the simulation. The noise in the diffusion part of the concentration, calculated via \aref{noise:promtoconc}, has no dependence on $\bar{n}$ anymore, in contrast to our result in \eref{NoiseCFull} which is proportional to $1/(1-\bar{n})$. However, one would expect the noise in concentration measurements to divergence as the promoter stays occupied for most of the time. Clearly, the extra $(1-\bar{n})$ factor in \eref{NoiseProTka} is wrong, and is most likely the result of a linearization done in \cite{Tkacik2009}. 
+
+The second difference is due to an ultraviolet cutoff needed in \cite{Tkacik2009}. This divergence emerges in the Fourier back-transform analogous to \eref{FourierBackC}, and is the result of the DNA being represented as a cylinder with radius zero. Physically, such a representation is clearly wrong, because the probability of a point particle finding a line is zero. To circumvent this problem, the upper boundary of the integral is cutoff at one over the smallest lengthscale in the system: $\pi/\sigma$. It is however not clear how well throwing away the higher frequency compensates for the erronomous geometry. In our derivation (\eref{FDE_bulk}), we give the DNA a finite thickness, and the divergence in \eref{FourierBackC} does not occur. 
+
+
 
 
 

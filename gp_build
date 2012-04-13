@@ -44,6 +44,7 @@ set style line 20 lw 2 lt 1 lc rgb '#FFE9E5'
 # 5 - dashed as __.__.__.__
 # 6 - dashed as _._._._._._
 
+#Noise comparison analytic/simulation
 if [[ $plot -eq 1 ]]
 then
 
@@ -82,6 +83,7 @@ epstopdf NoisePlotFull.eps
 fi
 
 
+#Power spectra plot.
 if [[ $plot -eq 2 ]]
 then
 
@@ -117,7 +119,7 @@ EOF
 epstopdf PowerPlot.eps
 fi
 
-
+#Power spectra plot with inset.
 if [[ $plot -eq 3 ]]
 then
 
@@ -148,7 +150,7 @@ set format x "10^{%L}"
 
 #set ytics 2 format "%g"
 #set xtics 2 format "%g"
-set xlabel "{/Symbol w}"
+set xlabel "{/Symbol w} [1/s]"
 set ylabel "P_{n}({/Symbol w})"
 set rmargin 4
 #set key outside Left samplen 1 spacing 1.2 width -0.5
@@ -176,4 +178,42 @@ plot "./PowerPlotExt2_ana.dat" with lines ls 16 title "Extrinsic analytical",\
 EOF
 
 epstopdf PowerPlot2.eps
+fi
+
+
+# Potentially difference between Gasper and Joris
+if [[ $plot -eq 4 ]]
+then
+
+$lines1
+$lines2
+
+gnuplot << EOF -persist
+
+set terminal postscript eps enhanced color "CMSS10, 15"\
+fontfile "$fontfile1" fontfile "$fontfile2" fontfile "$fontfile3"
+set out "GaspervsJoris.eps"
+
+#$lines2
+
+#set yrange [-2:2]
+set xrange [0:1]
+
+#set ytics 2 format "%g"
+#set xtics 2 format "%g"
+set xlabel "n"
+set ylabel "S_{n}(0)"
+set key left top
+
+#set arrow nohead from -6,0 to 0,0 ls 14
+
+#plot "./Results.dat"
+plot "./NoisePlotJold_ana.dat" with lines ls 19 title "With cutoff",\
+ "./NoisePlotJ_ana.dat" with lines ls 16 title "No cutoff"
+#"./Result.dat" using 2:4 with lines notitle,\
+#"./RecAverage.dat" using 2:(10*\$4):(sqrt(\$3)):(10*sqrt(\$5)) with xyerrorbars notitle
+
+EOF
+
+epstopdf GaspervsJoris.eps
 fi
