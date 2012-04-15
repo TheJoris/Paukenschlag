@@ -50,7 +50,7 @@ ReadWrite=true
 
 [item:App_Noise.tex]
 archive=true
-column=36
+column=14
 encoding=UTF-8
 highlight=LaTeX
 line=188
@@ -90,10 +90,10 @@ order=7
 
 [item:Noise.tex]
 archive=true
-column=0
+column=611
 encoding=UTF-8
 highlight=LaTeX
-line=303
+line=270
 mode=LaTeX
 open=true
 order=8
@@ -149,12 +149,12 @@ open=true
 order=3
 
 [view-settings,view=0,item:App_Noise.tex]
-CursorColumn=420
+CursorColumn=14
 CursorLine=175
 
 [view-settings,view=0,item:Noise.tex]
-CursorColumn=2
-CursorLine=177
+CursorColumn=611
+CursorLine=270
 
 [view-settings,view=0,item:ThesisBase.tex]
 CursorColumn=0

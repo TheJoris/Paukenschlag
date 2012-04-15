@@ -2,11 +2,12 @@
 
 plot=$1
 
-prefix="/usr/share/texmf-texlive/fonts/type1/bluesky/cm"
+prefix1="/usr/share/texmf-texlive/fonts/type1/bluesky/cm"
+prefix2="/usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm"
 
-fontfile1="$prefix/cmmib10.pfb"
-fontfile2="$prefix/cmti12.pfb"
-fontfile3="$prefix/cmbx12.pfb"
+fontfile1="$prefix2/cmmib10.pfb"
+fontfile2="$prefix2/cmti12.pfb"
+fontfile3="$prefix2/cmbx12.pfb"
 
 lines1=\
 "

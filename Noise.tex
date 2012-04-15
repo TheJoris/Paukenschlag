@@ -242,7 +242,7 @@ The diffusion limited rate constant is
  k_D = \frac{\pi D_1}{\sigma I(\alpha,\beta)}.
  \elabel{kDFullJ}
 \end{equation}
-Note that in the limit of $k_a\to0$ or $D_3\to\infty$, $k_D$ is equal to that of the well mixed result.
+Note that in the limit of $k_a\to0$ or $D_3\to\infty$, $k_D$ is equal to the well mixed result.
 
 Again, the noise in the promoter state is
 \begin{equation}
@@ -253,9 +253,22 @@ and the noise in the 'equivalent concentration' of the cytoplasm $c$
 \begin{eqnarray}
  \elabel{NoiseCFull} 
  \left( \frac{\delta c}{\bar{c}} \right)^2 & = & \frac{2}{\bar{n}(1-\bar{n})} \left( \frac{k_d}{k_a} \, \frac{\bar{n} \sigma I(\alpha,\beta)}{\pi D_1 T \bar{c}} + \frac{1-\bar{n}}{k_- T}  \right) \\
+ \elabel{NoiseCFull2}
  & = & \frac{2}{\bar{n}(1-\bar{n})} \left( \frac{\beta I(\alpha,\beta)}{2 \pi^2 \alpha} \, \frac{\bar{n}}{D_3 T \bar{c}} \, \frac{1}{\sigma} + \frac{1-\bar{n}}{k_- T}  \right).
 \end{eqnarray}
 In the last line we changed the binding and unbinding rates of the DNA with the dimensionless variables $\alpha$ and $\beta$.
+
+
+\subsection{Comparing noise in a promoter with a receptor}
+We will compare the concentration noise level percieved by a promoter (p, \eref{NoiseCFull2}) with that of a receptor (r obtained in \cite{DeRonde2012}). A receptor is modeld as a sphere lying free in the bulk. Deviding both diffusion limited noise levels, we get
+\begin{equation}
+ \left( \frac{\delta c_p}{\delta c_r} \right)^2 = \frac{1-\bar{n}_r}{1-\bar{n}_p} \, \frac{k_D^r}{k_D^p} \, \frac{k_d}{k_a}
+\end{equation}
+where $\bar{n}_r$ and $\bar{n}_p$ are average occupancies of the receptor and promoter respectively. We assumed equal bulk concentrations $\bar{c}$ in both systems with and wihout DNA. In FIGX, the above expression is plotted for different values of $k_a$ and $k_d$. We used the same radii and intrinsic dissociation rates for both the promoter and the receptor. For the association rates we let $k_+^p = k_+^r / 4\pi\sigma_r^2$. Remaining parameters were set to sypical values describes under simulation results.
+
+The vally is caused by two effects. If we let $\beta$ decrease 
+
+On the right side of the valley, increasing $k_a$ or decreasing $k_d$ lowers the noise. This is not obvious, since the rate by which a TF can escape from the promoter, $k_D^r$, decreaes. Since, by increasing $k_a$, DNA rebinding increases and by lowering $k_d$, the DNA residence time increases. However, because TF now stay longer on the DNA, $\bar{\xi}$ increases, and the number of independent measurements a promoter can take during it's integration time also increases. On the right side of the valley, this effects wins from the lower $k_D^r$, On the left side of the valley however, $\bar{\xi}$ becomes so high that the promoter stays occupied for most of the time, and it becomes increasingly difficult to 
 
 
 \subsection{Comparing results with simulation}
@@ -277,7 +290,7 @@ We can obtain the correlation time by taking the low frequency limit of the powe
  \lim_{\omega\to0} P_n(\omega) = 2 \sigma_n^2 \tau_c.
  \elabel{PowPro}
 \end{equation}
-Apart from the factor 2, this is equal to the integral over the correlation function \eref{CT1}, and we will compare our simulation results with this expression. We plot the dependence of the noise as a function of the average occupance $\bar{n}$, where we change $\bar{n}$ by varying the intrinsic association rate $k_+$. The result is shown in \fref{NoisePlotFull}. The theory matches simulation very well up to $\bar{n}\sim0.8$. For higher value's of $\bar{n}$, it is harder to measure the plataue value at the low frequency limit of the power spectrum, as shown in the inset of \fref{PowerPlotA}. Furthermore, for higher $k_+$ values, the low concentration approximation (\aref{noise:Seq_approx}) breaks down, and they offset might be causes by interactions with other particles during the rebind trajectory.
+Apart from the factor 2, this is equal to the integral over the correlation function \eref{CT1}, and we will compare our simulation results with this expression. We plot the dependence of the noise as a function of the average occupance $\bar{n}$, where we change $\bar{n}$ by varying the intrinsic association rate $k_+$. The result is shown in \fref{NoisePlotFull}. The theory matches simulation very well up to $\bar{n}\sim0.8$. For higher value's of $\bar{n}$, it is harder to measure the plataue value at the low frequency limit of the power spectrum, as shown in the inset of \fref{PowerPlotA}. Furthermore, for higher $k_+$ values, the low concentration approximation (\aref{noise:Seq_approx}) breaks down, and the offset might be causes by interactions with other particles during rebind trajectories.
 
 \begin{figure}
 \includegraphics[clip]{NoisePlotFull}
@@ -287,7 +300,7 @@ Apart from the factor 2, this is equal to the integral over the correlation func
 
 
 \subsection{A comparison with the paper of Tka$\check{\bf c}$ik \cite{Tkacik2009}}
-In an earlier paper, Tka$\check{\bf c}$ik derives the noise for the same systems, but by a very different method. In short, he starts with the differential equations governing the fluctuations $\delta n$ in the promoter state. Fourier transforming the equations, and solving for $\delta n$, these fluctuations are related to the power spectrum by the fluctuation dissipation theorem. We will discuss the differences in the results for the full system only. The difference for the other simpler systems is analogous to those in the full system. Their final result for the noise in the promoter state is (Eq. 68 in \cite{Tkacik2009}) 
+In his paper, Tka$\check{\bf c}$ik derives the noise for the same systems, but by a very different method. He starts with the differential equations governing the fluctuations $\delta n$ in the promoter state, and relates these fluctuations to changes in the free energy of the promoter due to the binding and unbinding of TF's. Fourier transforming the equations, and solving for $\delta n$, these fluctuations are related to the power spectrum by the fluctuation dissipation theorem. We will discuss the differences in the results for the full system only. The difference in the other simpler systems is analogous to those in the full system. Their final result for the noise in the promoter state is (Eq. 68 in \cite{Tkacik2009}) 
 \begin{equation}
  \elabel{NoiseProTka}
  \left( \frac{\delta n}{\bar{n}} \right)^2 = 2 \bar{n}(1-\bar{n})\left[ (1 -\bar{n}) \, \frac{\sigma I(\alpha,\beta)}{\bar{n} \pi^2 D_1 T \bar{\xi}} + \frac{1-\bar{n}}{k_- T \bar{n}^2} \right]
@@ -295,14 +308,13 @@ In an earlier paper, Tka$\check{\bf c}$ik derives the noise for the same systems
 where $I(\alpha,\beta)$ is given by
 \begin{equation}
  \elabel{IntProTka}
- I(\alpha,\beta) = \int_0^{\infty} \frac{dt}{t^2 + 2/\pi^{2} \, \beta[2 + \alpha \, {\rm log}(1 + t^{-2})]^{-1}}.
+ I(\alpha,\beta) = \int_0^{\infty} \frac{dt}{t^2 + 2/\pi^{2} \, \beta[2 + \alpha \, {\rm log}(1 + t^{-2})]^{-1}},
 \end{equation}
-The first important difference is the extra factor $(1-\bar{n})$ in the diffusion term. This makes the noise symmetric in $\bar{n}$, which is clearly wrong as shown in \fref{NoisePlotFull}. Only for small values of $\bar{n}$, when $(1-\bar{n})\sim 1$, the result matches the simulation. The noise in the diffusion part of the concentration, calculated via \aref{noise:promtoconc}, has no dependence on $\bar{n}$ anymore, in contrast to our result in \eref{NoiseCFull} which is proportional to $1/(1-\bar{n})$. However, one would expect the noise in concentration measurements to divergence as the promoter stays occupied for most of the time. Clearly, the extra $(1-\bar{n})$ factor in \eref{NoiseProTka} is wrong, and is most likely the result of a linearization done in \cite{Tkacik2009}. 
+where $\alpha$ and $\beta$ are defined by \erefstwo{EqAlpha}{EqBeta}. The first important difference is the extra factor $(1-\bar{n})$ in the diffusion term. This makes the noise symmetric in $\bar{n}$, which is clearly wrong as shown in \fref{NoisePlotFull}. Only for small values of $\bar{n}$, when $(1-\bar{n})\sim 1$, the result matches the simulation. The noise in the diffusion part of the concentration, calculated via \aref{noise:promtoconc}, has no dependence on $\bar{n}$ anymore, in contrast to our result in \eref{NoiseCFull} which is proportional to $1/(1-\bar{n})$. However, one would expect the noise in concentration measurements to divergence as the promoter stays occupied for most of the time. Interestingly, de Ronde \cite{DeRonde2012} obtained precisely the same discrepancy for a receptor. Clearly, the extra $(1-\bar{n})$ factor in \eref{NoiseProTka} is wrong, and is most likely the result of a linearization done in \cite{Tkacik2009}. 
 
-The second difference is due to an ultraviolet cutoff needed in \cite{Tkacik2009}. This divergence emerges in the Fourier back-transform analogous to \eref{FourierBackC}, and is the result of the DNA being represented as a cylinder with radius zero. Physically, such a representation is clearly wrong, because the probability of a point particle finding a line is zero. To circumvent this problem, the upper boundary of the integral is cutoff at one over the smallest lengthscale in the system: $\pi/\sigma$. It is however not clear how well throwing away the higher frequency compensates for the erronomous geometry. In our derivation (\eref{FDE_bulk}), we give the DNA a finite thickness, and the divergence in \eref{FourierBackC} does not occur. 
+The second difference is due to an ultraviolet cutoff needed in \cite{Tkacik2009}. This divergence emerges in the Fourier back-transform analogous to \eref{FourierBackC}, and is the result of the DNA being represented as a cylinder with a zero radius. Physically, such a representation is clearly wrong, because the probability of a point particle finding a line is zero. To circumvent this problem, the upper boundary of the integral is cutoff at one over the smallest lengthscale in the system: $\pi/\sigma$. It is however not clear how well throwing away the higher frequencies compensates for the erronomous geometry. In our derivation (\eref{FDE_bulk}), we give the DNA a finite thickness, and the divergence in \eref{FourierBackC} does not occur. 
 
-
-
+Tka$\check{\bf c}$ik ends it's paper with a comparison between the concentration noise level of a promoter and a receptor (3D only); Fig. 2 of \cite{Tkacik2009}. 
 
 
 \subsection{Obtaining the correlation time by renormalizing the reaction rates}
@@ -343,5 +355,3 @@ One important difference between the two methods, is that in the method of van Z
  & = & \pdiff{}{t} S(t|\sigma).
 \end{eqnarray}
 With 'small time' we mean the timescale in which rebindings occur.
-
-\subsubsection*{Soll ich euch ein lied beibringen?}
