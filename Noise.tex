@@ -260,15 +260,22 @@ In the last line we changed the binding and unbinding rates of the DNA with the 
 
 
 \subsection{Comparing noise in a promoter with a receptor}
-We will compare the concentration noise level percieved by a promoter (p, \eref{NoiseCFull2}) with that of a receptor (r obtained in \cite{DeRonde2012}). A receptor is modeld as a sphere lying free in the bulk. Deviding both diffusion limited noise levels, we get
-\begin{equation}
- \left( \frac{\delta c_p}{\delta c_r} \right)^2 = \frac{1-\bar{n}_r}{1-\bar{n}_p} \, \frac{k_D^r}{k_D^p} \, \frac{k_d}{k_a}
-\end{equation}
-where $\bar{n}_r$ and $\bar{n}_p$ are average occupancies of the receptor and promoter respectively. We assumed equal bulk concentrations $\bar{c}$ in both systems with and wihout DNA. In FIGX, the above expression is plotted for different values of $k_a$ and $k_d$. We used the same radii and intrinsic dissociation rates for both the promoter and the receptor. For the association rates we let $k_+^p = k_+^r / 4\pi\sigma_r^2$. Remaining parameters were set to sypical values describes under simulation results.
+To gain better insight into the noise in the TF concentration percieved by a promoter, \eref{NoiseCFull}, we will compare it with the noise in a receptor. The noise in a receptor was derived in \cite{DeRonde2012}, and is modeled as a reactive sphere lying free in the bulk. Using labels $r$ for receptor, and $p$ for promoter, we devide the diffusion limited part of both the noise levels
+\begin{eqnarray}
+ \left( \frac{\delta c_p / \bar{c}_p}{\delta c_r / \bar{c}_r} \right)^2 & = & \frac{1-\bar{n}_r}{1-\bar{n}_p} \, \frac{k_D^r}{k_D^p} \, \frac{\bar{c}_r}{\bar{c_p}} \frac{k_d}{k_a} \\
+ & = & \frac{1-\bar{n}_r}{1-\bar{n}_p} \, \frac{k_D^r}{k_D^p} \, \frac{k_d}{k_a} \left( 1 + \frac{k_a}{k_d L^2}\right),
+ \elabel{NoiseCmpA}
+\end{eqnarray}
+where $\bar{n}_r$ and $\bar{n}_p$ are average occupancies of the receptor and promoter respectively. $k_D$ is the rate at which particles arive at an absorbing sink or sphere, in steady-state. In the second line we enforce that the total number of transcription factors, TF$_0$, is conserved: $\bar{\xi} \, L + \bar{c}_p \, L^3 = {\rm TF}_0$ and $\bar{c}_r = {\rm TF}_0/L^3$. We are interested in the behaviour of the noise when we change the association and dissociation rates of the DNA. The other parameters were set to typical values described in the simulation results section. 
 
-The vally is caused by two effects. If we let $\beta$ decrease 
+A plot of \eref{NoiseCmpA} for different values of $k_a$ is shown in \fref{TableauxNoiseCmp} (a). The valley is caused by two apposing effects setting the noise level. Starting on the right side, decreasing the DNA dissociation-rate (or increasing the association rate) increases the concentration $\bar{\xi}$ of TF's on the DNA, and therby increasing the number of independent measurements a promoter can make during it's integration time. However, as the promoter becomes occupied for more than half of the time, \fref{TableauxNoiseCmp} (b), it doesn't `measure' all the incoming particles, and the noise starts to rise again. Even when we ignore the effect of promoter occupancy, the noise has a valley at higher residence times (c). Here, all the TF in the cell will occupy the DNA, and $\bar{\xi}$ doesn't increase anymore with increasing $k_d$. At this point, the increasing difficulty of TF's to escape from the promoter starts to dominate (decreasing $k_D$), and the noise increases again. For a system with infinite TF's, and ignoring promoter occupancy, the noise increases monotonically with increasing $k_d$ (d). 
 
-On the right side of the valley, increasing $k_a$ or decreasing $k_d$ lowers the noise. This is not obvious, since the rate by which a TF can escape from the promoter, $k_D^r$, decreaes. Since, by increasing $k_a$, DNA rebinding increases and by lowering $k_d$, the DNA residence time increases. However, because TF now stay longer on the DNA, $\bar{\xi}$ increases, and the number of independent measurements a promoter can take during it's integration time also increases. On the right side of the valley, this effects wins from the lower $k_D^r$, On the left side of the valley however, $\bar{\xi}$ becomes so high that the promoter stays occupied for most of the time, and it becomes increasingly difficult to 
+\begin{figure}
+\includegraphics[clip]{TableauxNoiseCmp}
+\caption{\flabel{TableauxNoiseCmp} Comparing the noise in a promoter with a receptor. In all plots, the DNA dissociation rate, $k_d$, is on the horizontal axis. Different lines are for different values of the DNA association rate $k_a$. A legend with values is given in figure c. {\bf a,b}) Noise percieved by a promoter relative to a receptor. Roughly at the point when the promoter is occupied for half of the time, their is a valley in the noise. {\bf c}) Removing the effect of promoter occupancy, the noise shows a new valley due to the finite number of TF's in the system. {\bf d}) Removing both the constrain of promoter occupancy and finiteness of TF's, the noise increases monotonically with $k_d$.
+}
+\end{figure}
+
 
 
 \subsection{Comparing results with simulation}
@@ -285,7 +292,7 @@ We use \GFRD to generate trajectories of the promoter switching between the occu
 }
 \end{figure}
 
-We can obtain the correlation time by taking the low frequency limit of the power spectrum
+We can obtain the correlation time by taking the low frequency limit of the power spectrum (\aref{noise:corr_time})
 \begin{equation}
  \lim_{\omega\to0} P_n(\omega) = 2 \sigma_n^2 \tau_c.
  \elabel{PowPro}

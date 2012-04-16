@@ -1,13 +1,21 @@
 #!/bin/bash
 
+# Figures in the PLOTTING MACHINE!
+#
+# 1 - Noise comparison analytic/simulation
+# 2 - Power spectra plot.
+# 3 - Power spectra plot with inset.
+# 4 - Potentially difference between Gasper and Joris
+# 5 - Tablaux for sauration vs correlation time
+
 plot=$1
 
 prefix1="/usr/share/texmf-texlive/fonts/type1/bluesky/cm"
 prefix2="/usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm"
 
-fontfile1="$prefix2/cmmib10.pfb"
-fontfile2="$prefix2/cmti12.pfb"
-fontfile3="$prefix2/cmbx12.pfb"
+fontfile1="$prefix1/cmmib10.pfb"
+fontfile2="$prefix1/cmti12.pfb"
+fontfile3="$prefix1/cmbx12.pfb"
 
 lines1=\
 "
@@ -37,6 +45,20 @@ set style line 19 lw 4 lt 1 lc rgb '#68FFAA'
 set style line 20 lw 2 lt 1 lc rgb '#FFE9E5'
 "
 
+lines3=\
+"
+set style line 1 lw 4 lt 1 lc rgb '#CC5555'
+set style line 2 lw 4 lt 1 lc rgb '#55CC55'
+set style line 3 lw 4 lt 1 lc rgb '#5555CC'
+set style line 4 lw 4 lt 1 lc rgb '#CC55CC'
+set style line 5 lw 2 lt 2 lc rgb 'gray10'
+set style line 6 lw 2 lt 4 lc rgb 'gray50'
+set style line 7 lw 2 lt 1 lc rgb '#FF040E'
+set style line 8 lw 2 lt 1 lc rgb '#006868'
+set style line 9 lw 4 lt 1 lc rgb '#68FFAA'
+set style line 10 lw 4 lt 1 lc rgb '#FFE9E5'
+"
+
 # Linetype library:
 # 1 - solid line __________
 # 2 - dashed as __ __ __ __
@@ -44,6 +66,8 @@ set style line 20 lw 2 lt 1 lc rgb '#FFE9E5'
 # 4 - dashed as ...........
 # 5 - dashed as __.__.__.__
 # 6 - dashed as _._._._._._
+
+
 
 #Noise comparison analytic/simulation
 if [[ $plot -eq 1 ]]
@@ -217,4 +241,163 @@ plot "./NoisePlotJold_ana.dat" with lines ls 19 title "With cutoff",\
 EOF
 
 epstopdf GaspervsJoris.eps
+fi
+
+
+#Tableaux for saturation vs diffusive on-rate.
+if [[ $plot -eq 5 ]]
+then
+
+gnuplot << EOF -persist
+
+$lines1
+$lines3
+
+set terminal postscript eps enhanced color "CMSS10, 15"\
+fontfile "$fontfile1" fontfile "$fontfile2" fontfile "$fontfile3"
+set out "TableauxNoiseCmp.eps"
+
+# x = kdD
+# y = kaD
+n(x,y)=(y*kaP*TF0)/(y*kdP*L + x*kdP*L**(3) + y*kaP*TF0)
+
+kdhalf(y)=-y*(kdP*L-kaP*TF0)/(kdP*L**(3))
+
+set key noauto
+
+set size 1,1
+set origin 0,0
+
+set multiplot
+
+set size .5,.5
+set origin 0.,.0
+set log x
+set format x "10^{%L}"
+set nokey
+set title "b) Promoter occupancy"
+set xtic (1e-2,1e0,1e2,1e4)
+#set ytic (1e0,1e-10,1e-20)
+
+set yrange [0:1]
+set xrange [1e-1:1e4]
+
+L=1e-6
+TF0=10
+kaP=1e-4
+kdP=1e2
+
+plot n(x,1e-10) with lines ls 1 title "10^{-10}",\
+n(x,1e-11) with lines ls 2 title "10^{-11}",\
+n(x,1e-12) with lines ls 3 title "10^{-12}",\
+n(x,1e-13) with lines ls 4 title "10^{-13}",\
+.5 with lines ls 5
+
+set parametric
+
+set trange[0:.5]
+
+plot kdhalf(1e-10),t with lines ls 6,\
+kdhalf(1e-11),t with lines ls 6,\
+kdhalf(1e-12),t with lines ls 6,\
+kdhalf(1e-13),t with lines ls 6
+
+unset parametric
+
+set log xy
+set size .5,.5
+set origin .0,.5
+set format x "10^{%L}"
+set format y "10^{%L}"
+set nokey
+set title "a) Noise - finite #TF's, with occ."
+#set xtic (1e-2,1e0,1e2,1e4)
+#set ytic (1e0,1e-10,1e-20)
+
+set yrange [.75:400]
+set xrange [1e-1:1e4]
+
+plot "./NoiseCmp_10.dat" with lines ls 1 title "10^{-10}",\
+ "./NoiseCmp_11.dat" with lines ls 2 title "10^{-11}",\
+ "./NoiseCmp_12.dat" with lines ls 3 title "10^{-12}",\
+ "./NoiseCmp_13.dat" with lines ls 4 title "10^{-13}"
+
+set parametric
+
+set trange[0:10]
+
+plot kdhalf(1e-10),t with lines ls 6,\
+kdhalf(1e-11),t with lines ls 6,\
+kdhalf(1e-12),t with lines ls 6,\
+kdhalf(1e-13),t with lines ls 6
+
+unset parametric
+
+
+
+set log xy
+set size .5,.5
+set origin .5,.0
+set format x "10^{%L}"
+set format y "10^{%L}"
+set nokey
+set title "d) Noise - infinite #TF's, no occ."
+#set xtic (1e-2,1e0,1e2,1e4)
+#set ytic (1e0,1e-10,1e-20)
+
+set yrange [1e-2:500]
+set xrange [1e-1:1e4]
+
+plot "./NoisekDns_10.dat" with lines ls 1 title "10^{-10}",\
+ "./NoisekDns_11.dat" with lines ls 2 title "10^{-11}",\
+ "./NoisekDns_12.dat" with lines ls 3 title "10^{-12}",\
+ "./NoisekDns_13.dat" with lines ls 4 title "10^{-13}"
+
+
+
+set log xy
+set size .5,.5
+set origin .5,.5
+set format x "10^{%L}"
+set format y "10^{%L}"
+set key top left
+set title "c) Noise - finite #TF's, no occ."
+#set xtic (1e-2,1e0,1e2,1e4)
+#set ytic (1e0,1e-10,1e-20)
+
+set yrange [3e-1:500]
+set xrange [1e-1:1e4]
+
+plot "./NoisekDs_10.dat" with lines ls 1 title "10^{-10}",\
+ "./NoisekDs_11.dat" with lines ls 2 title "10^{-11}",\
+ "./NoisekDs_12.dat" with lines ls 3 title "10^{-12}",\
+ "./NoisekDs_13.dat" with lines ls 4 title "10^{-13}" 
+#set format y "10^{%L}"
+#set format x "10^{%L}"
+
+#set yrange [-2:2]
+#set xrange [0:1]
+
+#set ytics 2 format "%g"
+#set xtics 2 format "%g"
+#set xlabel "{/Symbol w} [1/s]"
+#set ylabel "P_{n}({/Symbol w})"
+#set rmargin 4
+#set key outside Left samplen 1 spacing 1.2 width -0.5
+
+#set arrow nohead from -6,0 to 0,0 ls 14
+
+#set size 0.4,0.4
+#set origin .12,.1
+#set noytic
+#set noxtic
+#set xtic (1e-1,1e4,1e10)
+#set ytic (1e0,1e-10,1e-20)
+#set noxlabel
+#set noylabel
+#set nokey
+
+EOF
+
+epstopdf TableauxNoiseCmp.eps
 fi
