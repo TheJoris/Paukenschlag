@@ -1,5 +1,6 @@
 \section{Introducing the promoter site in eGFRD}
 
+
 \subsection{Introduction}
 
 We want to be able to model promoter site's in \GFRD. A promoter site is simulated as a sink situated on a rod. A particle diffusing allong this rod, can, as it walks over the sink, either react with it or just move over it. Their is thus a reactive outflux proportianal to the probability of the particle being at the sink and the rate constant $k$. Next to the sink, the full \GFRD\, domain will also contain two absorbing boundaries. The fluxes at these three points are used to determine the event type at the next event time.
@@ -9,23 +10,24 @@ We want to be able to model promoter site's in \GFRD. A promoter site is simulat
 The differential equation governing the domain for a particle diffusing in 1D with diffusion constant $D$ in the presence of a sink at $x_s$ is
 \begin{equation}
  \frac{\partial p(x,t|x_0)}{\partial t} = D \, \nabla ^2 p(x,t|x_0) - k \, \delta (x - x_s) p(x,t|x_0).
- \label{DE_I}
+ \elabel{DE_I}
 \end{equation}
 Furthermore, their is an absorbing boundary at $L_l$ (left boundary) and another at $L_r$ (right boundary),
 \begin{eqnarray}
  p(L_l,t|x_0) & = & 0 \\
  p(L_r,t|x_0) & = & 0.
-\label{BC_I}
+\elabel{BC_I}
 \end{eqnarray}
 The initial condition is given by an unit instantaneous source at $x_0$
 \begin{equation}
  p(x,t|x_0) = \delta(x-x_0)\delta(t)
-\label{IC_I}
+\elabel{IC_I}
 \end{equation}
+
 
 \subsection{Obtaining the Green's function}
 
-Solving equation (\ref{DE_I}) directly is difficult due to the term containing both the delta function and the function we want to solve for. We can however split the full domain $[L_l,L_r]$ in to the sub-domains $[L_l,x_s]$ and $[x_s,L_r]$, with the delta sink in between. The delta-sink is now introduced into the problem by the continuity conditions which have to hold between the two domains. 
+Solving equation (\eref{DE_I}) directly is difficult due to the term containing both the delta function and the function we want to solve for. We can however split the full domain $[L_l,L_r]$ in to the sub-domains $[L_l,x_s]$ and $[x_s,L_r]$, with the delta sink in between. The delta-sink is now introduced into the problem by the continuity conditions which have to hold between the two domains. 
 
 \subsubsection{Deriving the continuity conditions}
 
@@ -61,34 +63,34 @@ Clearly, the sink causes a discontinuity in the flux from the left to the right 
 \end{equation}.
 (II) The flux from the left domain at $x_s$ should equal the flux from the right domain minus the flux which left via the sink,
 \begin{equation} 
- \left. \nabla p_l(x,t|x_0,\tau) \right|_{x_s} = \left. \nabla p_r(x,t|x_0,\tau) \right|_{x_s} - \frac{k}{D} \, p_{l}(x_s,t|x_0,\tau).
+ \left. \pdiff{}{x^2} p_l(x,t|x_0,\tau) \right|_{x_s} = \left. \pdiff{}{x^2} p_r(x,t|x_0,\tau) \right|_{x_s} - \frac{k}{D} \, p_{l}(x_s,t|x_0,\tau).
 \end{equation}
 
 \subsubsection{Ansats equations}
 
-The difficult problem of solving (\ref{DE_I}) has now been simplified to solving the well known heat equation in both domains. To simplify even more we let the Laplace operator act on the time domain of the heat equation. The time variable $t$ is replaced by the Laplace variable $s$ in all functions (Laplace transformed functions are denoted by a hat on top $\hat{f}$) and the time derivative in the heat equation changes in a multiplicative factor
+The difficult problem of solving (\eref{DE_I}) has now been simplified to solving the well known heat equation in both domains. To simplify even more we let the Laplace operator act on the time domain of the heat equation. The time variable $t$ is replaced by the Laplace variable $s$ in all functions (Laplace transformed functions are denoted by a hat on top $\hat{f}$) and the time derivative in the heat equation changes in a multiplicative factor
 \begin{equation}
  s \, \hat{p}(x,s|x_0) = D \, \nabla^2 \hat{p}(x,s|x_0).
 \end{equation}
-Furthermore we assume the delta-sink to be positioned at the origin $x_s=0$. Together with the boundary conditions (\ref{BC_I}) and the initial condition (\ref{IC_I}), where we assume the position of the initial delta peak to be in the right domain, we can write down an Ansatz in Laplace space for the two domains \cite{Carslaw1959}. For the right domain
+Furthermore we assume the delta-sink to be positioned at the origin $x_s=0$. Together with the boundary conditions (\eref{BC_I}) and the initial condition (\eref{IC_I}), where we assume the position of the initial delta peak to be in the right domain, we can write down an Ansatz in Laplace space for the two domains \cite{Carslaw1959}. For the right domain
 \begin{equation}
  \hat{p}_r(x,x_0,q) = \frac{1}{2 D q} e^{-q |x-x_0|} + A \, \mathrm{cosh} (q x) + B \, \mathrm{sinh} (q x),
- \label{Anz_R}
+ \elabel{Anz_R}
 \end{equation}
 and the left domain
 \begin{equation}
  \hat{p}_l(x,x_0,q) = E \, \mathrm{cosh} (q x) + F \, \mathrm{sinh} (q x),
-\label{Anz_L}
+\elabel{Anz_L}
 \end{equation}
 where the unknowns $A,B$ and $E,F$ can be functions of $q$, and $q=\sqrt{s/D}$. By filling in the Ansatz into the boundary and continuity conditions we find the four unknowns. Plugging these back into the Ansatz and simplifying, the solution in Laplace space becomes
 \begin{equation}
  \hat{p}_r(x,q|x_0) = -2 \, \frac{\mathrm{sinh} \, q(L_r - x)}{2 D q} \left( \frac{Dq \, \mathrm{sinh} \, q(L_l + x_0) + k \, \mathrm{sinh} \, q L_l \,\, \mathrm{sinh} \, q x_0}{Dq \, \mathrm{sinh} \, q(L_r + L_l) + k \, \mathrm{sinh} \,\, q L_l \, \mathrm{sinh} \, q L_r} \right)
- \label{SOL_R}
+ \elabel{SOL_R}
 \end{equation}
 
 \begin{equation}
  \hat{p}_l(x,q|x_0) = -\frac{\mathrm{sinh} \, q(L_l + x) \,\, \mathrm{sinh} \, q(L_r - x_0)}{Dq \, \mathrm{sinh} \, q(L_r + L_l) + k \, \mathrm{sinh} \, q L_l \,\, \mathrm{sinh} \, q L_r}
-\label{SOL_L}
+\elabel{SOL_L}
 \end{equation}
 
 \subsubsection{Transforming the Laplace solution to the time domain}
@@ -96,101 +98,66 @@ where the unknowns $A,B$ and $E,F$ can be functions of $q$, and $q=\sqrt{s/D}$. 
 In order to transform our solution in Laplace space back to the time domain, solving the Bromwich integral is paramount
 \begin{equation}
  \frac{1}{2 \pi i} \int_{-\infty i + \gamma}^{+\infty i + \gamma} \, e^{s t} \, \hat{p}(x,s|x_0) \, ds.
- \label{INT_I}
+ \elabel{INT_I}
 \end{equation}
-Our solution in Laplace space is not of a simple form which can be looked up in a transform table, neither can we use the primitive of the integrand and fill in the integration boundaries; finding the primitive is beyond our capabilities. Therefore we have to reside to residual integration. We only roughly sketch the steps needed in residual integration; a more complete and excellent account is given in \cite{Bossen2011a}.
+Our solution in Laplace space is not of a simple form which can be looked up in a transform table, neither can we use the primitive of the integrand and fill in the integration boundaries; finding the primitive is beyond our capabilities. Therefore we have to reside to residual integration. We will only roughly sketch the steps needed in residual integration; more complete and excellent accounts are given in \cite{Carslaw1959} and \cite{Bossen2011a}.
 
 When we integrate function $f$ of a complex variable $z$ counterclockwise around a closed contour $\gamma$, this is equal to the sum over all residuals at positions $z = c_i$ of $f$ within $\gamma$
 \begin{equation}
  2 \pi i\,\sum_{i=1}^{N}\,\mathrm{Res}(f,c_i) = \oint_\gamma f(z)\,dz.
- \label{RES_I}
+ \elabel{RES_I}
 \end{equation}
 
-Investigating our solutions (\ref{SOL_R}) and (\ref{SOL_L}), we find that they are rational functions where both the numerator and denominator are holomorphic. We denote the numerator by $g_{r/l}(x,q|x_0)$ and the denominator by $h(x,q|x_0)$, where the subscript $r/l$ of the numerator indicates the solution for the right or the left domain. Both solutions have the same denominator apart from the factor $2 D q$ in the right domain, which we ignore for now because it cancels later on. Our solutions $p_{r/l}$ can hence be written as
+Investigating our solutions (\eref{SOL_R}) and (\eref{SOL_L}), we find that they are rational functions where both the numerator and denominator are holomorphic. We denote the numerator by $g_{r/l}(x,q|x_0)$ and the denominator by $h(q)$, where the subscript $r/l$ of the numerator indicates the solution for the right or the left domain. Both solutions have the same denominator apart from the factor $2 D q$ in the right domain, which we ignore for now because it cancels later on. Our solutions $p_{r/l}$ can thus be written as
 \begin{equation} 
  \hat{p}_{r/l}(x,q|x_0) = \frac{g_{r/l}(x,q|x_0)}{h(q)}.
 \end{equation}
-From the theory of complex integration we know that the residues of these functions can be found via,
+Assuming our solutions have simple poles, from the theory of complex integration, we know that the residues of these functions can be found via
 \begin{equation} 
- \mathrm{Res} \left( \frac{g_{r/l}(x,q|x_0)}{h(q)},\beta_i \right) = \left. \frac{g_{r/l}(x,q|x_0)}{\partial_q h(q)} \right|_{q = \beta_i}
- \label{RES_II}
+ \mathrm{Res} \left( \frac{g_{r/l}(x,q|x_0)}{h(q)},\beta_i \right) = \left. \frac{g_{r/l}(x,q|x_0)}{\partial_q h(q)} \right|_{q = \beta_i},
+ \elabel{RES_II}
 \end{equation}
 where the $\beta_i$ 's are the positions of the simple poles and are the roots of the denominator $h$,
 \begin{equation} 
- D\beta_i \, \mathrm{sinh} \, \beta_i (L_r + L_l) + k \, \mathrm{sinh} \, \beta_i L_l \, \mathrm{sinh} \, \beta_i L_r = 0.
- \label{ROOT_I}
+ Dq \, \mathrm{sinh} \, q (L_r + L_l) + k \, \mathrm{sinh} \, q L_l \, \mathrm{sinh} \, q L_r = 0.
+ \elabel{ROOT_I}
 \end{equation}
 
-The above equation only holds for real $q$ when $q = 0$, but this is not a simple pole of $\hat{p}$ because $g(x,q|x_0) = 0$ at this point. The relation does have however, an infinite amount of solutions when $q$ is purely imaginary. Remember that $q = \sqrt{s/D}$, which means that there are only poles for real $s < 0$. Looking at equation (\ref{INT_I}), the negative $s$ will give us a solution in the time domain which is monotonically decaying. This is obvious because for $t > 0$ we only have sinks and no source terms. Hence, from now on, we assume $q$ to be of the form $q = i \bar{q}, \, \bar{q} \in \mathbb{R}_{>0}$.
+The above equation only holds for real $q$ when $q = 0$, but this root can be ignored because $g(x=0,q|x_0) = 0$. The relation does have however, an infinite number of solutions when $q$ is purely imaginary. Remember that $q = \sqrt{s/D}$, which means that there are only poles for real $s < 0$. Looking at equation (\eref{INT_I}), the negative $s$ will give us a solution in the time domain which is monotonically decaying. This is obvious because for $t > 0$ we only have sinks and no source terms. Hence, from now on, we assume $q$ to be of the form $q = i \bar{q}, \, \bar{q} \in \mathbb{R}_{>0}$.
 
-If we first apply the transformation $q \rightarrow i \bar{q}$ and than use equalities (\ref{RES_I}) and (\ref{RES_II}), the integral (\ref{INT_I}) becomes
+If we first apply the transformation $q \rightarrow i \bar{q}$ and than use equalities (\eref{RES_I}) and (\eref{RES_II}), the integral (\eref{INT_I}) becomes
 \begin{equation} 
  \frac{1}{2 \pi i} \oint_{\gamma}
- \, e^{- D \bar{q}^2 t} \, \frac{g(x,i \bar{\bar{q}}|x_0)}{h(i \bar{q})} \, 2 D i \bar{q} \, d\bar{q} = \sum_{i=1}^{\infty} e^{ - D \bar{q}^2 t} \, \left. \frac{g(x,i \bar{q}|x_0)}{\partial_q h(i \bar{q})} \right|_{\bar{q} = \beta_i} \, 2 D i \bar{q}
+ \, e^{- D \bar{q}^2 t} \, \frac{g(x,i \bar{q}|x_0)}{h(i \bar{q})} \, 2 D i \bar{q} \, d\bar{q} = \sum_{i=1}^{\infty} e^{ - D \bar{q}^2 t} \, \left. \frac{g(x,i \bar{q}|x_0)}{\partial_q h(i \bar{q})} 2 D i \bar{q} \right|_{\bar{q} = \beta_i},
 \end{equation}
-Now we can fill in our Laplace solutions and obtain the final solution in real space
+where we used that $ds = 2Dq\,dq$. Now we can fill in our Laplace solutions and obtain the final solution in real space. The hyperbolic functions wil become trigeometric functions due to the purely imaginary arguments. Collecting all imaginary terms, and using the fact that the function is evaluated at the roots of \eref{ROOT_I}, we find that indeed the imaginary part dissapears and are left with a real function. Writing the result such that it is manifestly zero at the boundaries, we find
 \begin{multline}
  p_r(x,t|x_0) = -2 \sum_{i=1}^{\infty} \, e^{- D \beta_i ^2 t} \, \mathrm{sin} \, \beta_i (L_r - x) \\ 
 \frac{D \beta_i \, \mathrm{sin} \, \beta_i (L_l + x_0) + k \, \mathrm{sin} \, \beta_i L_l \,\, \mathrm{sin} \, \beta_i x_0}{D \, (L \beta_i \mathrm{cos} \, \beta_i L + \, \mathrm{sin} \, L \beta_i ) + k \,( L_r \, \mathrm{cos} \, \beta_i L_r \,\, \mathrm{sin} \, \beta_i L_l + L_l \, \mathrm{cos} \, \beta_i L_l \,\, \mathrm{sin} \, \beta_i L_r )},
- \label{FSOL_R}
+ \elabel{FSOL_R}
 \end{multline}
 
 \begin{multline}
  p_l(x,t,|x_0) = -\sum_{i=1}^{\infty} e^{- D \beta_i ^2 t} \, 2 D \beta_i \, \\ 
 \frac{\mathrm{sin} \, \beta_i (L_l + x) \,\, \mathrm{sin} \, \beta_i (L_r - x_0)}{D \, (L \beta_i \mathrm{cos} \, \beta_i L + \, \mathrm{sin} \, L \beta_i ) + k \,( L_r \, \mathrm{cos} \, \beta_i L_r \,\, \mathrm{sin} \, \beta_i L_l + L_l \, \mathrm{cos} \, \beta_i L_l \,\, \mathrm{sin} \, \beta_i L_r )},
-\label{FSOL_L}
+\elabel{FSOL_L}
 \end{multline}
-where $L=L_r + L_l$ in both equations. Note that when $p_r$ is evaluated for $x<x_0$, $x$ and $x_0$ have to be interchanged in equation (\ref{FSOL_R}). This is due to the absolute sign in the Ansatz (\ref{Anz_R}).
+where $L=L_r + L_l$ in both equations. Note that when $p_r$ is evaluated for $x<x_0$, $x$ and $x_0$ have to be interchanged in equation (\eref{FSOL_R}). This is due to the absolute sign in the Ansatz (\eref{Anz_R}). In \aref{sink:GFRD} we give an oversight of how these results are used in \GFRD.
 
-\subsubsection{Solution for a sink in an unbounded domain}
+
+\subsection{Validating the solution}
+To validate our solution, we first check if it obeys the imposed boundary conditions. Clearly, \erefstwo{FSOL_R}{FSOL_L} are zero at $L_r$ and $-L_l$ respectivily. 
+
+
+\subsection{Plots of the Green's function}
+
+
+\subsection{Solution for a sink in an unbounded domain}
 
 For completes and its usefulnesses in \GFRD, we end this derivation with the Green's function for an absorbing sink at $x_s$ in the absence of absorbing boundaries at both sides
 \begin{multline}
  p(x,t|x_0) = \frac{1}{\sqrt{4 \pi D t}}e^{\frac{-(x-x_0)^2}{4 D t}} - \frac{k}{4 D}e^{\frac{k}{2 D}(|x-x_s|+|x_s-x_0|)+\frac{k^2 t}{4 D}} \\
 \mathrm{erfc}\left( \frac{|x-x_s|+|x_s-x_0|}{\sqrt{4 D t}}+\frac{k}{2D}\sqrt{D t} \right).
-\label{FSOL_NB}
+\elabel{FSOL_NB}
 \end{multline}
 We note that we can map this solution to the solution of a radiation boundary condition at $x_s$ in a semi-infinite domain when we change $k \rightarrow 2 k$ and multiply the second term with 1/2. The servival probility function $S(t|x0)$ of the above function is equal to that of the radiation boundary when we double the rate $k$.
-
-\subsection{Important quantities for \GFRD}
-
-For the functionallity of \GFRD we need the survival probability $S(t|x_0)$, the cumulative distribution function (c.d.f) in space $F(x^*,t|x_0)$ and the fluxes $q_x(t|x_0)$ leaving the domain. Probability flux leaves the domain at the left and right boundaries and via the sink.
-
-Remeber that the Green's functions (\ref{SOL_R}) and (\ref{SOL_L}) were of the form
-\begin{equation} 
- \sum_{i=1}^{\infty} e^{-D \beta_i ^2 t} \, \frac{g_{r/l}(x, \beta_i |x_0)}{ h'(\beta_i)}
-\end{equation}
-where $h'$ denotes the derivative of the denominator function $h(q)$. Because the required quantaties are obtained by integrating or differentiating the Green's functions with respect to their spatial coordinate $x$, the only part of the solution which changes is the numerator function $g_{r/l}$. Therefore, below we only write this part the equation.
-
-The survival probability is defined by the spatial integral of the Green's function over the whole domain. Because there is only a source (the initial delta peak) at $t = 0$, we expect $S(t)$ to be a monotonic decaying fucntion starting at 1,
-\begin{equation} 
- S(t|x_0) = \int_{-L_l}^{0} p_l(x,t|x_0) \, dx \, + \, \int_{0}^{L_r} p_r(x,t|x_0) \, dx.
-\end{equation}
-The c.d.f. for the spatial coordinate $x$ is the integral of the Green's function from $-L_l$ to an arbitrary position $x^* \in [-L_l,L_r]$. Because we want the c.d.f. to be normelized, a.k. the c.d.f. $F \rightarrow 1$ as $x^* \rightarrow L_r$, we devide the integral with the survival probability,
-\begin{equation}
- \begin{split}
-  F(x^*,t|x_0) & = \frac{1}{S(t|x_0)} \int_{-L_l}^{x*} p_l(x,t|x_0) \, dx \quad (x^* \leq 0), \\
-  F(x^*,t|x_0) & = \frac{1}{S(t|x_0)} \left( \int_{-L_l}^{0} p_l(x,t|x_0) \, dx \, + \, \int_{0}^{x^*} p_r(x,t|x_0) \, dx. \right) \quad (x^* > 0) 
- \end{split}
-\end{equation}
-The flux (net current moving to the right) through a point $x'$ lying within the domain is,
-
-\begin{equation}
- q(t|x_0) = -D \left. \partial_x p(x,t|x_0) \right|_{x = x'}
-\end{equation}
-
-\subsection{Numerical evaluation}
-
-In order for the root fuction to be easily evaluated by the rootfinder, we apply the transformations $L_l + L_r \rightarrow L$ and $L_r - L_l \rightarrow L'$ and let $x = s L$, and obtain,
-\begin{equation}
- x \, \mathrm{sin} \, x \, + \, \frac{k \, L}{2 \, D} \, \left( \, \mathrm{cos} \, x \frac{L'}{L} \, - \, \mathrm{cos} \, x \right) = 0
-\end{equation}
-for the denominator of the Green's functions $\partial_q h(q)$, after $q \rightarrow i s$ we write with the same transformations as above,
-\begin{equation}
- D \left( L s \, \mathrm{cos} \, s L \, + \, \mathrm{sin} \, s L \, \right) \, + \, \frac{k}{2} \, \left( L \, \mathrm{sin} \, s L \, - \, L' \, \mathrm{sin} \, s L' \right).
-\end{equation}
-The numerator for the survival probability $S(t|x_0)$ is found to equal
-\begin{multline}
-2 D \left[ \mathrm{sin} \, q L \, - \, \mathrm{sin} \, q (L_r - x_0) \, - \, \mathrm{sin} \, q (L_l + x_0)  \right] \, + \, \\ 
- \frac{2 k}{q} \mathrm{sin} \, q L_l \left[ \mathrm{sin} \, q L_r \, - \, \mathrm{sin} \, q x_0 \, - \, \mathrm{sin} \, q (L_r - x_0) \right] 
-\end{multline}

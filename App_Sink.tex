@@ -11,4 +11,47 @@
 % \setcounter{subsubsection}{0}
 % \renewcommand{\thesubsubsection}{SI-\arabic{subsubsection}}
 
-\section{Greensfunction for the sink}
+\section{Green's function with the sink}
+
+\subsection{\alabel{sink:GFRD} Important quantities for \GFRD}
+
+For the functionallity of \GFRD\, we need the survival probability $S(t|x_0)$, the cumulative distribution function (c.d.f) in space $F(x^*,t|x_0)$ and the fluxes $q_x(t|x_0)$ leaving the domain. Probability flux leaves the domain at the left and right boundaries and via the sink.
+
+Remeber that the Green's functions (\eref{SOL_R}) and (\eref{SOL_L}) were of the form
+\begin{equation} 
+ \sum_{i=1}^{\infty} e^{-D \beta_i ^2 t} \, \frac{g_{r/l}(x, \beta_i |x_0)}{ h'(\beta_i)}
+\end{equation}
+where $h'$ denotes the derivative of the denominator function $h(q)$. Because the required quantaties are obtained by integrating or differentiating the Green's functions with respect to their spatial coordinate $x$, the only part of the solution which changes is the numerator function $g_{r/l}$. Therefore, below we only write this part the equation.
+
+The survival probability is defined by the spatial integral of the Green's function over the whole domain. Because there is only a source (the initial delta peak) at $t = 0$, we expect $S(t)$ to be a monotonic decaying fucntion starting at 1,
+\begin{equation} 
+ S(t|x_0) = \int_{-L_l}^{0} p_l(x,t|x_0) \, dx \, + \, \int_{0}^{L_r} p_r(x,t|x_0) \, dx.
+\end{equation}
+The c.d.f. for the spatial coordinate $x$ is the integral of the Green's function from $-L_l$ to an arbitrary position $x^* \in [-L_l,L_r]$. Because we want the c.d.f. to be normelized, a.k. the c.d.f. $F \rightarrow 1$ as $x^* \rightarrow L_r$, we devide the integral with the survival probability,
+\begin{equation}
+ \begin{split}
+  F(x^*,t|x_0) & = \frac{1}{S(t|x_0)} \int_{-L_l}^{x*} p_l(x,t|x_0) \, dx \quad (x^* \leq 0), \\
+  F(x^*,t|x_0) & = \frac{1}{S(t|x_0)} \left( \int_{-L_l}^{0} p_l(x,t|x_0) \, dx \, + \, \int_{0}^{x^*} p_r(x,t|x_0) \, dx. \right) \quad (x^* > 0) 
+ \end{split}
+\end{equation}
+The flux (net current moving to the right) through a point $x'$ lying within the domain is
+\begin{equation}
+ q(t|x_0) = -D \left. \partial_x p(x,t|x_0) \right|_{x = x'},
+\end{equation}
+where $x'$ is either $-L_l$, zero or $L_r$.
+
+\subsection{\alabel{sink:numerics} Numerical evaluation}
+
+In order for the root fuction to be easily evaluated by the rootfinder, we apply the transformations $L_l + L_r \rightarrow L$ and $L_r - L_l \rightarrow L'$ and let $x = s L$, and obtain,
+\begin{equation}
+ x \, \mathrm{sin} \, x \, + \, \frac{k \, L}{2 \, D} \, \left( \, \mathrm{cos} \, x \frac{L'}{L} \, - \, \mathrm{cos} \, x \right) = 0
+\end{equation}
+for the denominator of the Green's functions $\partial_q h(q)$, after $q \rightarrow i s$ we write with the same transformations as above,
+\begin{equation}
+ D \left( L s \, \mathrm{cos} \, s L \, + \, \mathrm{sin} \, s L \, \right) \, + \, \frac{k}{2} \, \left( L \, \mathrm{sin} \, s L \, - \, L' \, \mathrm{sin} \, s L' \right).
+\end{equation}
+The numerator for the survival probability $S(t|x_0)$ is found to equal
+\begin{multline}
+2 D \left[ \mathrm{sin} \, q L \, - \, \mathrm{sin} \, q (L_r - x_0) \, - \, \mathrm{sin} \, q (L_l + x_0)  \right] \, + \, \\ 
+ \frac{2 k}{q} \mathrm{sin} \, q L_l \left[ \mathrm{sin} \, q L_r \, - \, \mathrm{sin} \, q x_0 \, - \, \mathrm{sin} \, q (L_r - x_0) \right] 
+\end{multline}
