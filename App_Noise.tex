@@ -13,7 +13,7 @@
 
 \section{Appendix: Noise in transcriptional regulation}
 
-\subsection{\alabel{noise:corr_time} The correlation time}
+\subsection{\alabel{noise:corr_time} The correlation time (from \cite{DeRonde2012})}
 The time-average of an observable $A\br{t}$\cite{Frenkel2002} is defined as
 \begin{align}
 \elabel{si:time_av_mean}
@@ -83,7 +83,6 @@ For a Poisson process with correlation time $\tau_c$, the power spectrum is
 \end{equation}
 
 
-
 \subsection{\alabel{noise:limits_Laplace} Limits in Laplace space}
 Here we show how we can obtain the large time limits of a function, given it's sollution in Laplace space. First, we can find the time integral of an arbitrary function by taking the limit
 \begin{align}
@@ -103,7 +102,7 @@ And, in the same spirit
 
 
 \subsection{\alabel{noise:backward_eqn} The backward Smoluchowski equation}
-Here we prove that the flux into a sink $k(t)$ with a radiation boundary condition, in an equilibrated sytem of particles, is given by
+Here we prove that the flux into a sink with a radiation boundary condition, in an equilibrated sytem of particles, is given by
 \begin{equation}
  k(t) = k_+ \, S(t|\sigma).
  \elabel{bsm_k}
@@ -126,7 +125,7 @@ where, in the second line, we let the time derivative act on $t'$. Furthermore w
 In the second line we applied integration by parts twice and threw away the boundary terms. If we let the arbitrary timepoint $t'$ go to zero in \eref{bsm_1}, the second Green's function changes into $\delta(\vect{r}-\vect{r}')$ and the integral vanisches. The result is the backward Kolmogorov equation
 \begin{eqnarray}
  \pdiff{p(\vect{r},t|\vect{r_0})}{t} & = & \mathscr{L}_{\vect{r_0}}^{\dag} p(\vect{r},t|\vect{r_0}) \\
- & = & r_0^{1-d} e^{V(r_0)} \pdiff{}{r_0} D r_0^{d-1} e^{-V(r_0)} \pdiff{}{r_0} p(\vect{r},t|\vect{r_0})
+ & = & r_0^{1-d} e^{V(r_0)} \pdiff{}{r_0} D r_0^{d-1} e^{-V(r_0)} \pdiff{}{r_0} p(\vect{r},t|\vect{r_0}).
  \elabel{backward_eqn}
 \end{eqnarray}
 Integrating both sides to $\vect{r}$ we get
@@ -134,16 +133,18 @@ Integrating both sides to $\vect{r}$ we get
  \pdiff{S(t|\vect{r_0})}{t} = \mathscr{L}_{\vect{r_0}}^{\dag} S(t|\vect{r_0}).
  \elabel{S_eqn}
 \end{equation}
+In words, the forward equation tells us what the probability is to end up in $\vec{r}$ at time $t$, given that you started in $\vec{r_0}$ at time zero. The backward equation tells you the probability to have started in $\vec{r}_0$ at time zero, given that you end up in $\vec{r}$ at time $t$. Without a potential, these two Green's functions are equivalent.
+
 To prove \eref{bsm_k}, we show that the initial condition and the time derivative of both the influx and the survival probability $S(t|\sigma)$ are the same. The influx at a radiation boundary from an equilibrium is
 \begin{equation}
  k(t) = k_+ \left. \int d\vect{r_0} p(\vect{r},t|\vect{r_0}) \right|_{r=\sigma}.
  \elabel{bsm_3}
 \end{equation}
-The time derivative of the influx obeys
+where $p$ has a radiation boundary at $\sigma$. The time derivative of the influx obeys
 \begin{eqnarray}
  \pdiff{}{t} \left. \int d\vect{r_0} p(\vect{r},t|\vect{r_0}) \right|_{r=\sigma} & = & \mathscr{L}_{\vect{r}} \left. \int d\vect{r_0} p(\vect{r},t|\vect{r_0}) \right|_{r=\sigma}.
 \end{eqnarray}
-When we evaluate \eref{S_eqn} at $r_0=\sigma$, we see, using the Kolmogorov equation, that the time derivatives of both quantaties obey the same differential equation. Furthermore, in the limit $t \to 0$, both \eref{bsm_3} and \eref{bsm_k} equal. We conclude that \eref{bsm_k} must hold.
+When we evaluate \eref{S_eqn} at $r_0=\sigma$, we see, using Kolmogorov \eref{backward_eqn}, that the time derivatives of both quantaties obey the same differential equation. Furthermore, in the limit $t \to 0$, both \eref{bsm_3} and \eref{bsm_k} equal. We conclude that \eref{bsm_k} must hold.
 
 
 \subsection{\alabel{noise:Seq_approx} Approximating the $\mathscr{S}_{\rm irr}(t|{\rm eq})$ function}
@@ -152,7 +153,7 @@ We want to approximate the survival probability of a promoter in equilibrium sol
  \mathscr{S}_{\rm irr}(t|{\rm eq}) = {\rm exp}\left(-c \int_0^t k_{{\rm irr}}(t') dt'\right) = {\rm exp}\left(-c k_+ \int_0^t S(t'|\sigma) dt'\right)
  \elabel{Seq_app}
 \end{equation}
-such that it can be Laplace transformed, and has correct behaviour in the limit $s\to0$. A small $s$ limit amounts to a large $t$ limit in the time domain, and because the argument of the exponential will diverge for large $t$, a small argument expansion will not work. The reason for the divergence is because $S(t|\sigma)$ approaches a constant value in the limit $t\to\infty$, and the integral divereges. Therefore, the argument in the exponential scales as a linear function of $t$ to highest order. Written for large times, \eref{Seq_app} is
+such that it can be Laplace transformed, and has correct behaviour in the limit $s\to0$. A small $s$ limit amounts to a large $t$ limit in the time domain, and because the argument of the exponential will diverge for large $t$, a small argument expansion will not work. The reason for the divergence is because $S(t|\sigma)$ approaches a constant value in the limit $t\to\infty$, and the integral divereges. Because $S(t|\sigma)$ becomes constant, the argument in the exponential scales as a linear function of $t$ to highest order. Written for large times, \eref{Seq_app} is
 \begin{equation}
  \mathscr{S}_{\rm irr}(t|{\rm eq}) \sim {\rm exp}\left(-c \left[ \alpha_1 t + \alpha_2 t^{\beta_2} + \ldots \right] \right),
 \end{equation}
@@ -211,11 +212,7 @@ We want evaluate the fourier transform of the delta function used in solving \er
 The first equality is the defenition of the Fourier integral in the plane perpendicular to the DNA. In the second line we write out the innerproduct, where the angle bewteen {\bf k} and {\bf r} is shifted w.r.t. $\theta$. Since we integrate the full circle this shift cancels, and we get a Bessel function of the first kind. The integral over $r$ amount to replacing every accurance of $r$ with $\sigma$.
 
 
-\subsection{Leggacy}
-\begin{equation}
- \lim_{c \to 0} \hat{\mathscr{S}}_{\rm irr}(s|eq) \approx \frac{1}{s} \left( 1 + \frac{2 c D_1 k_+ \sqrt{\frac{s}{D_1}}}{k_+ + 2 D_1 \sqrt{\frac{s}{D_1}}} \right)^{-1}
-\end{equation}
-
+\subsection{\alabel{noise:1dsystem} 1D domain with sink, in time and Laplace domain}
 The Green's function, in an unbounded domain, with an irreversible sink and the initial condition both at the origin, is given by
 \begin{multline}
  p(z,t|z_0=0) = \frac{1}{\sqrt{4 \pi D_1 t}}e^{\frac{-z^2}{4 D_1 t}} - \frac{k_+}{4 D_1}e^{\frac{k_+}{2 D_1}(|z|)+\frac{k_+^2 t}{4 D_1}} \\
@@ -224,22 +221,4 @@ The Green's function, in an unbounded domain, with an irreversible sink and the 
 Transforming this to Laplace space
 \begin{equation}
  \hat{p}(z,s|\sigma) = \frac{1}{2 D_1 q}e^{-q|z|} - \frac{k_+}{4 D^2}\frac{e^{-q|z|}}{q(q+\frac{k_+}{2 D_1})}, \quad q=\sqrt{\frac{s}{D_1}}.
-\end{equation}
-If we plug this into the correlation function (\eref{LapCorr1D}) and take the limit $s \to 0$, we arrive at
-\begin{equation}
- \hat{C_n}(s) = \sigma_n^2 \, \bar{n} \, \frac{k_+ + k_D}{k_+ \bar{\xi} k_D} = \sigma_n^2 \, \frac{k_+ + k_D}{k_D (k_+ \bar{\xi} + k_-)}, \quad k_D = \sqrt{4 D_1 k_d}.
- \elabel{LapCorr25D}
-\end{equation}
-The correlation time is thus
-\begin{equation}
- \tau_c = \frac{k_+ + k_D}{k_D (k_+ \bar{\xi} + k_-)}
-\end{equation}
-and we can define the renormalized rates $k_{\rm on}$ and $k_{\rm off}$ as
-\begin{equation}
- \frac{1}{k_{\rm on}} = \frac{1}{k_+} + \frac{1}{\sqrt{4 D_1 k_d}}, \quad \frac{1}{k_{\rm off}} = \frac{1}{k_-} + \frac{K_{\rm eq}}{\sqrt{4 D_1 k_d}}, \quad K_{\rm eq} = \frac{k_+}{k_-}.
-\end{equation}
-Here $k_+$ and $k_-$ are the intrinsic association and dissociation rates of the promoter site respectively. 
-and the correlation time
-\begin{equation}
- \tau_c = \frac{k_+ + k_D}{(k_+ \bar{\xi} + k_-) k_D} = \frac{k_+ + \frac{\pi D_1}{\sigma I(\alpha,\beta)}}{(k_+ \bar{\xi} + k_-) \frac{\pi D_1}{\sigma I(\alpha,\beta)}}.
 \end{equation}

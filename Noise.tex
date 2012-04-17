@@ -1,20 +1,20 @@
 \section{The fundamental limit on noise in transcriptional regulation}
 
 \subsection{Introduction}
-As was motivated in the introduction, the time a promoter is occupied by a transcription factor can vary strong over time. We want to find out how this variance depends on the parameters such as the binding affinities to the promoter and the DNA, the decay rate from the DNA and the diffusion constants. We define our variance as follows. We measure the time a promoter site is occupied over a time $T$, where $T$ is much larger than the correlation time $\tau_c$. If we repeat this measurement many times, the variance in our collection of measurements is given by (\aref{noise:corr_time})
+The time a promoter is occupied by a transcription factor varies strong over time. We want to find out how this variance depends on the mechanisms by which a TF finds the promoter site. We define our variance as follows. We measure the time a promoter site is occupied over a time $T$, where $T$ is much larger than the correlation time $\tau_c$. If we repeat this measurement many times, the variance in our collection of measurements is given by (\aref{noise:corr_time})
 \begin{equation}
  \left( \delta n \right)^2 \equiv \sigma_{\rm n, T}^2 = \frac{2 \sigma_{\rm n}^2 \,\tau_{\rm c}}{T}
  \elabel{std_devT}
 \end{equation}
 where $\sigma_n^2$ is the variance of an instantaneous measurement. The variance of an instantanious measurement for a binomial process (the promoter has only two states) is known to be $\bar{n}(1-\bar{n})$, with $\bar{n}$ the average occupancy. Therefore we only need to find the correlation time. 
 
-We will first derive the correlation function, from which we can obtain the correlation time. With this correlation time in hand, we obtain general relations for the noise in the promoter occupancy, concentration fluctuations around the promoter and the lower limit set by the diffusive arrival. We continue with obtaining expressions in different geometries. First for a system where particles can only move on the DNA (1D only), secondly for DNA in a well mixed solution and end with a system where TF's can perform multiple rebinding with the DNA before binding to the promoter.
+We will first derive the correlation function, from which we can obtain the correlation time. With the correlation time in hand, we obtain general relations for the noise in the promoter occupancy, concentration fluctuations around the promoter and the lower limit in the noise set by the diffusive arrival. We continue with obtaining expressions in different geometries. First for a system where particles can only move on the DNA (1D only), secondly for DNA in a well mixed solution and end with the full system where TF's can perform multiple rebinding with the DNA before binding to the promoter.
 
 
 \subsection{Methods}
 
 \subsubsection{The correlation function}
-Here we derive the auto-correlation function for a switching process in Laplace space as was done by de Ronde et al. \cite{DeRonde2012}. We start with writing down the general expression for the correlation function of a switch
+Here we derive the auto-correlation function for a switching process in Laplace space as was done by de Ronde et al.\cite{DeRonde2012}. We start with writing down the general expression for the correlation function of a switch
 \begin{eqnarray}
  C(\tau) & \equiv & \left\langle (n(\tau) - \bar{n})(n(0) - \bar{n}) \right\rangle \\
   	& = & \bar{n} \left( p_{*|*}(\tau)-\bar{n} \right).
@@ -24,12 +24,12 @@ The function $n(t)$ depicts the promoter state and is either one when the promot
 \begin{equation}
  p_{*|*} = 1 - \mathscr{S}_{\rm rev}(\tau|*)
 \end{equation}
-where $\mathscr{S}(t|*)$ is the reversible survival probability of a free promoter given that it started in the bound state. The promoter can undergo multiple rounds of binding and unbinding during the time $\tau$. We can describe this revirsible process in term of an irreversible one via the convolution \cite{Agmon1990}
+where $\mathscr{S}(\tau|*)$ is the probability of the promoter to be free at $\tau$, given that it started boundend. The promoter can undergo multiple rounds of binding and unbinding during the time $\tau$. We can describe this revirsible process in term of an irreversible one via the convolution \cite{Agmon1990}
 \begin{equation}
  \mathscr{S}_{\rm rev}(t|*) = k_- \int_0^t [1-\mathscr{S}_{\rm rev}(t'|*)]\mathscr{S}_{\rm irr}(t-t'|\sigma)dt'.
  \elabel{rev_conv}
 \end{equation}
-The first factor under the integral gives the probability that the promoter is occupied at time $t'$. After which it decays for the last time with a rate $k_-$, and remains unoccupied until $t$ with a probability $\mathscr{S}_{\rm irr}(t-t'|\sigma)$. After decay, a TF is placed at contact (denoted by $\sigma$ in $\mathscr{S}_{\rm irr}$) with the promoter. Integrating over all intermediate times $t'$, gives us the probability that a promoter in unoccupied at time $t$. 
+The first factor under the integral gives the probability that the promoter is occupied at time $t'$. After which it decays for the last time with a rate $k_-$, and remains unoccupied until $t$ with a probability $\mathscr{S}_{\rm irr}(t-t'|\sigma)$. After decay, a TF is placed at contact (denoted by $\sigma$ in $\mathscr{S}_{\rm irr}$) with the promoter. Integrating over all intermediate times $t'$, gives us the probability that a promoter is unoccupied at time $t$. 
 
 For the irreversible survival probability with one TF at contact with the promoter we propose the form
 \begin{equation}
@@ -48,7 +48,7 @@ which states that the rate at which TF's bind to the promoter is equal to the ra
  \mathscr{S}_{\rm irr}(t|{\rm eq}) = e^{-\bar{\xi}\int_0^t k_{{\rm irr}}(t') dt'},
  \elabel{Seq}
 \end{equation}
-and $k_{{\rm irr}}(t)$ is, using the backward Smoluchowski equation, equal to (\aref{noise:backward_eqn})
+and $k_{{\rm irr}}(t)$ is, using the backward Smoluchowski equation (\aref{noise:backward_eqn}), equal to 
 \begin{equation}
  k_{\rm rad}(t) = k_+ \, S_{\rm rad}(t|\sigma).
  \elabel{krad}
@@ -65,27 +65,28 @@ We start by Laplace transforming \eref{rev_conv} and solve it for $\mathscr{S}_{
  \hat{C_n}(s) = \sigma_n^2 \, \frac{\bar{n} \hat{\mathscr{S}}_{\rm irr}(s|eq)}{1-(1-\bar{n})s\hat{\mathscr{S}}_{\rm irr}(s|eq)}.
  \elabel{LapCorr}
 \end{equation}
-Since we can not directly Laplace transform the exponential in \eref{Seq}, we hypothesize the following form as an approximation (\aref{noise:Seq_approx})
+Since we can not directly Laplace transform the exponential in \eref{Seq}, we hypothesize the following form in the limit of low TF concentration $c$, as an approximation (\aref{noise:Seq_approx})
 \begin{equation}
- \lim_{c\to0} \hat{\mathscr{S}}_{\rm rad}(s|eq) = \frac{1}{s}  \, \frac{1}{ 1 + \bar{\xi} \hat{k}_{\rm rad}(s)}
+ \lim_{c\to0} \hat{\mathscr{S}}_{\rm rad}(s|eq) = \frac{1}{s}  \, \frac{1}{ 1 + \bar{\xi} \hat{k}_{\rm rad}(s)}.
  \elabel{Seq_approx}
 \end{equation}
 Note that for a constant rate, $\hat{k}_{\rm rad}(s) \propto k/s$, the above gives an exponential decay in the time domain, which is the exact sollution. 
 
-Substituting this approximation into \eref{LapCorr}, we obtain after simplifying
+Substituting this approximation into \eref{LapCorr}, we obtain, after simplifying
 \begin{equation}
  \lim_{c \to 0} \hat{C_n}(s) = \frac{\bar{n} \sigma_n^2}{\bar{n} s + k_+ \bar{\xi} \, s \hat{S}(s|\sigma)}.
+ \elabel{Corr_approx}
 \end{equation}
 The correlation time of the process is found by taking the $s \to 0$ limit
 \begin{eqnarray}
  \lim_{s \to 0} \hat{C_n}(s) = \int_0^\infty C_n(t) dt = \sigma_n^2 \, \tau_c.
 \end{eqnarray}
-Using the approximation in \eref{Seq_approx}, the general expression for the correlation time becomes (\aref{noise:limits_Laplace})
+Using the approximation in \eref{Corr_approx}, the general expression for the correlation time becomes (\aref{noise:limits_Laplace})
 \begin{equation}
  \lim_{c \to 0, s \to 0} \hat{C_n}(s) = \frac{\bar{n} \sigma_n^2}{k_+ \bar{c} \, S(\infty|\sigma)} = \frac{\sigma_n^2 \tau_c^*}{S(\infty|\sigma)},
  \elabel{CT1}
 \end{equation}
-where $\tau_c^*$ is the correlation time for the fast proces, $\tau_c^* = k_+ \hat{c} + k_-$. To summarize, given the large time limit of $S(t|\sigma)$, we have the correlation time.
+where $\tau_c^*$ is the correlation time for the fast proces, $\tau_c^* = k_+ \hat{c} + k_-$. To summarize, given the large time limit of $S(t|\sigma)$, we have, in the low $c$ limit, the correlation time.
 
 
 \subsubsection{Defining noise}
@@ -94,7 +95,7 @@ We define the noise in the receptor state, using \erefstwo{std_devT}{CT1}, as
  \left( \frac{\delta n}{\bar{n}} \right)^2 = 2 \, \frac{\sigma_n^2}{\bar{n}^2} \, \frac{\tau_c}{T} = 2 \, \frac{\sigma_n^2}{\bar{n}^2} \, \frac{\tau_c^*}{S(\infty|\sigma)} \, \frac{1}{T}.
  \elabel{EqProNoise}
 \end{equation}
-It turns out that the escape probability and $\tau_c$ have the general form
+It turns out that the escape probability and the correlation time $\tau_c$ have a general form
 \begin{equation}
  S(\infty|\sigma) = \frac{k_D}{k_+ + k_D} \quad {\rm and} \quad \tau_c = \frac{k_+ + k_D}{(k_+ \bar{\xi} + k_-) k_D},
  \elabel{Sinfty}
@@ -135,16 +136,16 @@ Here, the noise decays as a function of the integration time $T$, as the long ti
 \subsection{Noise in different environments}
 
 \subsubsection{1D diffusion only}
-We start by calculating the noise in a system where TF's diffuse allong the DNA only: no excursions in the cytoplasm are allowed. It is well known \cite{Redner2001} that for such a 1D system, particles allways return to their starting position. As a result, TF's are unable to 'escape' from binding to the promotor and the survival probability of the single particle problem tends to zero. Therefore, we use \eref{EqProNoiseII} for defining the noise, and we start by deriving the large time limit of the correlation function.
+We start by calculating the noise in a system where TF's diffuse allong the DNA only: no excursions in the cytoplasm are allowed. It is well known \cite{Redner2001} that for a 1D system, particles allways return to their starting position. As a result, TF's are unable to 'escape' from binding to the promotor and the survival probability of the single particle problem tends to zero. Therefore, we use \eref{EqProNoiseII} for defining the noise, and we start by deriving the large time limit of the correlation function.
 
-The survival probability in Laplace space for this system is
+The survival probability in Laplace space for this system is (\aref{noise:1dsystem})
 \begin{equation}
  \hat{S}(s|\sigma) = \frac{1}{s}\left( \frac{\sqrt{4 D_1 s}}{\sqrt{4 D_1 s} + k_+} \right),
  \elabel{LSx0}
 \end{equation}
-where $D_1$ is the diffusion contant in 1D and $k_+$ is the association rate to the promoter. Using the approximation for $\hat{\mathscr{S}}_{\rm irr}(s|{\rm eq})$, \eref{Seq}, and plugging this into the correlation function \eref{LapCorr}
+where $D_1$ is the diffusion contant in 1D and $k_+$ is the association rate of the promoter. Plugging this into the low concentration approximation for the correlation function \eref{Corr_approx}
 \begin{equation}
-  \hat{C_n}(s) = \sigma_n^2 \, \frac{\bar{n} \, \left( k_+ + \sqrt{4 D_1 s} \right)}{k_+ \bar{n} s + \bar{\xi} k_+ \sqrt{4 D_1 s} + \bar{n} s \sqrt{4 D_1 s}}
+  \hat{C_n}(s) = \sigma_n^2 \, \frac{\bar{n} \, \left( k_+ + \sqrt{4 D_1 s} \right)}{k_+ \bar{n} s + \bar{\xi} k_+ \sqrt{4 D_1 s} + \bar{n} s \sqrt{4 D_1 s}}.
   \elabel{LapCorr1D}
 \end{equation}
 It is clear that in the limit $s \to 0$, the correlation function diverges to $+\infty$ such that $\tau_c$ is infinite. To lowest order, the expansion in $s$ reads
@@ -168,7 +169,7 @@ We see that the noise decreases only with the square root of the measurement tim
 
 
 \subsubsection{1D diffusion with exchange to a perfectly mixed bulk}
-Here we imagine a system where TF's diffuse along an infinite strand of DNA and can fall off with a uniform rate $k_d$. When they fall off they are placed at a random position in the bulk. The survival probability for a TF initially at the promoter site is given by \eref{LSx0}, where, due to the uniform decay, the Laplace variable $s$ is shifted by $k_d$: $q \to \sqrt{(s+k_d)/D}$. The required long time limit of the survival probability is
+Here we imagine a system where TF's diffuse along an infinite strand of DNA and can fall off with a uniform rate $k_d$. When they fall off they are placed at a random position in the bulk. The survival probability for a TF initially at the promoter site is given by \eref{LSx0}, where, due to the uniform decay, the Laplace variable $s$ is shifted by $k_d$: $q \to \sqrt{(s+k_d)/D}$. The required long time limit of the survival probability is now larger than zero
 \begin{equation}
  \lim_{s\to0} s \, \hat{S}(s|\sigma) = S(\infty|\sigma) = \frac{\sqrt{4 D_1 k_d}}{\sqrt{4 D_1 k_d} + k_+}.
 \end{equation}
@@ -185,38 +186,38 @@ and the noise in the 'equivalent concentration' of the cytoplasm $c$
 
 
 \subsubsection{1D diffusion with exchange to the bulk}
-Now we want to evaluate the noise in the occupancy of a promoter site when particles are not placed at a random position after falling from the DNA, but are placed at contact with it. A TF starting at the promoter site switches between sliding along the DNA and making excursions in the cytoplasm. The TF slides with a small diffusion constant $D_1$ and has the possibility of irreversibly binding to the promoter. After falling from the DNA, the TF diffuses around in the cytoplasm with a larger diffusion constant $D_3$, and, because it is essentially a 2D problem, will always rebinds with the DNA. Our derivation of the noise is very similar to that followed by Tka$\check{\rm c}$ik \cite{Tkacik2009}.
+Now we want to evaluate the noise in the occupancy of a promoter site when particles are not placed at a random position after falling from the DNA, but are placed at contact with it. A TF starting at the promoter site switches between sliding along the DNA and making excursions in the cytoplasm. The TF slides with a small diffusion constant $D_1$ and has the possibility of irreversibly binding to the promoter. After falling from the z-axis, the TF diffuses around in the cytoplasm with a larger diffusion constant $D_3$, and, because it is essentially a 2D problem, will always rebinds with the DNA. Our derivation of the noise is very similar to that followed by Tka$\check{\rm c}$ik \cite{Tkacik2009}.
 
 To find the survival probability for this problem, we start with writing down the differential equations describing the full system
 \setlength{\jot}{12pt}
 \begin{eqnarray*}
- \frac{\partial \xi}{\partial t} & = & D_1 \frac{\partial^2\xi(z,t)}{\partial^2 z} - k_+ \xi(z,t) \delta(z - z_0) - k_d \xi(z,t) + k_a c(z, |{\bf r}| = \sigma, t) \\
+ \frac{\partial \xi(z,t|z_0)}{\partial t} & = & D_1 \frac{\partial^2\xi(z,t)}{\partial^2 z} - k_+ \xi(z,t) \delta(z - z_0) - k_d \xi(z,t) + k_a c(z, |{\bf r}| = \sigma, t) \\
  \frac{\partial c}{\partial t} & = & D_3 \nabla^2 c(z, \mathbf r \mathrm, t) - \left[ k_a c(z, \bf r \it, t) - k_d \xi(z,t) \right] \frac{\delta(|\mathbf r \mathrm| - \sigma)}{2 \pi \sigma}.
 \end{eqnarray*}
-Here $\xi$(z, t) is the probability density of the TF sliding along the DNA, which we model as an infinite long rod along the z-axis with a radius $\sigma$. Probability flows irreversibly into the sink, positioned at $z_0$, with a rate $k_+$. The TF can fall from the DNA into the cytoplasm with a uniform rate $k_d$, and is placed at a distance $\sigma$ from the DNA. The particle can rebind again with a rate $k_a$. Excursions in the cytoplasm are described by $c$(z, {\bf r}, t). First we Laplace transform with respect to time
+Here $\xi(z, t|z_0)$ is the Green's function describing the 1D sliding of the TF along the DNA, which we model as an infinite long rod along the z-axis with a radius $\sigma$. Probability flows irreversibly into the sink, positioned at $z_0$, with a rate $k_+$. The TF can fall from the DNA into the cytoplasm with a uniform rate $k_d$, and is placed at a distance $\sigma$ from the DNA. The particle can rebind again with a rate $k_a$. Excursions in the cytoplasm are described by $c$(z, {\bf r}, t). First we Laplace transform with respect to time
 \begin{eqnarray*}
- s \, \hat{\xi} - \delta(z - z_0) & = & D_1 \frac{\partial^2\hat{\xi}(z,s)}{\partial^2 z} - k_+ \hat{\xi}(z,s) \delta(z - z_0) - k_d \hat{\xi}(z,s) + k_a \hat{c}(z, |{\bf r}| = \sigma, s) \\
- s \, \hat{c} & = & D_3 \nabla^2 \hat{c}(z, \mathbf r \mathrm, s) - \left[ k_a \hat{c}(z, \mathbf r \mathrm, s) - k_d \hat{\xi}(z,s) \right] \frac{\delta(|\mathbf r \mathrm| - \sigma)}{2 \pi \sigma},
+ s \, \hat{\xi} - \delta(z - z_0) & = & D_1 \frac{\partial^2\hat{\xi}(z)}{\partial^2 z} - k_+ \hat{\xi}(z) \delta(z - z_0) - k_d \hat{\xi}(z) + k_a \hat{c}(z, |{\bf r}| = \sigma) \\
+ s \, \hat{c} & = & D_3 \nabla^2 \hat{c}(z, \mathbf r \mathrm) - \left[ k_a \hat{c}(z, \mathbf r \mathrm) - k_d \hat{\xi}(z) \right] \frac{\delta(|\mathbf r \mathrm| - \sigma)}{2 \pi \sigma},
 \end{eqnarray*}
-where we explicitly included the initial condition of one particle placed in contact with the promoter site on the DNA. Now we Fourier transform with respect to space (\aref{noise:delta_int})
+where we explicitly included the initial condition of one particle placed in contact with the promoter site on the DNA. We left away the Laplace variable $s$ in the function arguments. Now we Fourier transform with respect to space (\aref{noise:delta_int})
 \begin{eqnarray}
- s \, \tilde{\xi}(q, s) - 1 & = & - D_1 q^2 \tilde{\xi}(q,s) - k_+ \tilde{\xi}(z_0,s) - k_d \tilde{\xi}(q,s) + k_a \tilde{c}(q, s) \elabel{FDE_dna} \\
- s \, \tilde{c} & = & - D_3 (q^2 + k^2) \tilde{c}(q, \mathbf r \mathrm, s) - \left[ k_a \tilde{c}(q, s) - k_d \tilde{\xi}(q,s) \right] J_{0}(k \sigma). 
+ s \, \tilde{\xi}(q, s) - 1 & = & - D_1 q^2 \tilde{\xi}(q) - k_+ \tilde{\xi}(z_0) - k_d \tilde{\xi}(q) + k_a \tilde{c}(q) \elabel{FDE_dna} \\
+ s \, \tilde{c} & = & - D_3 (q^2 + k^2) \tilde{c}(q, \mathbf r \mathrm) - \left[ k_a \tilde{c}(q) - k_d \tilde{\xi}(q) \right] J_{0}(k \sigma). 
  \elabel{FDE_bulk}
 \end{eqnarray}
-Here $q$ is the spatial Fourier variable conjugate to $z$, and $\bf k \rm$ is conjugate to $\bf R \bf$. We assumed the promoter and intitial position both to be at the origin: $z_0 = 0$. Observe that the bulk density $\tilde{c}$ appears as a function of $q$ only in the equation for $\tilde{\xi}$. In order to solve for $\tilde{\xi}$, we first solve the second equation for $\tilde{c}(q,\bf k \rm, s)$, 
+Here $q$ is the spatial Fourier variable conjugate to $z$, and $\bf k \rm$ is conjugate to $\bf R \bf$. We assumed the promoter and intitial position both to be at the origin: $z_0 = 0$. Observe that the bulk density $\tilde{c}$ appears as a function of $q$ only in the equation for $\tilde{\xi}$. In order to solve for $\tilde{\xi}$, we first solve the second equation for $\tilde{c}(q,\bf k \rm)$, 
 \begin{equation}
- \tilde{c}(q,\bf k \rm, s) = \frac{k_d \tilde{\xi}(q,s) - k_a\tilde{c}(q,s)}{s + D_3(q^2 + k^2)} J_{0}(k \sigma ),
+ \tilde{c}(q,{\bf k}) = \frac{k_d \tilde{\xi}(q) - k_a\tilde{c}(q)}{s + D_3(q^2 + k^2)} J_{0}(k \sigma ),
 \end{equation}
 and Fourier back-transform both sides in ${\bf k}$
 \begin{eqnarray}
  \elabel{FourierBackC}
- \tilde{c}(q, s) & = & \int \frac{d^2 k}{(2 \pi)^2} \tilde{c}(q,\bf k \rm, s) \\
- & = & \frac{k_d \tilde{\xi}(q,s) - k_a\tilde{c}(q,s)}{2 \pi D_3} \, K_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right).
+ \tilde{c}(q) & = & \int \frac{d^2 k}{(2 \pi)^2} \tilde{c}(q,{\bf k}) \\
+ & = & \frac{k_d \tilde{\xi}(q) - k_a\tilde{c}(q)}{2 \pi D_3} \, K_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right).
 \end{eqnarray}
-Solving the above for $\tilde{c}(q,s)$, and substituting it into \eref{FDE_dna}, we can solve for $\tilde{\xi}(q,s)$. Again, back-transforming this equation in $q$ at the promoter site, we find
+Solving the above for $\tilde{c}(q)$, and substituting it into \eref{FDE_dna}, we can solve for $\tilde{\xi}(q)$. Again, back-transforming this equation in $q$ at the promoter site, we find
 \begin{equation}
- \tilde{\xi}(z_0, s) = \int \frac{d\,q}{2 \pi} \frac{1-k_+ \tilde{\xi}(z_0, s)}{s + D_1 q^2+k_d F^{-1}(q,s)}
+ \tilde{\xi}(z_0) = \int \frac{d\,q}{2 \pi} \frac{1-k_+ \tilde{\xi}(z_0)}{s + D_1 q^2+k_d F^{-1}(q,s)}
  \elabel{FDE_dna2}
 \end{equation}
 where
@@ -260,7 +261,7 @@ In the last line we changed the binding and unbinding rates of the DNA with the 
 
 
 \subsection{Comparing noise in a promoter with a receptor}
-To gain better insight into the noise in the TF concentration percieved by a promoter, \eref{NoiseCFull}, we will compare it with the noise in a receptor. The noise in a receptor was derived in \cite{DeRonde2012}, and is modeled as a reactive sphere lying free in the bulk. Using labels $r$ for receptor, and $p$ for promoter, we devide the diffusion limited part of both the noise levels
+To gain better insight into the noise in the TF concentration percieved by a promoter, \eref{NoiseCFull}, we will compare it with the noise in a receptor. The noise in a receptor was derived in \cite{DeRonde2012}, and is modeled as a reactive sphere lying free in the bulk. Using labels $r$ for receptor, and $p$ for promoter, we devide the diffusion limited part of both the noise levels to obtain
 \begin{eqnarray}
  \left( \frac{\delta c_p / \bar{c}_p}{\delta c_r / \bar{c}_r} \right)^2 & = & \frac{1-\bar{n}_r}{1-\bar{n}_p} \, \frac{k_D^r}{k_D^p} \, \frac{\bar{c}_r}{\bar{c_p}} \frac{k_d}{k_a} \\
  & = & \frac{1-\bar{n}_r}{1-\bar{n}_p} \, \frac{k_D^r}{k_D^p} \, \frac{k_d}{k_a} \left( 1 + \frac{k_a}{k_d L^2}\right),
@@ -268,11 +269,11 @@ To gain better insight into the noise in the TF concentration percieved by a pro
 \end{eqnarray}
 where $\bar{n}_r$ and $\bar{n}_p$ are average occupancies of the receptor and promoter respectively. $k_D$ is the rate at which particles arive at an absorbing sink or sphere, in steady-state. In the second line we enforce that the total number of transcription factors, TF$_0$, is conserved: $\bar{\xi} \, L + \bar{c}_p \, L^3 = {\rm TF}_0$ and $\bar{c}_r = {\rm TF}_0/L^3$. We are interested in the behaviour of the noise when we change the association and dissociation rates of the DNA. The other parameters were set to typical values described in the simulation results section. 
 
-A plot of \eref{NoiseCmpA} for different values of $k_a$ is shown in \fref{TableauxNoiseCmp} (a). The valley is caused by two apposing effects setting the noise level. Starting on the right side, decreasing the DNA dissociation-rate (or increasing the association rate) increases the concentration $\bar{\xi}$ of TF's on the DNA, and therby increasing the number of independent measurements a promoter can make during it's integration time. However, as the promoter becomes occupied for more than half of the time, \fref{TableauxNoiseCmp} (b), it doesn't `measure' all the incoming particles, and the noise starts to rise again. Even when we ignore the effect of promoter occupancy, the noise has a valley at higher residence times (c). Here, all the TF in the cell will occupy the DNA, and $\bar{\xi}$ doesn't increase anymore with increasing $k_d$. At this point, the increasing difficulty of TF's to escape from the promoter starts to dominate (decreasing $k_D$), and the noise increases again. For a system with infinite TF's, and ignoring promoter occupancy, the noise increases monotonically with increasing $k_d$ (d). 
+A plot of \eref{NoiseCmpA} for different values of $k_a$ is shown in \fref{TableauxNoiseCmp} (a). The valley is caused by two apposing effects setting the noise level. Starting on the right side, decreasing the DNA dissociation-rate (or increasing the association rate) increases the concentration $\bar{\xi}$ of TF's on the DNA, and therby increasing the number of independent measurements a promoter can make during it's integration time. However, as the promoter becomes occupied for more than half of the time, \fref{TableauxNoiseCmp} (b), it doesn't `measure' the greater part of the incoming particles anymore, and the noise starts to rise again. Even when we ignore the effect of promoter occupancy, the noise has a valley at higher residence times (c). Here, all the TF in the cell will occupy the DNA, and $\bar{\xi}$ doesn't increase anymore with increasing $k_d$. At this point, the increasing difficulty of TF's to escape from the promoter starts to dominate (decreasing $k_D$), and again the noise increases. For a system with infinite TF's, and ignoring promoter occupancy, the noise increases monotonically with increasing $k_d$ (d). 
 
 \begin{figure}
 \includegraphics[clip]{TableauxNoiseCmp}
-\caption{\flabel{TableauxNoiseCmp} Comparing the noise in a promoter with a receptor. In all plots, the DNA dissociation rate, $k_d$, is on the horizontal axis. Different lines are for different values of the DNA association rate $k_a$. A legend with values is given in figure c. {\bf a,b}) Noise percieved by a promoter relative to a receptor. Roughly at the point when the promoter is occupied for half of the time, their is a valley in the noise. {\bf c}) Removing the effect of promoter occupancy, the noise shows a new valley due to the finite number of TF's in the system. {\bf d}) Removing both the constrain of promoter occupancy and finiteness of TF's, the noise increases monotonically with $k_d$.
+\caption{\flabel{TableauxNoiseCmp} Comparing the noise in a promoter with a receptor. In all plots, the DNA dissociation rate, $k_d$, is on the horizontal axis. Different lines are for different values of the DNA association rate $k_a$. A legend with values is given in figure c. {\bf a,b}) Noise percieved by a promoter relative to a receptor. Roughly at the point when the promoter is occupied for half of the time, their is a minimum in the noise. {\bf c}) Removing the effect of promoter occupancy, the noise shows a new valley due to the finite number of TF's in the system. {\bf d}) Removing both the constrain of promoter occupancy and finiteness of TF's, the noise has no minimum.
 }
 \end{figure}
 
@@ -284,7 +285,7 @@ A plot of \eref{NoiseCmpA} for different values of $k_a$ is shown in \fref{Table
 We check our final result, \eref{NoiseProFull}, by comparing it with simulations done using \GFRD. The simulation setup consists of a box with periodic bounday conditions with a size $L=1\mu m$. Inside is a rod, resembling the DNA, which spans the box and contains one promoter site at it's middle. The system is initialized with TF$_0=10$ randomly placed transcription factors in the bulk. TF's can bind non-specifically to the rod, diffuse one dimensionally and either react with the promoter if it is close, or fall off again. Parameters are set according to results in \cite{Elf2007a}. We set the diffusion constant in the bulk, $D_3=3 \mu m^2/s$, and the diffusion constant on the DNA $D_1=0.05 \mu m^2/s$. The decay rate from the DNA, which sets the average DNA residence time, is $k_d=1ms^{-1}$. The association rate with the DNA is set to a high value, $k_a=10\mu m^2/s$, such that the DNA search becomes diffusion limited. The radius of TF and DNA together is $\sigma=4.4nm$. For the dissociaten rate from the promoter we chose $k_-=0.1 1/ms$. We change the association rate $k_+$, from $5\cdot10^{-5} m/s$ upto $2\cdot10^{-2} m/s$, to compare it's effect on the noise with \eref{NoiseProFull}. 
 
 \subsubsection{Simulation results}
-We use \GFRD to generate trajectories of the promoter switching between the occupied or unoccupied state. The easiest way to obtain information from it is by taking the power spectrum of these trajectories. \cite{Tkacik2009,VanZon2006}. In \fref{PowerPlotA} we show the power spectrum of a 3000s long lasting trajectory of the promoter state. It can be devidend into three regimes. The low frequency regime, which is the result of slow processes in the system, is well described by a Poissonian switch. This means that the switching of the promoter on these timescales is induced by TF's which have no prior knowledge of the position of the promoter site. The TF which dissociated from the promoter before, had prior knowledge but escaped, leaving an equilibrated system. The very short timescales, are also dominated by Poissonian processes. These are rebindings of TF's which had no time to diffuse, and the rebind time is set by $k_+$ only. The intermediated regime is dominated by particle trajectories which diffused but remained close to the promoter, before rebinding. This is not a Poisson process, and the Poisson theory doesn't match.
+We use \GFRD to generate trajectories of the promoter switching between the occupied or unoccupied state. The easiest way to obtain information from it is by taking the power spectrum of these trajectories. \cite{Tkacik2009,VanZon2006}. In \fref{PowerPlotA} we show the power spectrum of a 3000s long lasting trajectory of the promoter state. It can be devidend into three regimes. The low frequency regime, which is the result of slow processes in the system, is well described by a Poissonian switch. This means that the switching of the promoter on these timescales is induced by TF's which have no prior knowledge of the position of the promoter site. The TF which dissociated from the promoter before, had prior knowledge but escaped, leaving an equilibrated system. The very short timescales, are also dominated by Poissonian processes. These are rebindings of TF's which had no time to diffuse, and the rebind time is set by $k_+$ only. In the intermediated regime, waiting times are dominated by particles wich diffused around, but did not escape, before binding. Because due to it's recent dissociation, the TF has prior knowledge of the promoter position, and the waiting times are non Poissonian.
 
 \begin{figure}
 \includegraphics[clip]{PowerPlot2}
@@ -292,7 +293,7 @@ We use \GFRD to generate trajectories of the promoter switching between the occu
 }
 \end{figure}
 
-We can obtain the correlation time by taking the low frequency limit of the power spectrum (\aref{noise:corr_time})
+To measure the correlation time, we take the low frequency limit of the power spectrum (\aref{noise:corr_time})
 \begin{equation}
  \lim_{\omega\to0} P_n(\omega) = 2 \sigma_n^2 \tau_c.
  \elabel{PowPro}
@@ -300,14 +301,17 @@ We can obtain the correlation time by taking the low frequency limit of the powe
 Apart from the factor 2, this is equal to the integral over the correlation function \eref{CT1}, and we will compare our simulation results with this expression. We plot the dependence of the noise as a function of the average occupance $\bar{n}$, where we change $\bar{n}$ by varying the intrinsic association rate $k_+$. The result is shown in \fref{NoisePlotFull}. The theory matches simulation very well up to $\bar{n}\sim0.8$. For higher value's of $\bar{n}$, it is harder to measure the plataue value at the low frequency limit of the power spectrum, as shown in the inset of \fref{PowerPlotA}. Furthermore, for higher $k_+$ values, the low concentration approximation (\aref{noise:Seq_approx}) breaks down, and the offset might be causes by interactions with other particles during rebind trajectories.
 
 \begin{figure}
-\includegraphics[clip]{NoisePlotFull}
-\caption{\flabel{NoisePlotFull} Low frequency limit of the power spectrum (\eref{PowPro}) for a promoter site on the DNA, compared with simulations and the result found in \cite{Tkacik2009}.
-}
+\centering
+\includegraphics[scale=.75]{NoisePlotFull}
+\caption{\flabel{NoisePlotFull} Low frequency limit of the power spectrum (\eref{PowPro}) for a promoter site on the DNA, compared with simulations. The grey lines shows the result found in \cite{Tkacik2009}, which is symmetric around $n$.}
 \end{figure}
 
 
+
 \subsection{A comparison with the paper of Tka$\check{\bf c}$ik \cite{Tkacik2009}}
-In his paper, Tka$\check{\bf c}$ik derives the noise for the same systems, but by a very different method. He starts with the differential equations governing the fluctuations $\delta n$ in the promoter state, and relates these fluctuations to changes in the free energy of the promoter due to the binding and unbinding of TF's. Fourier transforming the equations, and solving for $\delta n$, these fluctuations are related to the power spectrum by the fluctuation dissipation theorem. We will discuss the differences in the results for the full system only. The difference in the other simpler systems is analogous to those in the full system. Their final result for the noise in the promoter state is (Eq. 68 in \cite{Tkacik2009}) 
+In his paper, Tka$\check{\bf c}$ik derives the noise for the same systems as we did, but by a very different method. He starts with the differential equations governing the fluctuations $\delta n$ in the promoter state, and relates these fluctuations to changes in the free energy of the promoter due to the binding and unbinding of TF's. Fourier transforming the equations, and solving for $\delta n$, these fluctuations are related to the power spectrum by the fluctuation dissipation theorem. We will discuss the differences in the results for the full system only. The difference in the other simpler systems is analogous to those in the full system. 
+
+The final result for the noise in the promoter state is (Eq. 68 in \cite{Tkacik2009}) 
 \begin{equation}
  \elabel{NoiseProTka}
  \left( \frac{\delta n}{\bar{n}} \right)^2 = 2 \bar{n}(1-\bar{n})\left[ (1 -\bar{n}) \, \frac{\sigma I(\alpha,\beta)}{\bar{n} \pi^2 D_1 T \bar{\xi}} + \frac{1-\bar{n}}{k_- T \bar{n}^2} \right]
@@ -317,11 +321,19 @@ where $I(\alpha,\beta)$ is given by
  \elabel{IntProTka}
  I(\alpha,\beta) = \int_0^{\infty} \frac{dt}{t^2 + 2/\pi^{2} \, \beta[2 + \alpha \, {\rm log}(1 + t^{-2})]^{-1}},
 \end{equation}
-where $\alpha$ and $\beta$ are defined by \erefstwo{EqAlpha}{EqBeta}. The first important difference is the extra factor $(1-\bar{n})$ in the diffusion term. This makes the noise symmetric in $\bar{n}$, which is clearly wrong as shown in \fref{NoisePlotFull}. Only for small values of $\bar{n}$, when $(1-\bar{n})\sim 1$, the result matches the simulation. The noise in the diffusion part of the concentration, calculated via \aref{noise:promtoconc}, has no dependence on $\bar{n}$ anymore, in contrast to our result in \eref{NoiseCFull} which is proportional to $1/(1-\bar{n})$. However, one would expect the noise in concentration measurements to divergence as the promoter stays occupied for most of the time. Interestingly, de Ronde \cite{DeRonde2012} obtained precisely the same discrepancy for a receptor. Clearly, the extra $(1-\bar{n})$ factor in \eref{NoiseProTka} is wrong, and is most likely the result of a linearization done in \cite{Tkacik2009}. 
+where $\alpha$ and $\beta$ are defined by \erefstwo{EqAlpha}{EqBeta}. 
 
-The second difference is due to an ultraviolet cutoff needed in \cite{Tkacik2009}. This divergence emerges in the Fourier back-transform analogous to \eref{FourierBackC}, and is the result of the DNA being represented as a cylinder with a zero radius. Physically, such a representation is clearly wrong, because the probability of a point particle finding a line is zero. To circumvent this problem, the upper boundary of the integral is cutoff at one over the smallest lengthscale in the system: $\pi/\sigma$. It is however not clear how well throwing away the higher frequencies compensates for the erronomous geometry. In our derivation (\eref{FDE_bulk}), we give the DNA a finite thickness, and the divergence in \eref{FourierBackC} does not occur. 
+The first important difference is the extra factor $(1-\bar{n})$ in the diffusion term. This makes the noise symmetric in $\bar{n}$, which is clearly wrong as shown in \fref{NoisePlotFull}. Only for small values of $\bar{n}$, when $(1-\bar{n})\sim 1$, the result matches the simulation. The noise in the diffusion part of the concentration, calculated via \aref{noise:promtoconc}, has no dependence on $\bar{n}$ anymore, in contrast to our result in \eref{NoiseCFull} which is proportional to $1/(1-\bar{n})$. However, when a promoter is occupied for most of the time, it won't be able to `measure' new incoming particles, and thus doesn't make as much independent measurements as it could have if it was unoccupied. One would thus expect the noise to increase a $\bar{n}\to1$. Furthermore, de Ronde \cite{DeRonde2012} obtained precisely the same discrepancy for a receptor. Clearly, the extra $(1-\bar{n})$ factor in \eref{NoiseProTka} is wrong, and is most likely the result of a linearization done in \cite{Tkacik2009}. 
 
-Tka$\check{\bf c}$ik ends it's paper with a comparison between the concentration noise level of a promoter and a receptor (3D only); Fig. 2 of \cite{Tkacik2009}. 
+The second difference is due to an ultraviolet cutoff needed in \cite{Tkacik2009}. This divergence emerges in the Fourier back-transform analogous to \eref{FourierBackC}, and is the result of the DNA being represented as a cylinder with a zero radius. Physically, such a representation is clearly wrong, because the probability of a point particle finding a line is zero. To circumvent this problem, the upper boundary of the integral is cutoff at one over the smallest lengthscale in the system: $\pi/\sigma$. It is however not clear how well throwing away the higher frequencies compensates for the erronomous geometry. In our derivation (\eref{FDE_bulk}), we give the DNA a finite thickness, and the divergence in \eref{FourierBackC} does not occur. Although removing the cutoff gives a better quantitative agreement with simulation results, the approximation is qualitatively very similar as shown in \fref{GaspervsJoris}.
+\begin{figure}
+\centering
+\includegraphics[scale=.75]{GaspervsJoris}
+\caption{\flabel{GaspervsJoris} Comparing the promoter noise level as defined in \eref{PowPro}, for a system with and without a ultraviolet cutoff. The cutoff was at $\pi/\sigma$. The curve with cutoff is equal to Eq. 68 in \cite{Tkacik2009}, but with a factor $(1-\bar{n})$ in the diffusion part.}
+\end{figure}
+
+In the final act of his paper, Tka$\check{\bf c}$ik compares the concentration noise level of a promoter with a receptor; Fig. 2 in \cite{Tkacik2009}. Because in his expresion for the noise, a promoter is not hindered by occupancy and because he assumes an infinite TF number, the noise has no minimum, simular to \fref{TableauxNoiseCmp} (d). Our result is therefore qualitatively very difference from that of Tka$\check{\bf c}$ik.
+
 
 
 \subsection{Obtaining the correlation time by renormalizing the reaction rates}
@@ -355,7 +367,7 @@ The correlation time for this system is
 This expression for the correlation time is equivalent to that found in \eref{CT1} using the method by de Ronde et al. Thus, in the low concentration limit of non-interacting TF's, the methods of van Zon and de Ronde to obtain the correlation time are equivalent.
 
 \subsubsection{Why the methods are the same}
-One important difference between the two methods, is that in the method of van Zon, a TF following a rebinding trajectory, will allways find an unoccupied promoter when it returns. Their is no interuption by the other particles from the equilibrium. De Ronde, a priori, does allow this event by writing the survival probability as a product of either binding from the bulk or rebinding. However, by using the low concentration approximation \eref{Seq_approx}, we throw away the possibility of interuptions on short time scales. We used the large time limit in \aref{noise:Seq_approx}, to show the system is by approximation allways in steady state. By the same arguments, we can show that for small times, the possibility of interuptions are neglectable
+The important difference between the two methods, is that in the method of van Zon, a TF following a rebinding trajectory, will allways find an unoccupied promoter when it returns. Their is no hindrance by the other particles from the equilibrium. De Ronde, a priori, does allow this event by writing the survival probability as a product of either binding from the bulk or rebinding. However, by using the low concentration approximation \eref{Seq_approx}, we throw away the possibility of interuptions on short time scales. We used the large time limit in \aref{noise:Seq_approx}, to show the system is by approximation allways in steady state. By the same arguments, we can show that for small times, the possibility of interuptions are neglectable
 \begin{eqnarray}
  \lim_{c\to0} \pdiff{}{t} \mathscr{S}_{\rm irr}(t|\sigma) & = & \lim_{c\to0} \mathscr{S}_{\rm irr}(t|{\rm eq}) \left( \pdiff{}{t}S(t|\sigma) \right)+\left( \pdiff{}{t} \mathscr{S}_{\rm irr}(t|{\rm eq}) \right) S(t|\sigma) \nonumber \\
  & = & \lim_{c\to0} \mathscr{S}_{\rm irr}(t|\sigma) \left( \frac{1}{S(t|\sigma)} \pdiff{}{t} S(t|\sigma) - \bar{c} k(t) \right) \\

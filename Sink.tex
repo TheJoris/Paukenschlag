@@ -1,12 +1,12 @@
-\section{Solving the 1D diffusion equation with a delta-sink and absorbing boundaries}
-
-\subsection{Motivation}
-
-In this paper a 1D greensfuction with a delta-sink and two absorbing boundaries is derived. Furtheremore, other quantaties important for $\GFRD$, such as the survival probability, the c.d.f. in space and the fluxes at the boundarie and the sink are given. Finally we will consider the convergence of the series and other properties important for the numeric implementation of the functions.
+\section{Introducing the promoter site in eGFRD}
 
 \subsection{Introduction}
+We want to simulate a promoter site in \GFRD. 
 
-To simulate the 1D diffussion of a protein allong the DNA in the pressence of a promotor site with $\GFRD$, we need a new type of domain. This domain contains a delta-sink which simulates the promotor site. In contrast to the original domains which have an absorbing boundary condition, particles are not reflected in the case a particle doesn't react, but instead just diffuse over the reactive spot. This reactive spot will generate a probability current leaving the domain proportianal to the rate constant $k$ and the probability of a particle being at that specific site. This current represents the particles wich bind to the promotor. Other sink terms are the two absorbing boundaries at both sites of the domain. The fluxes at these three point are used in $\GFRD$ to determine the event type at the next event time.
+To simulate the 1D diffussion of a protein allong the DNA in the pressence of a promotor site, we need a new type of domain in \GFRD. This domain contains a delta-sink which simulates the promotor site. If a particle moves over this sink, their is
+
+
+In contrast to the original domains which have an absorbing boundary condition, particles are not reflected in the case a particle doesn't react, but instead just diffuse over the reactive spot. This reactive spot will generate a probability current leaving the domain proportianal to the rate constant $k$ and the probability of a particle being at that specific site. This current represents the particles wich bind to the promotor. Besides the sink, their are two absorbing boundaries where particles can leave the domain. The fluxes at these three point are used in \GFRD to determine the event type at the next event time.
 
 \subsection{Obtaining the Green's function}
 
@@ -145,7 +145,7 @@ where $L=L_r + L_l$ in both equations. Note that when $p_r$ is evaluated for $x<
 
 \subsubsection{Solution for a sink in an unbounded domain}
 
-For completes and its usefulnesses in $\GFRD$, we end this derivation with the Green's function for an absorbing sink at $x_s$ in the absence of absorbing boundaries at both sides
+For completes and its usefulnesses in \GFRD, we end this derivation with the Green's function for an absorbing sink at $x_s$ in the absence of absorbing boundaries at both sides
 \begin{multline}
  p(x,t|x_0) = \frac{1}{\sqrt{4 \pi D t}}e^{\frac{-(x-x_0)^2}{4 D t}} - \frac{k}{4 D}e^{\frac{k}{2 D}(|x-x_s|+|x_s-x_0|)+\frac{k^2 t}{4 D}} \\
 \mathrm{erfc}\left( \frac{|x-x_s|+|x_s-x_0|}{\sqrt{4 D t}}+\frac{k}{2D}\sqrt{D t} \right).
@@ -153,9 +153,9 @@ For completes and its usefulnesses in $\GFRD$, we end this derivation with the G
 \end{multline}
 We note that we can map this solution to the solution of a radiation boundary condition at $x_s$ in a semi-infinite domain when we change $k \rightarrow 2 k$ and multiply the second term with 1/2. The servival probility function $S(t|x0)$ of the above function is equal to that of the radiation boundary when we double the rate $k$.
 
-\subsection{Important quantities for $\GFRD$}
+\subsection{Important quantities for \GFRD}
 
-For the functionallity of $\GFRD$ we need the survival probability $S(t|x_0)$, the cumulative distribution function (c.d.f) in space $F(x^*,t|x_0)$ and the fluxes $q_x(t|x_0)$ leaving the domain. Probability flux leaves the domain at the left and right boundaries and via the sink.
+For the functionallity of \GFRD we need the survival probability $S(t|x_0)$, the cumulative distribution function (c.d.f) in space $F(x^*,t|x_0)$ and the fluxes $q_x(t|x_0)$ leaving the domain. Probability flux leaves the domain at the left and right boundaries and via the sink.
 
 Remeber that the Green's functions (\ref{SOL_R}) and (\ref{SOL_L}) were of the form
 \begin{equation} 

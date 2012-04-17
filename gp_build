@@ -244,7 +244,7 @@ epstopdf GaspervsJoris.eps
 fi
 
 
-#Tableaux for saturation vs diffusive on-rate.
+#Tableaux for saturation vs diffusive on-rate. -LE MACHINE!
 if [[ $plot -eq 5 ]]
 then
 
