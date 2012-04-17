@@ -1,59 +1,59 @@
 \section{Introducing the promoter site in eGFRD}
 
 \subsection{Introduction}
-We want to simulate a promoter site in \GFRD. 
 
-To simulate the 1D diffussion of a protein allong the DNA in the pressence of a promotor site, we need a new type of domain in \GFRD. This domain contains a delta-sink which simulates the promotor site. If a particle moves over this sink, their is
+We want to be able to model promoter site's in \GFRD. A promoter site is simulated as a sink situated on a rod. A particle diffusing allong this rod, can, as it walks over the sink, either react with it or just move over it. Their is thus a reactive outflux proportianal to the probability of the particle being at the sink and the rate constant $k$. Next to the sink, the full \GFRD\, domain will also contain two absorbing boundaries. The fluxes at these three points are used to determine the event type at the next event time.
 
+\subsubsection{Formal defenition of the domain}
 
-In contrast to the original domains which have an absorbing boundary condition, particles are not reflected in the case a particle doesn't react, but instead just diffuse over the reactive spot. This reactive spot will generate a probability current leaving the domain proportianal to the rate constant $k$ and the probability of a particle being at that specific site. This current represents the particles wich bind to the promotor. Besides the sink, their are two absorbing boundaries where particles can leave the domain. The fluxes at these three point are used in \GFRD to determine the event type at the next event time.
-
-\subsection{Obtaining the Green's function}
-
-\subsubsection{Conditions}
-
-We want to find the Green's function $p(x,t|x_0,\tau)$ for a particle with diffussion constand $D$, obbaying the differential equation,
+The differential equation governing the domain for a particle diffusing in 1D with diffusion constant $D$ in the presence of a sink at $x_s$ is
 \begin{equation}
- \frac{\partial p(x,t|x_0,\tau)}{\partial t} = D \, \nabla ^2 p(x,t|x_0,\tau) - k \, \delta (x - x_s) p(x,t|x_0,\tau)
+ \frac{\partial p(x,t|x_0)}{\partial t} = D \, \nabla ^2 p(x,t|x_0) - k \, \delta (x - x_s) p(x,t|x_0).
  \label{DE_I}
 \end{equation}
-on a one dimensional domain with absorbing boundary conditions at $L_l$ (left boundary) and $L_r$ (right boundary),
+Furthermore, their is an absorbing boundary at $L_l$ (left boundary) and another at $L_r$ (right boundary),
 \begin{eqnarray}
- p(L_l,t|x_0,\tau) & = & 0 \\
- p(L_r,t|x_0,\tau) & = & 0
+ p(L_l,t|x_0) & = & 0 \\
+ p(L_r,t|x_0) & = & 0.
 \label{BC_I}
 \end{eqnarray}
-and a unit instantaneous source at $x_0$ as initial condition
+The initial condition is given by an unit instantaneous source at $x_0$
 \begin{equation}
- p(x,t|x_0,\tau) = \delta(x-x_0) \delta(t-\tau).
+ p(x,t|x_0) = \delta(x-x_0)\delta(t)
 \label{IC_I}
 \end{equation}
 
-\subsubsection{Solving in Laplace space}
+\subsection{Obtaining the Green's function}
 
-Solving equation (\ref{DE_I}) directly is difficult due to the term containing both the delta function and the function we want to solve for. We can however split up the domain $[L_l,L_r]$ in to the sub-domains $[L_l,x_s]$ and $[x_s,L_r]$, with the delta sink in in between them. The delta-sink is now introduced into the problem by the continuity conditions which have to hold between the two domains. 
+Solving equation (\ref{DE_I}) directly is difficult due to the term containing both the delta function and the function we want to solve for. We can however split the full domain $[L_l,L_r]$ in to the sub-domains $[L_l,x_s]$ and $[x_s,L_r]$, with the delta sink in between. The delta-sink is now introduced into the problem by the continuity conditions which have to hold between the two domains. 
 
-\subsubsection{The continuity conditions}
+\subsubsection{Deriving the continuity conditions}
 
 The continuity equation for our problem is
-
 \begin{equation}
  \nabla \vec{J}(x,t|x_0) + \partial_t p(x,t|x_0) = -k \delta( x - x_s ) p(x,t|x_0),
 \end{equation}
-which means that probability density is conserved everywhere except at the postition of the sink $x_s$, where is 'dissapears' with a rate $k \delta ( x - x_s ) p$. We can simplify this condition by first plugging in Fick's law for the probability current $J$, and integrating over a small region $[a - \epsilon,a + \epsilon]$ around the sink, 
+which means that probability density is conserved everywhere (ignoring boundaries) except at the postition of the sink $x_s$, where it `dissapears' with a rate $k\,p(x_s,t|x_0)$. We can simplify this condition by first plugging in Fick's law for the probability current $\vec{J}$, and integrating over a small region $[x_s - \epsilon,x_s + \epsilon]$ around the sink, 
+\setlength{\jot}{10pt}
 \begin{gather}
 \int_{x_s - \epsilon}^{x_s + \epsilon} \partial_x \left( -D \partial_x p(x,t|x_0)  \right) \, dx + \partial_t \int_{x_s - \epsilon}^{x_s + \epsilon} p(x,t|x_0) \, dx = \nonumber \\
--k \int_{a - \epsilon}^{a + \epsilon} \delta( x - x_s ) p(x,t|x_0) \, dx \nonumber \\
-\left[ -D \partial_x p(x,t|x_0)  \right]_{x_s - \epsilon}^{x_s + \epsilon} + \partial_t \left. P(x,t|x_0) \right|_{x_s - \epsilon}^{x_s + \epsilon} = -k p(x_s,t|x_0) \nonumber \\
-J_r(x_s + \epsilon,t|x_0) - J_l(x_s - \epsilon,t|x_0) + \partial_t \frac{P(x_s + \epsilon,t|x_0) - P(x_s - \epsilon,t|x_0)}{2 \epsilon} 2\epsilon = \nonumber \\ 
--k p(x_s,t|x_0). \nonumber \\
+-k \int_{a - \epsilon}^{a + \epsilon} \delta( x - x_s ) p(x,t|x_0) \, dx, \nonumber
 \end{gather}
-were we multiplied the second term on the left hand side with $2\epsilon/2\epsilon$. Now taking the limit $\epsilon \rightarrow 0$,
+introducing $P$ for the primitive of p wrt $x$
+\begin{equation}
+\left[ -D \partial_x p(x,t|x_0)  \right]_{x_s - \epsilon}^{x_s + \epsilon} + \partial_t \left. P(x,t|x_0) \right|_{x_s - \epsilon}^{x_s + \epsilon} = -k p(x_s,t|x_0) \nonumber,
+\end{equation}
+and multiplying the second term on the left hand side with $2\epsilon/2\epsilon$, we get
 \begin{gather}
- \lim_{\epsilon \to 0} J_r(x_s + \epsilon,t|x_0) - J_l(x_s - \epsilon,t|x_0) + \partial_t p(x_s,t|x_0) 2\epsilon = -k p(x_s,t|x_0) \nonumber = \\
+J_r(x_s + \epsilon,t|x_0) - J_l(x_s - \epsilon,t|x_0) + \partial_t \frac{P(x_s + \epsilon,t|x_0) - P(x_s - \epsilon,t|x_0)}{2 \epsilon} 2\epsilon = \nonumber \\ 
+-k p(x_s,t|x_0). \nonumber
+\end{gather}
+Now taking the limit $\epsilon \rightarrow 0$,
+\begin{gather}
+ \lim_{\epsilon \to 0} J_r(x_s + \epsilon,t|x_0) - J_l(x_s - \epsilon,t|x_0) + \partial_t p(x_s,t|x_0) 2\epsilon = -k p(x_s,t|x_0) \nonumber \\
  J_r(x_s,t|x_0) - J_l(x_s,t|x_0) = -k p(x_s,t|x_0).
 \end{gather}
-Clearly, the sink causes a discontinuity in the flux from the left to the right domain $J_l$ and vice versa flux $J_r$, at the boundary. We use this result for the continuity conditions between the two domains, which are:
+Clearly, the sink causes a discontinuity in the flux from the left to the right domain $J_l$, and vice versa for $J_r$, at the boundary. We use this result for the continuity conditions between the two domains, which are:
 
 (I) The solution for the left domain $p_l$ has to equal the solution for the right domain $p_r$ at $x_s$,
 \begin{equation} 
@@ -66,42 +66,41 @@ Clearly, the sink causes a discontinuity in the flux from the left to the right 
 
 \subsubsection{Ansats equations}
 
-The difficult problem of solving (\ref{DE_I}) has now been simplified to solving the well known heat equation in both domains. To simplify even more we let the Laplace operator act on the time domain of the heat equation. The time variable $t$ is replaced by the Laplace variable $s$ in all functions (Laplace transformed functions are denoted by a bar on top $\bar{f}$) and the time derivative in the heat equation changes in a multiplicative factor;
+The difficult problem of solving (\ref{DE_I}) has now been simplified to solving the well known heat equation in both domains. To simplify even more we let the Laplace operator act on the time domain of the heat equation. The time variable $t$ is replaced by the Laplace variable $s$ in all functions (Laplace transformed functions are denoted by a hat on top $\hat{f}$) and the time derivative in the heat equation changes in a multiplicative factor
 \begin{equation}
- s \, \bar{p}(x,s|x_0) = D \, \nabla^2 \bar{p}(x,s|x_0).
+ s \, \hat{p}(x,s|x_0) = D \, \nabla^2 \hat{p}(x,s|x_0).
 \end{equation}
-Furthermore we assume the delta-sink to be positioned at the origin $x_s=0$. Together with the boundary conditions (\ref{BC_I}) and the initial condition (\ref{IC_I}), were we assume the position of the initial delta peak to be in the right domain, we can write down an Ansatz in Laplace space for the two domains.
-For the right domain,
+Furthermore we assume the delta-sink to be positioned at the origin $x_s=0$. Together with the boundary conditions (\ref{BC_I}) and the initial condition (\ref{IC_I}), where we assume the position of the initial delta peak to be in the right domain, we can write down an Ansatz in Laplace space for the two domains \cite{Carslaw1959}. For the right domain
 \begin{equation}
- \bar{p}_r(x,x_0,q) = \frac{1}{2 D q} e^{-q |x-x_0|} + A \, \mathrm{cosh} (q x) + B \, \mathrm{sinh} (q x)
+ \hat{p}_r(x,x_0,q) = \frac{1}{2 D q} e^{-q |x-x_0|} + A \, \mathrm{cosh} (q x) + B \, \mathrm{sinh} (q x),
  \label{Anz_R}
 \end{equation}
 and the left domain
 \begin{equation}
- \bar{p}_l(x,x_0,q) = E \, \mathrm{cosh} (q x) + F \, \mathrm{sinh} (q x),
+ \hat{p}_l(x,x_0,q) = E \, \mathrm{cosh} (q x) + F \, \mathrm{sinh} (q x),
 \label{Anz_L}
 \end{equation}
 where the unknowns $A,B$ and $E,F$ can be functions of $q$, and $q=\sqrt{s/D}$. By filling in the Ansatz into the boundary and continuity conditions we find the four unknowns. Plugging these back into the Ansatz and simplifying, the solution in Laplace space becomes
 \begin{equation}
- \bar{p}_r(x,q|x_0) = -2 \, \frac{\mathrm{sinh} \, q(L_r - x)}{2 D q} \left( \frac{Dq \, \mathrm{sinh} \, q(L_l + x_0) + k \, \mathrm{sinh} \, q L_l \,\, \mathrm{sinh} \, q x_0}{Dq \, \mathrm{sinh} \, q(L_r + L_l) + k \, \mathrm{sinh} \,\, q L_l \, \mathrm{sinh} \, q L_r} \right)
+ \hat{p}_r(x,q|x_0) = -2 \, \frac{\mathrm{sinh} \, q(L_r - x)}{2 D q} \left( \frac{Dq \, \mathrm{sinh} \, q(L_l + x_0) + k \, \mathrm{sinh} \, q L_l \,\, \mathrm{sinh} \, q x_0}{Dq \, \mathrm{sinh} \, q(L_r + L_l) + k \, \mathrm{sinh} \,\, q L_l \, \mathrm{sinh} \, q L_r} \right)
  \label{SOL_R}
 \end{equation}
 
 \begin{equation}
- \bar{p}_l(x,q,|x_0) = -\frac{\mathrm{sinh} \, q(L_l + x) \,\, \mathrm{sinh} \, q(L_r - x_0)}{Dq \, \mathrm{sinh} \, q(L_r + L_l) + k \, \mathrm{sinh} \, q L_l \,\, \mathrm{sinh} \, q L_r}
+ \hat{p}_l(x,q|x_0) = -\frac{\mathrm{sinh} \, q(L_l + x) \,\, \mathrm{sinh} \, q(L_r - x_0)}{Dq \, \mathrm{sinh} \, q(L_r + L_l) + k \, \mathrm{sinh} \, q L_l \,\, \mathrm{sinh} \, q L_r}
 \label{SOL_L}
 \end{equation}
 
 \subsubsection{Transforming the Laplace solution to the time domain}
 
-In order to transform our solution in Laplace space back to the time domain solving the following integral is paramount,
+In order to transform our solution in Laplace space back to the time domain, solving the Bromwich integral is paramount
 \begin{equation}
- \frac{1}{2 \pi i} \int_{-\infty i + \gamma}^{+\infty i + \gamma} \, e^{s t} \, \bar{p}(x,s|x_0) \, ds.
+ \frac{1}{2 \pi i} \int_{-\infty i + \gamma}^{+\infty i + \gamma} \, e^{s t} \, \hat{p}(x,s|x_0) \, ds.
  \label{INT_I}
 \end{equation}
-Our solution in Laplace space is not of a simple form which can be looked up in a transform table, neither can we use the primitive of the integrand and fill in the integration boundaries; finding the primitive is beyond our capabilities. Therefore we have to reside to residual integration. 
+Our solution in Laplace space is not of a simple form which can be looked up in a transform table, neither can we use the primitive of the integrand and fill in the integration boundaries; finding the primitive is beyond our capabilities. Therefore we have to reside to residual integration. We only roughly sketch the steps needed in residual integration; a more complete and excellent account is given in \cite{Bossen2011a}.
 
-When we integrate a function $f$ of a complex variable $z$ counterclockwise around a closed contour $\gamma$, this is equal to the sum over all residuals at positions $z = c_i$ of $f$ within $\gamma$
+When we integrate function $f$ of a complex variable $z$ counterclockwise around a closed contour $\gamma$, this is equal to the sum over all residuals at positions $z = c_i$ of $f$ within $\gamma$
 \begin{equation}
  2 \pi i\,\sum_{i=1}^{N}\,\mathrm{Res}(f,c_i) = \oint_\gamma f(z)\,dz.
  \label{RES_I}
@@ -109,7 +108,7 @@ When we integrate a function $f$ of a complex variable $z$ counterclockwise arou
 
 Investigating our solutions (\ref{SOL_R}) and (\ref{SOL_L}), we find that they are rational functions where both the numerator and denominator are holomorphic. We denote the numerator by $g_{r/l}(x,q|x_0)$ and the denominator by $h(x,q|x_0)$, where the subscript $r/l$ of the numerator indicates the solution for the right or the left domain. Both solutions have the same denominator apart from the factor $2 D q$ in the right domain, which we ignore for now because it cancels later on. Our solutions $p_{r/l}$ can hence be written as
 \begin{equation} 
- \bar{p}_{r/l}(x,q|x_0) = \frac{g_{r/l}(x,q|x_0)}{h(q)}.
+ \hat{p}_{r/l}(x,q|x_0) = \frac{g_{r/l}(x,q|x_0)}{h(q)}.
 \end{equation}
 From the theory of complex integration we know that the residues of these functions can be found via,
 \begin{equation} 
@@ -122,12 +121,12 @@ where the $\beta_i$ 's are the positions of the simple poles and are the roots o
  \label{ROOT_I}
 \end{equation}
 
-The above equation only holds for real $q$ when $q = 0$, but this is not a simple pole of $\bar{p}$ because $g(x,q|x_0) = 0$ at this point. The relation does have however, an infinite amount of solutions when $q$ is purely imaginary. Remember that $q = \sqrt{s/D}$, which means that there are only poles for real $s < 0$. Looking at equation (\ref{INT_I}), the negative $s$ will give us a solution in the time domain which is monotonically decaying. This is obvious because for $t > 0$ we only have sinks and no source terms. Hence, from now on, we assume $q$ to be of the form $q = i \hat{q}, \, \hat{q} \in \mathbb{R}_{>0}$.
+The above equation only holds for real $q$ when $q = 0$, but this is not a simple pole of $\hat{p}$ because $g(x,q|x_0) = 0$ at this point. The relation does have however, an infinite amount of solutions when $q$ is purely imaginary. Remember that $q = \sqrt{s/D}$, which means that there are only poles for real $s < 0$. Looking at equation (\ref{INT_I}), the negative $s$ will give us a solution in the time domain which is monotonically decaying. This is obvious because for $t > 0$ we only have sinks and no source terms. Hence, from now on, we assume $q$ to be of the form $q = i \bar{q}, \, \bar{q} \in \mathbb{R}_{>0}$.
 
-If we first apply the transformation $q \rightarrow i \hat{q}$ and than use equalities (\ref{RES_I}) and (\ref{RES_II}), the integral (\ref{INT_I}) becomes
+If we first apply the transformation $q \rightarrow i \bar{q}$ and than use equalities (\ref{RES_I}) and (\ref{RES_II}), the integral (\ref{INT_I}) becomes
 \begin{equation} 
  \frac{1}{2 \pi i} \oint_{\gamma}
- \, e^{- D \hat{q}^2 t} \, \frac{g(x,i \hat{\hat{q}}|x_0)}{h(i \hat{q})} \, 2 D i \hat{q} \, d\hat{q} = \sum_{i=1}^{\infty} e^{ - D \hat{q}^2 t} \, \left. \frac{g(x,i \hat{q}|x_0)}{\partial_q h(i \hat{q})} \right|_{\hat{q} = \beta_i} \, 2 D i \hat{q}
+ \, e^{- D \bar{q}^2 t} \, \frac{g(x,i \bar{\bar{q}}|x_0)}{h(i \bar{q})} \, 2 D i \bar{q} \, d\bar{q} = \sum_{i=1}^{\infty} e^{ - D \bar{q}^2 t} \, \left. \frac{g(x,i \bar{q}|x_0)}{\partial_q h(i \bar{q})} \right|_{\bar{q} = \beta_i} \, 2 D i \bar{q}
 \end{equation}
 Now we can fill in our Laplace solutions and obtain the final solution in real space
 \begin{multline}
