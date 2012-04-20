@@ -15,35 +15,27 @@ Cells regulate their proteine levels by enhancing or repressing the expression o
 
 
 \subsection{Introduction to eGFRD}
-We want to simulate the many body problem of diffusing and reacting particles, in full spatial and temperal resolution. Because particles only interact via hard body interaction, we can apply a clever trick. We devide the domain of the full system into smaller subdomains, in such a way that they only contain one or two particles. For domains containing only one or two particles, there exist a rich literature of exact solutions in the form of Green's functions. The enhanced Green's Function Reaction Dynamics (\GFRD) algorithm sequentially propegates the subdomains using these Green's functions, and in effect propegates the whole system. \cite{VanZon2006}\cite{VanZon2005}\cite{Takahashi2010} The advantage is that, for low concentrations, a single round of the algorithm can amount to large steps in space and time. 
+We want to simulate the many body problem of diffusing and reacting particles, in full spatial and temperal resolution. Because particles only interact via hard body interaction, we can apply a clever trick. We devide the domain of the full system into smaller subdomains, in such a way that they only contain one or two particles. For single or double particle problems, there exist a rich literature of exact solutions in the form of Green's functions. The enhanced Green's Function Reaction Dynamics (\GFRD) algorithm sequentially propegates the subdomains using these Green's functions, and in effect propegates the whole system. \cite{VanZon2006}\cite{VanZon2005}\cite{Takahashi2010} The advantage is that, for low concentrations, a single round of the algorithm can amount to large steps in space and time. 
 
-The system is initialized by setting the global time $t=0$, and drawing speherical domains centered around single particles. If two particles are close together however, they both go in the same domain to form a pair. We continue describing the behavour of a single-domain.
+The system is initialized by setting the global time $t=0$, and drawing speherical domains centered around single particles. If two particles are close together however, they both go in the same domain to form a pair. Each domain has a Green's function $p({\bf r}, \Delta t|{\bf r_0})$ associated with it, describing the probability of where the particle will be after a time $\Delta t$, given that it started at ${\bf r_0}$ \cite{Carslaw1959}. We continue describing the behaviour of a single-domain in detail.
 
 \subsubsection{single domains}
-
-
-Each domain has a Green's function describing given that you started at the center of the domain ${\bf r_0}$
+Because we know for certain that at $t_0$ the particle is in the center of the domain, we look for the Green's function with initial condition
 \begin{equation}
- p({\bf r}, \Delta t|{\bf r_0}) = \delta(\mathbf{r - r_0})
+ p({\bf r}, t_0|{\bf r_0},t_0) = \delta(\mathbf{r - r_0}).
 \end{equation}
-
-
-Each domain has a Green's function $p({\bf r}, \Delta t|{\bf r_0})$ associated with it, describing the probability of where the particle will be after a time $\Delta t$, given that it started at ${\bf r_0}$ \cite{Carslaw1959}. A single particle can either escape through the outer boundary of it's domain, or undergo a monomolecular reaction. 
-
-
-A pair domain has the extra possibility of undergoing a bimolecular reaction.
-
-To give a rough idea of the algorithm, we continue describing how it works for a domain containing only one particle.
-
- To continue, we have to determine which of these events is going to take place and when it will happen. The tentative next-event time is drawn from the propensity $q_{\rm event i}(t)$ of each particular event happening. The next-event is  determined by taking the smallest tentative next-event time
+Particles crossing the boundary of the domain, positioned a distance $a$ from the origin, have to be removed from the ensemble to keep the simulator consistent. This amounts to subjecting the Green's function to a absorbing boundary condition at the boundary of the domain
 \begin{equation}
- t_{\rm next\,event} = {\rm min}(t_{\rm monomolecular},\,t_{\rm escape},\,[t_{\rm bimolecular}]).
+ p({\bf |r|}=a, t|{\bf r_0},t_0) = 0.
 \end{equation}
-First, the monomolecular reaction is modeled as a Poisson process
+These conditions, together with the diffusion equation, define the solution. \cite{Carslaw1959}\cite{Beck1992} 
+
+There are two events possible in this domain; either the particle escapes through the outer boundary, or it undergo's a monomolecular reaction. To continue, we have to determine which of these events is going to take place and when it will happen. The tentative next-event time for each possible event is drawn from the propensity $q_{\rm event}(t)$. First, the monomolecular reaction is modeled as a Poisson process
 \begin{equation}
  q_{\rm mon}(t) = -k\, {\rm exp}(-k t).
 \end{equation}
-Second, the escape propensity is equal to the flux leaving the domain through the outer boundary. The outer boundary is made absorbing, meaning that each trajectory hitting this boundary will be removed from the ensemble. The total part of the ensemble still residing in the domain is given by the survival probability
+Second, the escape propensity is equal to the flux leaving the domain through the outer boundary. 
+The total part of the ensemble still residing in the domain is given by the survival probability
 \begin{equation}
  S(t|{\mathbf r_0}) = \int_V p({\bf r}, \Delta t|{\bf r_0}) \, d{\mathbf r},
  \elabel{Surv}
@@ -51,11 +43,33 @@ Second, the escape propensity is equal to the flux leaving the domain through th
 where $V$ is the whole volume of the domain. This function is unity at $t=0$, when the particles is certain to be in the domain, after which it monotonically decays to zero. The required propensity is given by the flux $q_{\rm esc}(t)$ leaving the domain
 \begin{equation}
  q_{\rm esc}(t|{\mathbf r_0}) = -\pdiff{S(t|{\mathbf r_0})}{t}.
+ \elabel{Sflux}
+\end{equation}
+To determine which event will happen, we take the smallest tentative next-event time
+\begin{equation}
+ t_{\rm next\,event} = {\rm min}(t_{\rm mon},\,t_{\rm esc}).
 \end{equation}
 
 \subsubsection{pair domains}
-The more complex procedure of sampleling a tentative next-event time for the bimolecular reaction in describred in the supplemntary material of \cite{Takahashi2010}.
+The two particle problem can be split in two seperate problems: one is the diffusion of the center of mass vector ${\bf R}$ of the pair, and the other is the inter particle vector ${\bf r}$ between the particles. See the supplementary material of \cite{Takahashi2010}. The pair domain now consists of two domains, where the domain for ${\bf R}$ describes the diffusive movement of the domain containing ${\bf r}$. The c.o.m domain only knows the escape event at a tentative time $t_{{\bf R},\,{\rm escape}}$, calculated the same as for the single domain. 
 
+The ${\bf r}$-domain can generate two events; either an escape when the i.p.v. gets to large, or a reaction when the particles get close. The possibility of escape is again imposed with an absorbing boundary at the outer radius. For a reaction, we impose a radiation boundary at the inner radius, being the sum of the particle radii $\sigma$, of the domain. A radiation boundary only absorbs a particle with a certain rate $k_+$, else it is reflected. The i.p.v. domain is thus set by the conditions
+\setlength{\jot}{10pt}
+\begin{eqnarray}
+ p({\bf r}, t_0|{\bf r_0},t_0) & = & \delta(\mathbf{r - r_0}) \\
+ p({\bf |r|=a}, t|{\bf r_0},t_0) & = & 0 \\
+ D \pdiff{}{r} p({\bf |r|}=\sigma, t_0|{\bf r_0},t_0) & = & k_+\,p({\bf |r|}=\sigma, t|{\bf r_0},t_0),
+\end{eqnarray}
+where the i.p.v. started at a distance $r_0$. The last line states that the flux through the inner boundary is proportional to the probability of being at the boudnary. Just as in \eref{Sflux}
+
+
+
+
+
+A monomoleculair reaction of one of the two particles with times $t_{\rm A, mon}$ and $t_{\rm B, mon}$
+
+
+A pair domain has the extra possibility of undergoing a bimolecular reaction.
 
 
 
@@ -67,6 +81,5 @@ In the full \GFRD\ algorithm, one can include rods (DNA) and planes (membranes) 
 
 
 
-\subsubsection{single particle domain}
 
 
