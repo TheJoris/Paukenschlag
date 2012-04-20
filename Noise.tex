@@ -1,20 +1,20 @@
 \section{The fundamental limit on noise in transcriptional regulation}
 
 \subsection{Introduction}
-The time a promoter is occupied by a transcription factor varies strong over time. We want to find out how this variance depends on the mechanisms by which a TF finds the promoter site. We define our variance as follows. We measure the time a promoter site is occupied over a time $T$, where $T$ is much larger than the correlation time $\tau_c$. If we repeat this measurement many times, the variance in our collection of measurements is given by (\aref{noise:corr_time})
+The time a promoter is occupied by a transcription factor varies strong over time. We want to find out how this variance depends on the mechanisms by which a TF finds the promoter site. The variance is defined as follows. We measure the time a promoter site is occupied over a time $T$, where $T$ is much larger than the correlation time $\tau_c$. If we repeat this measurement many times, the variance in our collection of measurements is given by (\aref{noise:corr_time})
 \begin{equation}
  \left( \delta n \right)^2 \equiv \sigma_{\rm n, T}^2 = \frac{2 \sigma_{\rm n}^2 \,\tau_{\rm c}}{T}
  \elabel{std_devT}
 \end{equation}
-where $\sigma_n^2$ is the variance of an instantaneous measurement. The variance of an instantanious measurement for a binomial process (the promoter has only two states) is known to be $\bar{n}(1-\bar{n})$, with $\bar{n}$ the average occupancy. Therefore we only need to find the correlation time. 
+where $\sigma_n^2$ is the variance of an instantaneous measurement. The variance of an instantanious measurement for a binomial process (the promoter has only two states) is known to be $\bar{n}(1-\bar{n})$, with $\bar{n}$ the average occupancy. Finding the correlation time is thus paramount to finding the noise.
 
-We will first derive the correlation function, from which we can obtain the correlation time. With the correlation time in hand, we obtain general relations for the noise in the promoter occupancy, concentration fluctuations around the promoter and the lower limit in the noise set by the diffusive arrival. We continue with obtaining expressions in different geometries. First for a system where particles can only move on the DNA (1D only), secondly for DNA in a well mixed solution and end with the full system where TF's can perform multiple rebinding with the DNA before binding to the promoter.
+We will first derive the correlation function, from which we can obtain the correlation time. With an expression for the correlation time in hand, we obtain general relations for the noise in the promoter occupancy, concentration fluctuations around the promoter and the lower limit in the noise set by the diffusive arrival of TF's. We continue with obtaining expressions in different geometries. Starting with a system where particles can only move on the DNA (1D only), and expanding to DNA in a well mixed solution we end with the full system where TF's can perform multiple rebinding with the DNA before binding to the promoter.
 
 
 \subsection{Methods}
 
 \subsubsection{The correlation function}
-Here we derive the auto-correlation function for a switching process in Laplace space as was done by de Ronde et al.\cite{DeRonde2012}. We start with writing down the general expression for the correlation function of a switch
+Here we derive the auto-correlation function for a switching process in Laplace space as was done by de Ronde et al.\cite{DeRonde2012}. Let's start with writing down the general expression for the correlation function of a switch
 \begin{eqnarray}
  C(\tau) & \equiv & \left\langle (n(\tau) - \bar{n})(n(0) - \bar{n}) \right\rangle \\
   	& = & \bar{n} \left( p_{*|*}(\tau)-\bar{n} \right).
@@ -303,7 +303,7 @@ Apart from the factor 2, this is equal to the integral over the correlation func
 \begin{figure}
 \centering
 \includegraphics[scale=.75]{NoisePlotFull}
-\caption{\flabel{NoisePlotFull} Low frequency limit of the power spectrum (\eref{PowPro}) for a promoter site on the DNA, compared with simulations. The grey lines shows the result found in \cite{Tkacik2009}, which is symmetric around $n$.}
+\caption{\flabel{NoisePlotFull} Low frequency limit of the power spectrum (\eref{PowPro}) for a promoter site on the DNA, compared with simulations. The grey lines shows the result found in \cite{Tkacik2009}, which, in contrast to our result, is symmetric around $n=.5$.}
 \end{figure}
 
 
@@ -329,7 +329,7 @@ The second difference is due to an ultraviolet cutoff needed in \cite{Tkacik2009
 \begin{figure}
 \centering
 \includegraphics[scale=.75]{GaspervsJoris}
-\caption{\flabel{GaspervsJoris} Comparing the promoter noise level as defined in \eref{PowPro}, for a system with and without a ultraviolet cutoff. The cutoff was at $\pi/\sigma$. The curve with cutoff is equal to Eq. 68 in \cite{Tkacik2009}, but with a factor $(1-\bar{n})$ in the diffusion part.}
+\caption{\flabel{GaspervsJoris} Comparing the promoter noise level as defined in \eref{PowPro}, for a system with and without an ultraviolet cutoff. The cutoff was set at $\pi/\sigma$. The curve with cutoff is equal to Eq. 68 in \cite{Tkacik2009}, but without the extra $(1-\bar{n})$ factor in the diffusion part.}
 \end{figure}
 
 In the final act of his paper, Tka$\check{\bf c}$ik compares the concentration noise level of a promoter with a receptor; Fig. 2 in \cite{Tkacik2009}. Because in his expresion for the noise, a promoter is not hindered by occupancy and because he assumes an infinite TF number, the noise has no minimum, simular to \fref{TableauxNoiseCmp} (d). Our result is therefore qualitatively very difference from that of Tka$\check{\bf c}$ik.

@@ -28,6 +28,8 @@
 \newcommand{\rates}[2]{\displaystyle
   \mathrel{\longrightleftharpoons^{#1\mathstrut}_{#2}}}
 
+\newcommand{\letter}[1]{\begin{minipage}[t]{0.05\linewidth}{\vspace{0pt}\textsf{#1}}\end{minipage}\hspace*{-0.05\linewidth}}
+
 %ifnot documentclass is revtex4 then else uncomment
 % \def\affiliation#1{\gdef\@affiliation{#1}} \gdef\@affiliation{}
 % \def\email#1{\gdef\@email{#1}}
@@ -95,7 +97,10 @@ Park 104, 1098 XG, Amsterdam}
 \newcommand{\avgabs}[1]{\avg{\abs{#1}}}
 \newcommand{\avgabssq}[1]{\avg{\abs{#1}^2}}
 \newcommand{\erfc}[1]{{\rm erfc}\br{#1}}
-\newcommand{\GFRD}{$^{\rm{e}} \rm{GFRD}$}
+
+%\newcommand{\GFRD}{$^{\rm{e}} \rm{GFRD}$}
+%\newcommand{\GFRD}{$^{\rm{e}} \mathcal{GFRD}$}
+\newcommand{\GFRD}{$^{\rm{e}}\mathsf{GFRD}$}
 
 %text in math env
 

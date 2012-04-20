@@ -2,6 +2,7 @@
 
 # Figures in the PLOTTING MACHINE!
 #
+# 0 - Convert all eps to pdf
 # 1 - Noise comparison analytic/simulation
 # 2 - Power spectra plot.
 # 3 - Power spectra plot with inset.
@@ -48,9 +49,9 @@ set style line 20 lw 2 lt 1 lc rgb '#FFE9E5'
 lines3=\
 "
 set style line 1 lw 4 lt 1 lc rgb '#CC5555'
-set style line 2 lw 4 lt 1 lc rgb '#55CC55'
-set style line 3 lw 4 lt 1 lc rgb '#5555CC'
-set style line 4 lw 4 lt 1 lc rgb '#CC55CC'
+set style line 2 lw 4 lt 2 lc rgb '#55CC55'
+set style line 3 lw 4 lt 3 lc rgb '#5555CC'
+set style line 4 lw 4 lt 4 lc rgb '#CC55CC'
 set style line 5 lw 2 lt 2 lc rgb 'gray10'
 set style line 6 lw 2 lt 4 lc rgb 'gray50'
 set style line 7 lw 2 lt 1 lc rgb '#FF040E'
@@ -66,6 +67,14 @@ set style line 10 lw 4 lt 1 lc rgb '#FFE9E5'
 # 4 - dashed as ...........
 # 5 - dashed as __.__.__.__
 # 6 - dashed as _._._._._._
+
+#Convert all eps formats to pdf not done by gnuplot
+if [[ $plot -eq 0 ]]
+then
+
+epstopdf Sink_domain.eps
+
+fi
 
 
 
@@ -401,3 +410,44 @@ EOF
 
 epstopdf TableauxNoiseCmp.eps
 fi
+
+
+
+#Pbound with a sink
+if [[ $plot -eq 6 ]]
+then
+
+$lines1
+$lines3
+
+gnuplot << EOF -persist
+
+set terminal postscript eps enhanced color "CMSS10, 15"\
+fontfile "$fontfile1" fontfile "$fontfile2" fontfile "$fontfile3"
+set out "SinkPbound.eps"
+
+#$lines2
+
+#set yrange [-2:2]
+#set xrange [0:1]
+
+#set ytics 2 format "%g"
+#set xtics 2 format "%g"
+set xlabel "k"
+set ylabel "n"
+set key bottom right
+
+#set arrow nohead from -6,0 to 0,0 ls 14
+
+set format x "10^{%L}"
+set log x
+
+#plot "./Results.dat"
+plot "./SinkPbound.dat" using 2:3:(sqrt(\$4)) with yerrorbar ls 7 title "Average occupancy of the sink",\
+"./SinkPbound.dat" using 2:3 with lines ls 1 notitle
+
+EOF
+
+epstopdf SinkPbound.eps
+fi
+
