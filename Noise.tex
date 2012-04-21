@@ -364,13 +364,27 @@ The correlation time for this system is
 \begin{equation}
  \tau_c = \frac{1}{k'_{\rm on} \bar{c} + k'_{\rm off}} = \frac{1}{ (k_+ \bar{c} + k_- ) S(\infty|\sigma) } = \frac{\tau_c^*}{S(\infty|\sigma)}.
 \end{equation}
-This expression for the correlation time is equivalent to that found in \eref{CT1} using the method by de Ronde et al. Thus, in the low concentration limit of non-interacting TF's, the methods of van Zon and de Ronde to obtain the correlation time are equivalent.
+Note that this expression for the correlation time is equivalent to that found in \eref{CT1} using the method by de Ronde et al. 
 
-\subsubsection{Why the methods are the same}
-The important difference between the two methods, is that in the method of van Zon, a TF following a rebinding trajectory, will allways find an unoccupied promoter when it returns. Their is no hindrance by the other particles from the equilibrium. De Ronde, a priori, does allow this event by writing the survival probability as a product of either binding from the bulk or rebinding. However, by using the low concentration approximation \eref{Seq_approx}, we throw away the possibility of interuptions on short time scales. We used the large time limit in \aref{noise:Seq_approx}, to show the system is by approximation allways in steady state. By the same arguments, we can show that for small times, the possibility of interuptions are neglectable
-\begin{eqnarray}
- \lim_{c\to0} \pdiff{}{t} \mathscr{S}_{\rm irr}(t|\sigma) & = & \lim_{c\to0} \mathscr{S}_{\rm irr}(t|{\rm eq}) \left( \pdiff{}{t}S(t|\sigma) \right)+\left( \pdiff{}{t} \mathscr{S}_{\rm irr}(t|{\rm eq}) \right) S(t|\sigma) \nonumber \\
- & = & \lim_{c\to0} \mathscr{S}_{\rm irr}(t|\sigma) \left( \frac{1}{S(t|\sigma)} \pdiff{}{t} S(t|\sigma) - \bar{c} k(t) \right) \\
- & = & \pdiff{}{t} S(t|\sigma).
-\end{eqnarray}
-With 'small time' we mean the timescale in which rebindings occur.
+\subsubsection{Why are the methods the same?}
+The important difference between the two methods, is that in the method of van Zon, a TF following a rebinding trajectory, will allways find an unoccupied promoter when it returns. Their is no hindrance by the other particles from the equilibrium. De Ronde, a priori, does allow for this by writing the survival probability as a product of either binding from the bulk or rebinding. As it turns out however, by using the low concentration limit, the time dependent behaviour at small time is coarse-grained out, just as is done by van Zon.
+
+To see this, we start from the relation used in the derivation of the correlation function \eref{SeqSsi}
+\begin{equation}
+ \pdiff{\mathscr{S}_{\rm irr}(t|{\rm eq})}{t} = -\bar{\xi} k_+ \, \mathscr{S}_{\rm irr}(t|\sigma),
+\end{equation}
+and Laplace transforming, we find that
+\begin{equation}
+ \hat{\mathscr{S}}(s|\sigma) = \frac{1}{\bar{\xi}k_+} \left[ 1 - s\,\hat{\mathscr{S}}(s|{\rm eq})\right].
+\end{equation}
+Plugging in our low $\bar{\xi}$ approximation \eref{Seq_approx} for $\hat{\mathscr{S}}(s|{\rm eq})$
+\begin{equation}
+ \lim_{\bar{\xi}\to 0} \hat{\mathscr{S}}(s|\sigma) = \frac{1}{\bar{\xi} k_+} \left[ \frac{\bar{\xi}\,\hat{k}(s)}{1 + \bar{\xi}\,\hat{k}(s)}\right].
+\end{equation}
+In the limit of low $s$, which we use when calculating the correlation time, the lowest power of $s$ in $\hat{k}(s)$ dominates. Since for $t\to\infty$, $k(t)$ appoaches the steady state limit $k_{\rm ss}$: $\lim_{s\to0} \hat{k}(s) \sim k_{\rm ss}/s = k_+ S(\infty|\sigma)$. Using this in the above equation, we can back-transform to the time domain to find
+\begin{equation}
+ \hat{\mathscr{S}}(s|\sigma) = \frac{k_{\rm ss}}{k_+} \left[ \frac{1}{s + \bar{\xi}\,k_{\rm ss}} \right] \quad \xrightarrow{\mathscr{L}^{-1}} \quad \mathscr{S}(t|\sigma) = S(\infty|\sigma)\,{\rm exp}\left[ -\bar{\xi} k_+ S(\infty|\sigma)\,t \right].
+\end{equation}
+Comparing this result with \eref{Def_Ssi}, we see that the rebinding trajectories are coarse-grained out by replacing $S(t|\sigma)$ with $S(\infty|\sigma)$. We are left with a Poisson decay of the survival probability with the diffusion limited on-rate, starting below unity. This exactly what van Zon does by renormelizing the reaction rates. Thus, in the low concentration limit of non-interacting TF's, the methods of van Zon and de Ronde to obtain the correlation time are equivalent.
+
+

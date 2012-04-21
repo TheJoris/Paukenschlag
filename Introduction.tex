@@ -1,9 +1,7 @@
 \section{Introduction}
 
-
-
 \subsection{motivation}
-Cells regulate their proteine levels by enhancing or repressing the expression of their genes. This is done by the binding of transcription factor proteins (TF) to specific sites on the DNA; the so called promoters. Because the number of TF's in a cell is typically very low ($\sim 10$), wether their is a TF present on a promoter or not varies largely over time. 
+Cells regulate their proteine levels by enhancing or repressing the expression of their genes. This is done by the binding of transcription factor proteins (TF) to specific sites on the DNA; the so called promoters. Because the number of TF's in a cell is typically very low, wether their is a TF present on a promoter or not varies largely over time. 
 
 \subsubsection{research questions}
 \begin{itemize}
@@ -53,23 +51,33 @@ To determine which event will happen, we take the smallest tentative next-event 
 \subsubsection{pair domains}
 The two particle problem can be split in two seperate problems: one is the diffusion of the center of mass vector ${\bf R}$ of the pair, and the other is the inter particle vector ${\bf r}$ between the particles. See the supplementary material of \cite{Takahashi2010}. The pair domain now consists of two domains, where the domain for ${\bf R}$ describes the diffusive movement of the domain containing ${\bf r}$. The c.o.m domain only knows the escape event at a tentative time $t_{{\bf R},\,{\rm escape}}$, calculated the same as for the single domain. 
 
-The ${\bf r}$-domain can generate two events; either an escape when the i.p.v. gets to large, or a reaction when the particles get close. The possibility of escape is again imposed with an absorbing boundary at the outer radius. For a reaction, we impose a radiation boundary at the inner radius, being the sum of the particle radii $\sigma$, of the domain. A radiation boundary only absorbs a particle with a certain rate $k_+$, else it is reflected. The i.p.v. domain is thus set by the conditions
+The ${\bf r}$-domain can generate two events; either an escape when the i.p.v. grows to large, or a reaction when the particles get close. The possibility of escape is again imposed with an absorbing boundary at the outer radius. For a reaction, we impose a radiation boundary at the inner radius, being the sum of the particle radii $\sigma$, of the domain. A radiation boundary only absorbs a particle with a certain rate $k_+$, else it is reflected. The i.p.v. domain is thus set by the conditions
 \setlength{\jot}{10pt}
 \begin{eqnarray}
  p({\bf r}, t_0|{\bf r_0},t_0) & = & \delta(\mathbf{r - r_0}) \\
  p({\bf |r|=a}, t|{\bf r_0},t_0) & = & 0 \\
  D \pdiff{}{r} p({\bf |r|}=\sigma, t_0|{\bf r_0},t_0) & = & k_+\,p({\bf |r|}=\sigma, t|{\bf r_0},t_0),
 \end{eqnarray}
-where the i.p.v. started at a distance $r_0$. The last line states that the flux through the inner boundary is proportional to the probability of being at the boudnary. Just as in \eref{Sflux}
+where the i.p.v. started at a distance $r_0$. The last line states that the flux through the inner boundary is proportional to the probability of being at the boudnary. The flux through both boundaries together is given by
+\begin{equation}
+ q_{\rm out}(t) = q_{\rm rad}(t) + q_{\rm abs}(t) = \pdiff{}{t} S(t|{\bf r_0}),
+\end{equation}
+and we can decide between them via the flux at the boundaries
+\begin{equation}
+q_{\rm rad}(t) = k_+ \, p({\bf |r|}=\sigma, t_0|{\bf r_0},t_0) \quad{\rm and}\quad q_{\rm abs}(t) = - D \pdiff{}{r} p({\bf |r|}=a, t_0|{\bf r_0},t_0).
+\end{equation}
+Finally, to choose an event, while also allowing for monomoleculair reactions with times $t_{\rm A, mon}$ and $t_{\rm B, mon}$, we choose the smallest tentative time
+\begin{equation}
+ t_{\rm next\,event} = {\rm min}(t_{{\bf R},\,{\rm escape}},\,t_{{\bf r},\,{\rm escape}},\,t_{\rm react},\,t_{\rm A, mon},\,t_{\rm B, mon}).
+\end{equation}
+
+\subsubsection{The schedular}
+After initialization, every domain $i$ has an event and the time $t_i$ the event takes place. All the event's are in a schedular, sorted by event time. The event on top is executed. The particle is placed at a position depending on the event. 
 
 
+At the new position, we draw a new domain and choose a next event and time as before. The next-event time for this event is set via $t^{\rm old}_i + t_i$. The global time is set to the domain time $t=t_i$. The 
 
 
-
-A monomoleculair reaction of one of the two particles with times $t_{\rm A, mon}$ and $t_{\rm B, mon}$
-
-
-A pair domain has the extra possibility of undergoing a bimolecular reaction.
 
 
 
