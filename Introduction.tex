@@ -13,7 +13,7 @@ Cells regulate their proteine levels by enhancing or repressing the expression o
 
 
 \subsection{Introduction to eGFRD}
-We want to simulate the many body problem of diffusing and reacting particles, in full spatial and temperal resolution. Because particles only interact via hard body interaction, we can apply a clever trick. We devide the domain of the full system into smaller subdomains, in such a way that they only contain one or two particles. For single or double particle problems, there exist a rich literature of exact solutions in the form of Green's functions. The enhanced Green's Function Reaction Dynamics (\GFRD) algorithm sequentially propegates the subdomains using these Green's functions, and in effect propegates the whole system. \cite{VanZon2006}\cite{VanZon2005}\cite{Takahashi2010} The advantage is that, for low concentrations, a single round of the algorithm can amount to large steps in space and time. 
+We want to simulate the many body problem of diffusing and reacting particles, in full spatial and temperal resolution. Because particles only interact via hard body interaction, we can apply a clever trick. We devide the domain of the full system into smaller subdomains, in such a way that they only contain one or two particles. For single or double particle problems, there exist a rich literature of exact solutions in the form of Green's functions. The enhanced Green's Function Reaction Dynamics (\GFRD) algorithm sequentially propegates the subdomains using these Green's functions, and in effect propegates the whole system. \cite{VanZon2006}\cite{VanZon2005}\cite{Takahashi2010} The advantage is that, for low concentrations, a particle can make a large step in space and time in a single round of the algorithm.
 
 The system is initialized by setting the global time $t=0$, and drawing speherical domains centered around single particles. If two particles are close together however, they both go in the same domain to form a pair. Each domain has a Green's function $p({\bf r}, \Delta t|{\bf r_0})$ associated with it, describing the probability of where the particle will be after a time $\Delta t$, given that it started at ${\bf r_0}$ \cite{Carslaw1959}. We continue describing the behaviour of a single-domain in detail.
 
@@ -28,12 +28,11 @@ Particles crossing the boundary of the domain, positioned a distance $a$ from th
 \end{equation}
 These conditions, together with the diffusion equation, define the solution. \cite{Carslaw1959}\cite{Beck1992} 
 
-There are two events possible in this domain; either the particle escapes through the outer boundary, or it undergo's a monomolecular reaction. To continue, we have to determine which of these events is going to take place and when it will happen. The tentative next-event time for each possible event is drawn from the propensity $q_{\rm event}(t)$. First, the monomolecular reaction is modeled as a Poisson process
+There are two events possible in this domain; either the particle escapes through the outer boundary, or it undergo's a monomolecular reaction $X\rightarrow Y$. To continue, we have to determine which of these events is going to take place and when it will happen. The tentative next-event time for each possible event is drawn from the propensity $q_{\rm event}(t)$. First, the monomolecular reaction is modeled as a Poisson process
 \begin{equation}
  q_{\rm mon}(t) = -k\, {\rm exp}(-k t).
 \end{equation}
-Second, the escape propensity is equal to the flux leaving the domain through the outer boundary. 
-The total part of the ensemble still residing in the domain is given by the survival probability
+Second, to sample the escape event, we have to find the flux leaving the domain through the outer boundary. The total part of the ensemble still residing in the domain is given by the survival probability
 \begin{equation}
  S(t|{\mathbf r_0}) = \int_V p({\bf r}, \Delta t|{\bf r_0}) \, d{\mathbf r},
  \elabel{Surv}
@@ -49,18 +48,18 @@ To determine which event will happen, we take the smallest tentative next-event 
 \end{equation}
 
 \subsubsection{pair domains}
-The two particle problem can be split in two seperate problems: one is the diffusion of the center of mass vector ${\bf R}$ of the pair, and the other is the inter particle vector ${\bf r}$ between the particles. See the supplementary material of \cite{Takahashi2010}. The pair domain now consists of two domains, where the domain for ${\bf R}$ describes the diffusive movement of the domain containing ${\bf r}$. The c.o.m domain only knows the escape event at a tentative time $t_{{\bf R},\,{\rm escape}}$, calculated the same as for the single domain. 
+The pair domain contains two particles A and B. To find a Green's function for it, we split the problem into two seperate problems: one is the diffusion of the center of mass vector ${\bf R}$ of the pair, and the other is the inter particle vector ${\bf r}$ between the particles. See the supplementary material of \cite{Takahashi2010}. The pair domain now consists of two domains, where the domain for ${\bf R}$ describes the diffusive movement of the domain containing ${\bf r}$. The c.o.m domain only knows the escape event at a tentative time $t_{{\bf R},\,{\rm escape}}$, calculated the same as for the single domain. 
 
-The ${\bf r}$-domain can generate two events; either an escape when the i.p.v. grows to large, or a reaction when the particles get close. The possibility of escape is again imposed with an absorbing boundary at the outer radius. For a reaction, we impose a radiation boundary at the inner radius, being the sum of the particle radii $\sigma$, of the domain. A radiation boundary only absorbs a particle with a certain rate $k_+$, else it is reflected. The i.p.v. domain is thus set by the conditions
+The ${\bf r}$-domain can generate two events; either an escape when the i.p.v. grows outside the domain, or a reaction when the particles are in contact: ${\bf |r|}=\sigma$. The possibility of escape is again imposed with an absorbing boundary at the outer radius. For a reaction, we impose a radiation boundary at the inner radius, $\sigma$, of the domain. A radiation boundary models a reaction by stating that when the particles are in contact, they react with a rate $k_+$. The i.p.v. domain is thus set by the conditions
 \setlength{\jot}{10pt}
 \begin{eqnarray}
  p({\bf r}, t_0|{\bf r_0},t_0) & = & \delta(\mathbf{r - r_0}) \\
  p({\bf |r|=a}, t|{\bf r_0},t_0) & = & 0 \\
  D \pdiff{}{r} p({\bf |r|}=\sigma, t_0|{\bf r_0},t_0) & = & k_+\,p({\bf |r|}=\sigma, t|{\bf r_0},t_0),
 \end{eqnarray}
-where the i.p.v. started at a distance $r_0$. The last line states that the flux through the inner boundary is proportional to the probability of being at the boudnary. The flux through both boundaries together is given by
+where the particles started seperated by a distance $r_0$. The last line states that the flux through the inner boundary is proportional to the probability of being at the boudnary. The flux through both boundaries together is given by
 \begin{equation}
- q_{\rm out}(t) = q_{\rm rad}(t) + q_{\rm abs}(t) = \pdiff{}{t} S(t|{\bf r_0}),
+ q_{\rm out}(t) = q_{\rm rad}(t) + q_{\rm abs}(t) = -\pdiff{}{t} S(t|{\bf r_0}),
 \end{equation}
 and we can decide between them via the flux at the boundaries
 \begin{equation}
@@ -72,16 +71,17 @@ Finally, to choose an event, while also allowing for monomoleculair reactions wi
 \end{equation}
 
 \subsubsection{The schedular}
-After initialization, every domain $i$ has an event and the time $t_i$ the event takes place. All the event's are in a schedular, sorted by event time. The event on top is executed. The particle is placed at a position depending on the event. 
+After initialization, every domain $i$ has an event and the time $t_i$ the event takes place. All the event's are in a schedular, sorted by event time. Every round, the event on top is executed. The particle in the 'active' domain is placed at a position depending on the event. 
 
 
-At the new position, we draw a new domain and choose a next event and time as before. The next-event time for this event is set via $t^{\rm old}_i + t_i$. The global time is set to the domain time $t=t_i$. The 
+At the new position, we draw a new domain and choose a next event and time as before. The new next-event time is calculated by adding the smallest tentative event-time to the old event time: $t^{\rm new}_i =  t^{\rm old}_i + t'_{i}$. This new event is placed back in the schedular, at the appropriate position sorted w.r.t event-time. The global time is set to the event-time of the last executed event: $t=t_i$. The algorithm continues by picking the top event from the schedular.
 
 
+\subsubsection{full GFRD}
+In the full \GFRD\ algorithm, the simulation world can include rods to simulate DNA or microtubels and planes representing membranes. Particles can switch between trajectory of 1D/2D diffusion and 3D diffusion by binding and fulling of these structures and the bulk. 
 
 
-
-In the full \GFRD\ algorithm, one can include rods (DNA) and planes (membranes) into the simulatin and let particles be exchanged between the bulk and these structures.
+particles can be placed on rods, with 1D diffusion and o planes with 2D diffusion.    into the simulation and let particles be exchanged between the bulk and these structures.
 
 
 
