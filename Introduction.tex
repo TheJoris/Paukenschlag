@@ -1,11 +1,24 @@
 \section{Introduction}
 
 \subsection{motivation}
-Cells regulate their proteine levels by enhancing or repressing the expression of their genes. This is done by the binding of transcription factor proteins (TF) to specific sites on the DNA; the so called promoters. Because the number of TF's in a cell is typically very low, wether their is a TF present on a promoter or not varies largely over time. 
+The microscopic behaviour of small molecules governs the macroscopic behaviour of living organisms. A key example is the way cells regulatate their proteine levels by enhancing or repressing the expression of their genes. This is done by the binding of transcription factor proteins (TF) to specific sites on the DNA; the so called promoters. Because the number of TF's in a cell is typically very low, wether their is a TF present on a promoter or not varies considerably over time. These fluctuations propegate downstream to the actual proteine synthese, and in effect influences the organisms behaviour. Understanding how the microscopic behaviour of TF's sets the noise in transcriptional regulation is an key step in understanding celluar function. Our investigation of the noise will be in two parts. First we find out how to simulate the complex microscopic behaviour of TF's around the promoter site. Second, we derive an analytic expression for the physical limit in the noise of transcriptional regulation.
 
-\subsubsection{research questions}
+\subsubsection{Simulations}
+The simulations are done useing the \GFRD\, algorithm, which we describe in more detail below. \GFRD\, simulates the diffusion of particles efficiently by taking big leaps in both space and time. Our first task will be to simulate a promoter site on the DNA, which was not possible before with this algorithm. The second task has to do with crowding. \GFRD\, works well for systems where the particle density is very low. However, when three or more particles get too close, the efficieny of the algorithm breaks down, and the simulator switches locally to brownian dynamics (BD). The BD-algorithm which was implemented before, only supported diffusion and reactions in 3D. We modify it such that it suports binding to rod shaped objects (modeling DNA) and diffusion and reactions in one or two dimensions.
+
+\subsubsection{Analysis}
+The analysis of how accurate a biological system can measure a concentration starts with a seminal work by Berg and Purcell \cite{Berg1977}. To introduce the reader with the concept of noise, we repeat their intuitive derivation. 
+
+Say a bacterium needs to measure the average ligand concentration $\bar{c}$ in it's surrounding, using a sensor with a linear dimension $a$. The average number of molecules close to the receptor which we expect to count is $\overline{N} \sim \bar{c} a^3$. Because the arrival and leaving of ligand molecules to the sensor is a Poisson process, the noise in a single measurement $\delta N_1 \sim \sqrt{\overline{N}}$. A ligand close to the sensor, takes a time $\tau_D \sim a^2/D$ to diffuse away. Therefore, by measuring a time $\tau$, we can take $N_{\rm meas} \sim \tau/\tau_D$ independent measurents, and the noise will decrease by $1/\sqrt{\overline{N}}$. Hence, the noise in the concentration percieved by a senor integrating over a time $\tau$ is
+\begin{equation}
+ \frac{\delta c}{\bar{c}} = \frac{\delta N}{\overline{N}} = \frac{1}{\sqrt{\overline{N}\,N_{\rm meas}}} = \frac{1}{\sqrt{D a \bar{c} \tau}}.
+\end{equation}
+This derivation however, does not consider the accuracy by which the sensor measures the molecules inside the volume $a^3$. Neither has the dimension $a$ a clear physical interpertation. A more rigorous approach was done by Bialek and Setayeshgar \cite{Bialek2005}, but was recently proven false by de Ronde et al. \cite{DeRonde2012}. 
+
+
+\subsubsection{Research questions}
 \begin{itemize}
- \item What is the noise limit of transcriptional regulation.
+ \item What sets the noise limit of transcriptional regulation.
  \item How to simulate a promoter site in \GFRD.
  \item How to make brownian dynamics suitable for the complex geometries of \GFRD
 \end{itemize}
