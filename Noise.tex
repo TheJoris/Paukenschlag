@@ -186,15 +186,21 @@ and the noise in the 'equivalent concentration' of the cytoplasm $c$
 
 
 \subsubsection{1D diffusion with exchange to the bulk}
-Now we want to evaluate the noise in the occupancy of a promoter site when particles are not placed at a random position after falling from the DNA, but are placed at contact with it. A TF starting at the promoter site switches between sliding along the DNA and making excursions in the cytoplasm. The TF slides with a small diffusion constant $D_1$ and has the possibility of irreversibly binding to the promoter. After falling from the z-axis, the TF diffuses around in the cytoplasm with a larger diffusion constant $D_3$, and, because it is essentially a 2D problem, will always rebinds with the DNA. Our derivation of the noise is very similar to that followed by Tka$\check{\rm c}$ik \cite{Tkacik2009}.
+This time, we want to evaluate the noise in the occupancy of a promoter site where particles do not escape after falling from the DNA, but are placed at contact with it. This way, a TF starting at the promoter site can switch several times between sliding along the DNA and making excursions in the cytoplasm before either rebinding or escaping, see \fref{promoter_schematic}. Our derivation of the noise is very similar to that followed by Tka$\check{\rm c}$ik \cite{Tkacik2009}.
 
-To find the survival probability for this problem, we start with writing down the differential equations describing the full system
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=.5]{promoter_schematic}
+\caption{\flabel{promoter_schematic} The TF starts on the promoter site located at $z_0$. It slide's with a small diffusion constant $D_1$ and can irreversibly bind to the promoter with a rate $k_+$. Or it falls from the DNA with a rate $k_d$, and starts diffusing around in the cytoplasm with a larger diffusion constant $D_3$. The TF will eventually rebind with the DNA with an intrinsic rate $k_a$.}
+\end{figure}
+
+To find the large time limit of the survival probability for a TF starting on the promter site, we start with writing down the differential equations describing the full system
 \setlength{\jot}{12pt}
 \begin{eqnarray*}
  \frac{\partial \xi(z,t|z_0)}{\partial t} & = & D_1 \frac{\partial^2\xi(z,t)}{\partial^2 z} - k_+ \xi(z,t) \delta(z - z_0) - k_d \xi(z,t) + k_a c(z, |{\bf r}| = \sigma, t) \\
  \frac{\partial c}{\partial t} & = & D_3 \nabla^2 c(z, \mathbf r \mathrm, t) - \left[ k_a c(z, \bf r \it, t) - k_d \xi(z,t) \right] \frac{\delta(|\mathbf r \mathrm| - \sigma)}{2 \pi \sigma}.
 \end{eqnarray*}
-Here $\xi(z, t|z_0)$ is the Green's function describing the 1D sliding of the TF along the DNA, which we model as an infinite long rod along the z-axis with a radius $\sigma$. Probability flows irreversibly into the sink, positioned at $z_0$, with a rate $k_+$. The TF can fall from the DNA into the cytoplasm with a uniform rate $k_d$, and is placed at a distance $\sigma$ from the DNA. The particle can rebind again with a rate $k_a$. Excursions in the cytoplasm are described by $c$(z, {\bf r}, t). First we Laplace transform with respect to time
+Here $\xi(z, t|z_0)$ is the Green's function describing the 1D sliding of the TF along the DNA, starting on the sink positioned at $z_0$. We model the DNA as an infinite long rod along the z-axis with a radius $\sigma$. Probability flows irreversibly into the sink with a rate $k_+$. The TF can fall from the DNA into the cytoplasm with a uniform rate $k_d$, and is placed at a distance $\sigma$ from the DNA. The particle can rebind again with a rate $k_a$. Excursions in the cytoplasm are described by $c$(z, {\bf r}, t). First we Laplace transform with respect to time
 \begin{eqnarray*}
  s \, \hat{\xi} - \delta(z - z_0) & = & D_1 \frac{\partial^2\hat{\xi}(z)}{\partial^2 z} - k_+ \hat{\xi}(z) \delta(z - z_0) - k_d \hat{\xi}(z) + k_a \hat{c}(z, |{\bf r}| = \sigma) \\
  s \, \hat{c} & = & D_3 \nabla^2 \hat{c}(z, \mathbf r \mathrm) - \left[ k_a \hat{c}(z, \mathbf r \mathrm) - k_d \hat{\xi}(z) \right] \frac{\delta(|\mathbf r \mathrm| - \sigma)}{2 \pi \sigma},

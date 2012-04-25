@@ -73,6 +73,12 @@ if [[ $plot -eq 0 ]]
 then
 
 epstopdf Sink_domain.eps
+epstopdf promoter_schematic.eps
+
+epstopdf gfrd_single.eps
+epstopdf gfrd_pair.eps
+epstopdf gfrd_domain.eps
+epstopdf gfrd_domain2.eps
 
 fi
 

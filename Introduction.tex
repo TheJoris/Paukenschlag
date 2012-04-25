@@ -1,6 +1,6 @@
 \section{Introduction}
 
-\subsection{motivation}
+\subsection{Motivation}
 The microscopic behaviour of small molecules governs the macroscopic behaviour of living organisms. A key example is the way cells regulatate their proteine levels by enhancing or repressing the expression of their genes. This is done by the binding of transcription factor proteins (TF) to specific sites on the DNA; the so called promoters. Because the number of TF's in a cell is typically very low, wether their is a TF present on a promoter or not varies considerably over time. These fluctuations propegate downstream to the actual proteine synthese, and in effect influences the organisms behaviour. Understanding how the microscopic behaviour of TF's sets the noise in transcriptional regulation is an key step in understanding celluar function. Our investigation of the noise will be in two parts. First we find out how to simulate the complex microscopic behaviour of TF's around the promoter site. Second, we derive an analytic expression for the physical limit in the noise of transcriptional regulation.
 
 \subsubsection{Simulations}
@@ -9,18 +9,20 @@ The simulations are done useing the \GFRD\, algorithm, which we describe in more
 \subsubsection{Analysis}
 The analysis of how accurate a biological system can measure a concentration starts with a seminal work by Berg and Purcell \cite{Berg1977}. To introduce the reader with the concept of noise, we repeat their intuitive derivation. 
 
-Say a bacterium needs to measure the average ligand concentration $\bar{c}$ in it's surrounding, using a sensor with a linear dimension $a$. The average number of molecules close to the receptor which we expect to count is $\overline{N} \sim \bar{c} a^3$. Because the arrival and leaving of ligand molecules to the sensor is a Poisson process, the noise in a single measurement $\delta N_1 \sim \sqrt{\overline{N}}$. A ligand close to the sensor, takes a time $\tau_D \sim a^2/D$ to diffuse away. Therefore, by measuring a time $\tau$, we can take $N_{\rm meas} \sim \tau/\tau_D$ independent measurents, and the noise will decrease by $1/\sqrt{\overline{N}}$. Hence, the noise in the concentration percieved by a senor integrating over a time $\tau$ is
+A bacterium performing chemotaxis needs to measure the average ligand concentration $\bar{c}$ in it's surrounding. For simplicity, we envision a receptor (biological sensor) on it's membrane as a box with linear dimension $a$. The average number of molecules inside the box which we expect to count is $\overline{N} \sim \bar{c} a^3$. Because the arrival and leaving of ligand molecules to the receptor is a Poisson process, the noise in a single measurement $\delta N_1 \sim \sqrt{\overline{N}}$. A ligand close to the receptor, takes a time $\tau_D \sim a^2/D$ to diffuse outside the box. Therefore, by measuring a time $\tau$, we can take $N_{\rm meas} \sim \tau/\tau_D$ independent measurents, and the noise will decrease by $1/\sqrt{\overline{N}}$. Hence, the noise in the concentration percieved by a receptor integrating over a time $\tau$ is
 \begin{equation}
  \frac{\delta c}{\bar{c}} = \frac{\delta N}{\overline{N}} = \frac{1}{\sqrt{\overline{N}\,N_{\rm meas}}} = \frac{1}{\sqrt{D a \bar{c} \tau}}.
 \end{equation}
-This derivation however, does not consider the accuracy by which the sensor measures the molecules inside the volume $a^3$. Neither has the dimension $a$ a clear physical interpertation. A more rigorous approach was done by Bialek and Setayeshgar \cite{Bialek2005}, but was recently proven false by de Ronde et al. \cite{DeRonde2012}. 
+This derivation however, does not consider the accuracy by which the receptor measures the molecules inside the volume $a^3$. Neither has the dimension $a$ a clear physical interpertation. A more rigorous approach to obtain the noise was done by Bialek and Setayeshgar \cite{Bialek2005}, and specifically for a promoter by Tka$\check{\bf c}$ik and Bialek in \cite{Tkacik2009}. However, by using a different method, de Ronde et al. recently obtained a different result and proved Bialek and Setayeshgar to be false \cite{DeRonde2012}.
 
+We will use the methods developed in \cite{DeRonde2012} to obtain the noise in a promoter site and compare the results with Tka$\check{\bf c}$ik.
 
 \subsubsection{Research questions}
+The above brings us to formulating the following main research questions
 \begin{itemize}
- \item What sets the noise limit of transcriptional regulation.
- \item How to simulate a promoter site in \GFRD.
- \item How to make brownian dynamics suitable for the complex geometries of \GFRD
+ \item What is the fundamental noise limit in transcriptional regulation?
+ \item How can we model a promoter site in \GFRD?
+ \item How to make a brownian dynamics algorithm suitable for the geometries we want to model, while keeping it simple and consistent with \GFRD?
 \end{itemize}
 
 
@@ -28,9 +30,21 @@ This derivation however, does not consider the accuracy by which the sensor meas
 \subsection{Introduction to eGFRD}
 We want to simulate the many body problem of diffusing and reacting particles, in full spatial and temperal resolution. Because particles only interact via hard body interaction, we can apply a clever trick. We devide the domain of the full system into smaller subdomains, in such a way that they only contain one or two particles. For single or double particle problems, there exist a rich literature of exact solutions in the form of Green's functions. The enhanced Green's Function Reaction Dynamics (\GFRD) algorithm sequentially propegates the subdomains using these Green's functions, and in effect propegates the whole system. \cite{VanZon2006}\cite{VanZon2005}\cite{Takahashi2010} The advantage is that, for low concentrations, a particle can make a large step in space and time in a single round of the algorithm.
 
-The system is initialized by setting the global time $t=0$, and drawing speherical domains centered around single particles. If two particles are close together however, they both go in the same domain to form a pair. Each domain has a Green's function $p({\bf r}, \Delta t|{\bf r_0})$ associated with it, describing the probability of where the particle will be after a time $\Delta t$, given that it started at ${\bf r_0}$ \cite{Carslaw1959}. We continue describing the behaviour of a single-domain in detail.
+The system is initialized by setting the global time $t=0$, and drawing speherical domains centered around single particles. If two particles are close together however, they both go in the same domain to form a pair. \fref{gfrd_domain} Each domain has a Green's function $p({\bf r}, \Delta t|{\bf r_0})$ associated with it, describing the probability of where the particle will be after a time $\Delta t$, given that it started at ${\bf r_0}$ \cite{Carslaw1959}. We continue describing the behaviour of a single-domain in detail.
 
-\subsubsection{single domains}
+\begin{figure}[ht]
+\begin{minipage}[ht]{.5\linewidth}
+\centering
+\includegraphics[scale=.5]{gfrd_domain}
+\end{minipage}
+\begin{minipage}[ht]{.5\linewidth}
+\centering
+\includegraphics[scale=.5]{gfrd_domain2}
+\end{minipage}
+\caption{\flabel{gfrd_domain} The many-body diffusion problem is split up in one and two body domains. The active domain, having the smallest next-event time, is colored red. It generates an escape event, and draws a new domain at the boundary of the old domain. All figures in this section are from \tt{ gfrd.org}.}
+\end{figure}
+
+\subsubsection{Single domains}
 Because we know for certain that at $t_0$ the particle is in the center of the domain, we look for the Green's function with initial condition
 \begin{equation}
  p({\bf r}, t_0|{\bf r_0},t_0) = \delta(\mathbf{r - r_0}).
@@ -60,8 +74,15 @@ To determine which event will happen, we take the smallest tentative next-event 
  t_{\rm next\,event} = {\rm min}(t_{\rm mon},\,t_{\rm esc}).
 \end{equation}
 
-\subsubsection{pair domains}
-The pair domain contains two particles A and B. To find a Green's function for it, we split the problem into two seperate problems: one is the diffusion of the center of mass vector ${\bf R}$ of the pair, and the other is the inter particle vector ${\bf r}$ between the particles. See the supplementary material of \cite{Takahashi2010}. The pair domain now consists of two domains, where the domain for ${\bf R}$ describes the diffusive movement of the domain containing ${\bf r}$. The c.o.m domain only knows the escape event at a tentative time $t_{{\bf R},\,{\rm escape}}$, calculated the same as for the single domain. 
+\begin{figure}[bh]
+\centering
+\includegraphics[scale=.75]{gfrd_single}
+\caption{\flabel{gfrd_single} Single domain. The particle always starts in the center.}
+\end{figure}
+
+
+\subsubsection{Pair domains}
+The pair domain contains two particles A and B. To find a Green's function for it, we split the problem into two seperate problems: one is the diffusion of the center of mass vector ${\bf R}$ of the pair, and the other is the inter particle vector ${\bf r}$ between the particles. See the supplementary material of \cite{Takahashi2010}. The pair domain now consists of two domains, where the domain for ${\bf R}$ describes the diffusive movement of the domain containing ${\bf r}$. See \fref{gfrd_pair}. The c.o.m domain only knows the escape event at a tentative time $t_{{\bf R},\,{\rm escape}}$, calculated the same as for the single domain. 
 
 The ${\bf r}$-domain can generate two events; either an escape when the i.p.v. grows outside the domain, or a reaction when the particles are in contact: ${\bf |r|}=\sigma$. The possibility of escape is again imposed with an absorbing boundary at the outer radius. For a reaction, we impose a radiation boundary at the inner radius, $\sigma$, of the domain. A radiation boundary models a reaction by stating that when the particles are in contact, they react with a rate $k_+$. The i.p.v. domain is thus set by the conditions
 \setlength{\jot}{10pt}
@@ -78,16 +99,28 @@ and we can decide between them via the flux at the boundaries
 \begin{equation}
 q_{\rm rad}(t) = k_+ \, p({\bf |r|}=\sigma, t_0|{\bf r_0},t_0) \quad{\rm and}\quad q_{\rm abs}(t) = - D \pdiff{}{r} p({\bf |r|}=a, t_0|{\bf r_0},t_0).
 \end{equation}
-Finally, to choose an event, while also allowing for monomoleculair reactions with times $t_{\rm A, mon}$ and $t_{\rm B, mon}$, we choose the smallest tentative time
+Finally, to choose an event, while allowing for monomolecular reactions with times $t_{\rm A, mon}$ and $t_{\rm B, mon}$, we take the one with the smallest tentative time
 \begin{equation}
  t_{\rm next\,event} = {\rm min}(t_{{\bf R},\,{\rm escape}},\,t_{{\bf r},\,{\rm escape}},\,t_{\rm react},\,t_{\rm A, mon},\,t_{\rm B, mon}).
 \end{equation}
 
+\begin{figure}[th]
+\centering
+\includegraphics[scale=.75]{gfrd_pair}
+\caption{\flabel{gfrd_pair} A pair-domain consists of two subdomains. The first in which the center of mass vector {\bf R} diffuses, centered around the starting point of the c.o.m. (cross). The second domain, centered on the position of {\bf R}, contains the diffusion of the inter-particle vector {\bf r}. The size of both domains is such that the sum of their lengths equals the size of the pair-domain. }
+\end{figure}
+
 \subsubsection{The schedular}
-After initialization, every domain $i$ has an event and the time $t_i$ the event takes place. All the event's are in a schedular, sorted by event time. Every round, the event on top is executed. The particle in the 'active' domain is placed at a position depending on the event. 
-
-
-At the new position, we draw a new domain and choose a next event and time as before. The new next-event time is calculated by adding the smallest tentative event-time to the old event time: $t^{\rm new}_i =  t^{\rm old}_i + t'_{i}$. This new event is placed back in the schedular, at the appropriate position sorted w.r.t event-time. The global time is set to the event-time of the last executed event: $t=t_i$. The algorithm continues by picking the top event from the schedular.
+After initialization, every domain $i$ has an event and the time $t_i$ the event takes place. All the event's are in a schedular, sorted by event time, with the smallest on top. Every round, the event on top is executed. First, the particle in the 'active' domain is placed at a position depending on the event: 
+\begin{itemize}
+ \item {\bf Escape} {\it (single)}: Placed on the boundary, where the angle's are chosen randomly.
+ \item {\bf R-escape} {\it (pair)}: Placed at the boundary of the {\bf R}-domain, and porportional to $p({\bf r},\Delta t|{\bf r_0})$ inside the {\bf r}-domian. 
+ \item {\bf r-escape} {\it (pair)}: Placed at the boundary of the {\bf r}-domain, and porportional to $p({\bf R},\Delta t|{\bf R_0})$ inside the {\bf R}-domian. 
+ \item {\bf Monomolecular reaction}: At a position inside the domain(s), proportional to $p({\bf r},\Delta t|{\bf r_0})$.
+ \item {\bf Bimolecular reaction}: Both particles are replaced by one placed proportional to $p({\bf R},\Delta t|{\bf R_0})$ in the {\bf R}-domain.
+ 
+\end{itemize}
+At the new position, we draw a new domain and choose a next event and time as before. \fref{gfrd_domain}, right. The new next-event time is calculated by adding the smallest tentative event-time of the new domian to the old event time: $t^{\rm new}_i =  t^{\rm old}_i + t'_{i}$. This new event is placed back in the schedular, at the appropriate position sorted w.r.t event-time. The global time is set to the event-time of the last executed event: $t=t_i$. The algorithm continues by picking the top event from the schedular.
 
 
 \subsubsection{full GFRD}
