@@ -12,3 +12,23 @@
 % \renewcommand{\thesubsubsection}{SI-\arabic{subsubsection}}
 
 \section{Brownian Dynamics}
+
+\subsection{\alabel{newBD:fwdbwdeq} On the equallity of the forward and backward move}
+We write the forward move, $P^{\rm move}_{u \rightarrow u^*}(\vec{r_0})$ or the probability of ending up inside the reaction volume given that you started at $r_0$, as
+\begin{multline}
+ P^{\rm move}_{u \rightarrow u^*}(r_0) = \int_{V} d\vec{r} P^{\rm free}(\vec{r},\Delta t|\vec{r_0}) \, \theta(\sigma + \delta - r) \, \theta(r - \sigma) \, \theta(r_0 - \sigma) + \\ \int_{V} d\vec{r} P^{\rm free}(\vec{r},\Delta t|\vec{r_0}) \, \theta(\sigma - r) \, \theta(\sigma + \delta - r_0)  \, \theta(r_0 - \sigma).
+\elabel{fwd_move}
+\end{multline}
+The first term collects the probability of ending inside the reaction volume, but outside the core radius $\sigma$. The second term collects all the bounce moves which started inside the reaction volume, and thus also end inside.
+
+For the backward move, the probability of ending up at $\vec{r}$, given that you started inside the reaction volume, is
+\begin{multline}
+\int_{V} d\vec{r_0} \frac{1}{V^*} \, \theta(\sigma + \delta - r_0) \, \theta(r_0 - \sigma) \, P^{\rm move}_{u^* \rightarrow u}(\vec{r},\Delta t|\vec{r_0})d\vec{r} 
+\\ =
+\\ \int_{V} d\vec{r_0} \frac{1}{V^*} \, \theta(\sigma + \delta - r_0) \, \theta(r_0 - \sigma) \, \bigg\{ P^{\rm free}(\vec{r},\Delta t|\vec{r_0}) d\vec{r} \, \theta(r - \sigma) \, + 
+\\ \int_{V} d\vec{r'} P^{\rm free}(\vec{r'},\Delta t|\vec{r_0}) \, \theta(\sigma - r') \, \delta(\vec{r} - \vec{r_0}) d\vec{r} \bigg\} \, 
+\\ = 
+\\ \frac{1}{V^*} \bigg\{ \int_{V} d\vec{r_0} \, P^{\rm free}(\vec{r},\Delta t|\vec{r_0}) d\vec{r} \, \theta(\sigma + \delta - r_0) \, \theta(r_0 - \sigma) \, \theta(r - \sigma) \, + 
+\\ \int_{V} d\vec{r'} P^{\rm free}(\vec{r'},\Delta t|\vec{r_0}) \, \theta(\sigma - r') \, \theta(\sigma + \delta - r_0)  \, \theta(r_0 - \sigma) d\vec{r_0}. \bigg\}
+\end{multline}
+The first line is just the backward transition without the $k_d \Delta t$ term. In the second line we have plugged in the move propegator (\eref{move_prop}), and in the third line we integrated out the $\delta$ function in the second term. The trick is that the free propegator is invariant under interchanging the coordinates $\vec{r}$ and $\vec{r_0}$. If we do so in the first term of the last line above, we see that the equation between curly brackets equals the forward move given in equation (\eref{fwd_move}). Thus the move from a position $\vec{r}$ to the reaction volume is, apart from normalization, equally probable as a move from the reaction volume towards this same $\vec{r}$. As a result the propagators cancel against each other in the detailed balance equation and we are left with (\eref{semi-pivotal}).
