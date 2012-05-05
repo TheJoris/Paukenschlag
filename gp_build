@@ -468,7 +468,7 @@ $lines2
 
 gnuplot << EOF -persist
 
-set terminal postscript eps enhanced color "CMSS10, 20"\
+set terminal postscript eps enhanced color "CMB10, 20"\
 fontfile "$fontfile1" fontfile "$fontfile2" fontfile "$fontfile3"
 set out "NoisePlotFullPoster.eps"
 
@@ -480,7 +480,7 @@ set xrange [0:1]
 #set ytics 2 format "%g"
 #set xtics 2 format "%g"
 set xlabel "n"
-set ylabel "Promoter Noise"
+set ylabel "2 {/Symbol s}_n^2 {/Symbol t}_c"
 
 plot "./NoiseResult.dat" using 2:4:(sqrt(\$3)):(sqrt(\$5)) with xyerrorbars ls 18 title "Simulated",\
 "./NoisePlotJ_ana.dat" with lines ls 16 notitle
@@ -501,7 +501,7 @@ gnuplot << EOF -persist
 $lines1
 $lines3
 
-set terminal postscript eps enhanced color "CMSS10, 20"\
+set terminal postscript eps enhanced color "CMB10, 20"\
 fontfile "$fontfile1" fontfile "$fontfile2" fontfile "$fontfile3"
 set out "TableauxNoiseCmpPoster.eps"
 
@@ -523,7 +523,7 @@ set origin 0.,.0
 set log x
 set format x "10^{%L}"
 set nokey
-set title "Promoter occupancy"
+set title "b) Promoter occupancy"
 set xtic (1e-2,1e0,1e2,1e4)
 #set ytic (1e0,1e-10,1e-20)
 
@@ -558,7 +558,7 @@ set origin .0,.5
 set format x "10^{%L}"
 set format y "10^{%L}"
 set nokey
-set title "finite #TF's, with occ."
+set title "a) finite #TF's, with occ."
 #set xtic (1e-2,1e0,1e2,1e4)
 #set ytic (1e0,1e-10,1e-20)
 
@@ -589,7 +589,7 @@ set origin .5,.0
 set format x "10^{%L}"
 set format y "10^{%L}"
 set nokey
-set title "infinite #TF's, no occ."
+set title "d) infinite #TF's, no occ."
 #set xtic (1e-2,1e0,1e2,1e4)
 #set ytic (1e0,1e-10,1e-20)
 
@@ -609,7 +609,7 @@ set origin .5,.5
 set format x "10^{%L}"
 set format y "10^{%L}"
 set key top left
-set title "finite #TF's, no occ."
+set title "c) finite #TF's, no occ."
 #set xtic (1e-2,1e0,1e2,1e4)
 #set ytic (1e0,1e-10,1e-20)
 
