@@ -3,9 +3,9 @@
 
 \subsection{Introduction}
 
-We want to be able to model promoter site's in \GFRD. A promoter site is simulated as a sink situated on a rod. A particle diffusing allong this rod, can, as it walks over the sink, either react with it or just move over it. Their is thus a reactive outflux proportianal to the probability of the particle being at the sink and the rate constant $k$. Next to the sink, the full \GFRD\, domain will also contain two absorbing boundaries. The fluxes at these three points are used to determine the event type at the next event time.
+We want to be able to model promoter site's in \GFRD. A promoter site is simulated as a sink situated on a rod. A particle diffusing along this rod, can, as it walks over the sink, either react with it or just move over it. Their is thus a reactive flux proportional to the probability of the particle being at the sink and the rate constant $k$. Next to the sink, the full \GFRD\, domain will also contain two absorbing boundaries. The fluxes at these three points are used to determine the event type at the next event time.
 
-\subsubsection{Formal defenition of the domain}
+\subsubsection{Formal definition of the domain}
 
 The differential equation governing the domain for a particle diffusing in 1D with diffusion constant $D$ in the presence of a sink at $x_s$ is
 \begin{equation}
@@ -24,6 +24,13 @@ The initial condition is given by an unit instantaneous source at $x_0$
 \elabel{IC_I}
 \end{equation}
 
+\begin{figure}[bh]
+\centering
+\includegraphics[scale=1]{Sink_domain}
+\caption{\flabel{SinkDomain} Schematic representation of the sink domain, and the used variables. The sink is situated at the origin, and the absorbing boundaries are at $-L_l$ and $L_r$. Particle starts at the position $x_0$.}
+\end{figure}
+
+
 
 \subsection{Obtaining the Green's function}
 
@@ -35,13 +42,13 @@ The continuity equation for our problem is
 \begin{equation}
  \nabla \vec{J}(x,t|x_0) + \partial_t p(x,t|x_0) = -k \delta( x - x_s ) p(x,t|x_0),
 \end{equation}
-which means that probability density is conserved everywhere (ignoring boundaries) except at the postition of the sink $x_s$, where it `dissapears' with a rate $k\,p(x_s,t|x_0)$. We can simplify this condition by first plugging in Fick's law for the probability current $\vec{J}$, and integrating over a small region $[x_s - \epsilon,x_s + \epsilon]$ around the sink, 
+which means that probability density is conserved everywhere (ignoring boundaries) except at the position of the sink $x_s$, where it `disappears' with a rate $k\,p(x_s,t|x_0)$. We can simplify this condition by first plugging in Fick's law for the probability current $\vec{J}$, and integrating over a small region $[x_s - \epsilon,x_s + \epsilon]$ around the sink, 
 \setlength{\jot}{10pt}
 \begin{gather}
 \int_{x_s - \epsilon}^{x_s + \epsilon} \partial_x \left( -D \partial_x p(x,t|x_0)  \right) \, dx + \partial_t \int_{x_s - \epsilon}^{x_s + \epsilon} p(x,t|x_0) \, dx = \nonumber \\
 -k \int_{a - \epsilon}^{a + \epsilon} \delta( x - x_s ) p(x,t|x_0) \, dx, \nonumber
 \end{gather}
-introducing $P$ for the primitive of p wrt $x$
+introducing $P$ for the primitive of p w.r.t. $x$
 \begin{equation}
 \left[ -D \partial_x p(x,t|x_0)  \right]_{x_s - \epsilon}^{x_s + \epsilon} + \partial_t \left. P(x,t|x_0) \right|_{x_s - \epsilon}^{x_s + \epsilon} = -k p(x_s,t|x_0) \nonumber,
 \end{equation}
@@ -59,14 +66,16 @@ Clearly, the sink causes a discontinuity in the flux from the left to the right 
 
 (I) The solution for the left domain $p_l$ has to equal the solution for the right domain $p_r$ at $x_s$,
 \begin{equation} 
- p_l(x_s,t|x_0,\tau) = p_r(x_s,t|x_0,\tau) 
+ p_l(x_s,t|x_0,\tau) = p_r(x_s,t|x_0) 
+ \elabel{Cont_I}
 \end{equation}.
 (II) The flux from the left domain at $x_s$ should equal the flux from the right domain minus the flux which left via the sink,
 \begin{equation} 
- \left. \pdiff{}{x^2} p_l(x,t|x_0,\tau) \right|_{x_s} = \left. \pdiff{}{x^2} p_r(x,t|x_0,\tau) \right|_{x_s} - \frac{k}{D} \, p_{l}(x_s,t|x_0,\tau).
+ \left. \pdiff{}{x} p_l(x,t|x_0) \right|_{x_s} = \left. \pdiff{}{x} p_r(x,t|x_0) \right|_{x_s} - \frac{k}{D} \, p_{l}(x_s,t|x_0).
+ \elabel{Cont_II}
 \end{equation}
 
-\subsubsection{Ansats equations}
+\subsubsection{Ansatz equations}
 
 The difficult problem of solving (\eref{DE_I}) has now been simplified to solving the well known heat equation in both domains. To simplify even more we let the Laplace operator act on the time domain of the heat equation. The time variable $t$ is replaced by the Laplace variable $s$ in all functions (Laplace transformed functions are denoted by a hat on top $\hat{f}$) and the time derivative in the heat equation changes in a multiplicative factor
 \begin{equation}
@@ -102,7 +111,7 @@ In order to transform our solution in Laplace space back to the time domain, sol
 \end{equation}
 Our solution in Laplace space is not of a simple form which can be looked up in a transform table, neither can we use the primitive of the integrand and fill in the integration boundaries; finding the primitive is beyond our capabilities. Therefore we have to reside to residual integration. We will only roughly sketch the steps needed in residual integration; more complete and excellent accounts are given in \cite{Carslaw1959} and \cite{Bossen2011a}.
 
-When we integrate function $f$ of a complex variable $z$ counterclockwise around a closed contour $\gamma$, this is equal to the sum over all residuals at positions $z = c_i$ of $f$ within $\gamma$
+When we integrate function $f$ of a complex variable $z$ counter-clockwise around a closed contour $\gamma$, this is equal to the sum over all residuals at positions $z = c_i$ of $f$ within $\gamma$
 \begin{equation}
  2 \pi i\,\sum_{i=1}^{N}\,\mathrm{Res}(f,c_i) = \oint_\gamma f(z)\,dz.
  \elabel{RES_I}
@@ -130,7 +139,7 @@ If we first apply the transformation $q \rightarrow i \bar{q}$ and than use equa
  \frac{1}{2 \pi i} \oint_{\gamma}
  \, e^{- D \bar{q}^2 t} \, \frac{g(x,i \bar{q}|x_0)}{h(i \bar{q})} \, 2 D i \bar{q} \, d\bar{q} = \sum_{i=1}^{\infty} e^{ - D \bar{q}^2 t} \, \left. \frac{g(x,i \bar{q}|x_0)}{\partial_q h(i \bar{q})} 2 D i \bar{q} \right|_{\bar{q} = \beta_i},
 \end{equation}
-where we used that $ds = 2Dq\,dq$. Now we can fill in our Laplace solutions and obtain the final solution in real space. The hyperbolic functions wil become trigeometric functions due to the purely imaginary arguments. Collecting all imaginary terms, and using the fact that the function is evaluated at the roots of \eref{ROOT_I}, we find that indeed the imaginary part dissapears and are left with a real function. Writing the result such that it is manifestly zero at the boundaries, we find
+where we used that $ds = 2Dq\,dq$. Now we can fill in our Laplace solutions and obtain the final solution in real space. The hyperbolic functions will become trigonometric functions due to the purely imaginary arguments. Collecting all imaginary terms, and using the fact that the function is evaluated at the roots of \eref{ROOT_I}, we find that indeed the imaginary part disappears and are left with a real function. Writing the result such that it is manifestly zero at the boundaries, we find
 \begin{multline}
  p_r(x,t|x_0) = -2 \sum_{i=1}^{\infty} \, e^{- D \beta_i ^2 t} \, \mathrm{sin} \, \beta_i (L_r - x) \\ 
 \frac{D \beta_i \, \mathrm{sin} \, \beta_i (L_l + x_0) + k \, \mathrm{sin} \, \beta_i L_l \,\, \mathrm{sin} \, \beta_i x_0}{D \, (L \beta_i \mathrm{cos} \, \beta_i L + \, \mathrm{sin} \, L \beta_i ) + k \,( L_r \, \mathrm{cos} \, \beta_i L_r \,\, \mathrm{sin} \, \beta_i L_l + L_l \, \mathrm{cos} \, \beta_i L_l \,\, \mathrm{sin} \, \beta_i L_r )},
@@ -146,18 +155,47 @@ where $L=L_r + L_l$ in both equations. Note that when $p_r$ is evaluated for $x<
 
 
 \subsection{Validating the solution}
-To validate our solution, we first check if it obeys the imposed boundary conditions. Clearly, \erefstwo{FSOL_R}{FSOL_L} are zero at $L_r$ and $-L_l$ respectivily. 
+To validate our solution, we first check if it obeys the imposed boundary conditions. Clearly, \erefstwo{FSOL_R}{FSOL_L} are zero at $L_r$ and $-L_l$ respectively, due to the overall sinus term. To check the continuity condition $p_r(x=0,t|x_0)=p_l(x=0,t|x_0)$, we interchange $x$ with $x_0$ in $p_r$ and evaluate both solutions at $x=0$. Only comparing numerators, the term proportional to $k$ vanishes in $p_r$, and both equations become the same. 
 
+The most important condition is that the flux imbalance at the position of the sink is proportional to the probability density at that point, \eref{Cont_II}. To check, we differentiate both the numerators with respect to $x$, let $x=0$, and subtract them to get
+\begin{equation}
+ 2 \mathrm{D} s^2 \mathrm{Cos}[\mathrm{L_l} s] \mathrm{Sin}[s (\mathrm{L_r}-\mathrm{x_0})]-2 \left(\mathrm{D} s^2 \mathrm{Cos}[\mathrm{L_l} s]+\mathrm{k} s \mathrm{Sin}[\mathrm{L_l} s]\right) \mathrm{Sin}[s (\mathrm{L_r}-\mathrm{x_0})].
+\end{equation}
+The first and second term in this equation cancel, leaving the third term which is equal to $k/D \, p_l(x=0,t|x_0)$, as was required. 
 
-\subsection{Plots of the Green's function}
+To validate it's implementation in \GFRD\,, we do a simple simulation with one particle and one sink on a finite rod. We measure the time the particle was bound with the sink, and calculate the average occupancy. This we can check with the analytical result for an equilibrated system,
+\begin{equation}
+\bar{n} = \frac{k_+ c}{k_+ c + k_-}.
+\end{equation}
+The result in \fref{sink_bound} shows excellent agreement with the theory.
 
+\begin{figure}[th]
+\centering
+\includegraphics[scale=.5]{SinkPbound}
+\caption{\flabel{sink_bound} Average occupancy of the sink for different values of the intrinsic association rate $k$. The domain size is $L=1\mu m$, containing one particle. The dissociation rate is $k_-=1ms$. Error bars are smaller than the plot dots.}
+\end{figure}
+
+\subsection{Visualizing the Green's function}
+To illustrate how the Green's function behaves, we show in \fref{sink} how the probability distribution (\erefstwo{FSOL_R}{FSOL_L}) and the flux changes over time. The left figure clearly shows a discontinuity at the position of the sink, and is zero at the boundaries. For small times, the probability distribution closely resembles that of the free propagator in an unbounded domain, because little flux has left the domain yet.
+
+\begin{figure}[ht]
+\begin{minipage}[ht]{.5\linewidth}
+\centering
+\includegraphics[scale=.3]{AbsSinkAbs_P}
+\end{minipage}
+\begin{minipage}[ht]{.5\linewidth}
+\centering
+\includegraphics[scale=.3]{AbsSinkAbs_Flux}
+\end{minipage}
+\caption{\flabel{sink} Green's function in a 1D domain with two absorbing boundaries at $r=0$ and $r=13$, a sink with rate $k=1$ at $x_s=5$ and a unit instantaneous source at $x_0=7$. The diffusion constant is $D=1$. {\bf Left}: Change of the probability distribution over time between $t=1$ (blue, on top) to $t=10$ (red, on the bottom). The discontinuity at the position of the sink is manifest. {\bf Right}: Fluxes leaving the domain. The total flux (blue line) is all the probability leaving the domain at time $t$. Because the particle starts closest to the sink, the flux through the sink (green) rises first. At later times the distribution starts to `see' the right boundary, as is shown of the left plot, and the flux through this (red) boundary starts to rise. The flux at the left boundary (light blue) is negative because probability leaves the domain flowing to the left. 
+}
+\end{figure}
 
 \subsection{Solution for a sink in an unbounded domain}
-
-For completes and its usefulnesses in \GFRD, we end this derivation with the Green's function for an absorbing sink at $x_s$ in the absence of absorbing boundaries at both sides
+For completes and its usefulness in \GFRD, we end this derivation with the Green's function for an absorbing sink at $x_s$ in an infinite domain
 \begin{multline}
  p(x,t|x_0) = \frac{1}{\sqrt{4 \pi D t}}e^{\frac{-(x-x_0)^2}{4 D t}} - \frac{k}{4 D}e^{\frac{k}{2 D}(|x-x_s|+|x_s-x_0|)+\frac{k^2 t}{4 D}} \\
 \mathrm{erfc}\left( \frac{|x-x_s|+|x_s-x_0|}{\sqrt{4 D t}}+\frac{k}{2D}\sqrt{D t} \right).
 \elabel{FSOL_NB}
 \end{multline}
-We note that we can map this solution to the solution of a radiation boundary condition at $x_s$ in a semi-infinite domain when we change $k \rightarrow 2 k$ and multiply the second term with 1/2. The servival probility function $S(t|x0)$ of the above function is equal to that of the radiation boundary when we double the rate $k$.
+We note that we can map this solution to the solution of a radiation boundary condition at $x_s$ in a semi-infinite domain when we change $k \rightarrow 2 k$ and multiply the second term with 1/2. The survival probability function $S(t|x_0)$ of the above function is equal to that of the radiation boundary when we double the rate $k$.

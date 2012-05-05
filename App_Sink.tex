@@ -13,7 +13,7 @@
 
 \section{Green's function with the sink}
 
-\subsection{\alabel{sink:GFRD} Important quantities for \GFRD}
+\subsection{\alabel{sink:GFRD} Important quantities for {\bf \GFRD}}
 
 For the functionallity of \GFRD\, we need the survival probability $S(t|x_0)$, the cumulative distribution function (c.d.f) in space $F(x^*,t|x_0)$ and the fluxes $q_x(t|x_0)$ leaving the domain. Probability flux leaves the domain at the left and right boundaries and via the sink.
 
@@ -23,10 +23,11 @@ Remeber that the Green's functions (\eref{SOL_R}) and (\eref{SOL_L}) were of the
 \end{equation}
 where $h'$ denotes the derivative of the denominator function $h(q)$. Because the required quantaties are obtained by integrating or differentiating the Green's functions with respect to their spatial coordinate $x$, the only part of the solution which changes is the numerator function $g_{r/l}$. Therefore, below we only write this part the equation.
 
-The survival probability is defined by the spatial integral of the Green's function over the whole domain. Because there is only a source (the initial delta peak) at $t = 0$, we expect $S(t)$ to be a monotonic decaying fucntion starting at 1,
+The survival probability is defined by the spatial integral of the Green's function over the whole domain
 \begin{equation} 
  S(t|x_0) = \int_{-L_l}^{0} p_l(x,t|x_0) \, dx \, + \, \int_{0}^{L_r} p_r(x,t|x_0) \, dx.
 \end{equation}
+
 The c.d.f. for the spatial coordinate $x$ is the integral of the Green's function from $-L_l$ to an arbitrary position $x^* \in [-L_l,L_r]$. Because we want the c.d.f. to be normelized, a.k. the c.d.f. $F \rightarrow 1$ as $x^* \rightarrow L_r$, we devide the integral with the survival probability,
 \begin{equation}
  \begin{split}
@@ -34,11 +35,17 @@ The c.d.f. for the spatial coordinate $x$ is the integral of the Green's functio
   F(x^*,t|x_0) & = \frac{1}{S(t|x_0)} \left( \int_{-L_l}^{0} p_l(x,t|x_0) \, dx \, + \, \int_{0}^{x^*} p_r(x,t|x_0) \, dx. \right) \quad (x^* > 0) 
  \end{split}
 \end{equation}
+
 The flux (net current moving to the right) through a point $x'$ lying within the domain is
 \begin{equation}
  q(t|x_0) = -D \left. \partial_x p(x,t|x_0) \right|_{x = x'},
 \end{equation}
-where $x'$ is either $-L_l$, zero or $L_r$.
+where $x'$ is either $-L_l$ or $L_r$. The flux leaving the system via the sink is
+\begin{equation}
+ q_{\rm sink}(t|x_0) = k p_l(0,t|x_0)
+\end{equation}
+
+Because all the integrals or differentials above are acting on single sinuses, finding the analytical expressions is easy, and we will not show the results here.
 
 \subsection{\alabel{sink:numerics} Numerical evaluation}
 
