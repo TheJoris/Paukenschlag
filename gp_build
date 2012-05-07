@@ -7,7 +7,7 @@
 # 2 - Power spectra plot.
 # 3 - Power spectra plot with inset.
 # 4 - Potentially difference between Gasper and Joris
-# 5 - Tablaux for sauration vs correlation time
+# 5 - Tablaux for saturation vs correlation time
 # 6 - Pbound with a sink
 
 plot=$1
@@ -438,6 +438,8 @@ set out "SinkPbound.eps"
 #set yrange [-2:2]
 #set xrange [0:1]
 
+n(x)=x*c/(x*c + kd)
+
 #set ytics 2 format "%g"
 #set xtics 2 format "%g"
 set xlabel "k"
@@ -449,9 +451,13 @@ set key bottom right
 set format x "10^{%L}"
 set log x
 
+c=1/1e-6
+kd=1000
 #plot "./Results.dat"
 plot "./SinkPbound.dat" using 2:3:(sqrt(\$4)) with yerrorbar ls 7 title "Average occupancy of the sink",\
-"./SinkPbound.dat" using 2:3 with lines ls 1 notitle
+n(x) with lines ls 1 notitle
+
+#"./SinkPbound.dat" using 2:3 with lines ls 1 notitle
 
 EOF
 
