@@ -1,19 +1,6 @@
-% \setcounter{figure}{0}
-% \setcounter{equation}{0}
-% \setcounter{table}{0}
-% \renewcommand{\theequation}{SI-\arabic{equation}}
-% \renewcommand{\thefigure}{SI-\arabic{figure}}\renewcommand{\figurename}{Figure}
-% \renewcommand{\thetable}{SI-\arabic{table}}
-% \setcounter{section}{0}
-% \renewcommand{\thesection}{SI-\Alph{section}}
-% \setcounter{subsection}{0}
-% \renewcommand{\thesubsection}{SI-\arabic{subsection}}
-% \setcounter{subsubsection}{0}
-% \renewcommand{\thesubsubsection}{SI-\arabic{subsubsection}}
+\section{Green's function with a sink}
 
-\section{Green's function with the sink}
-
-\subsection{\alabel{sink:GFRD} Important quantities for {\bf \GFRD}}
+\subsection{\alabel{sink:GFRD} Important quantities for eGFRD}
 
 For the functionallity of \GFRD\, we need the survival probability $S(t|x_0)$, the cumulative distribution function (c.d.f) in space $F(x^*,t|x_0)$ and the fluxes $q_x(t|x_0)$ leaving the domain. Probability flux leaves the domain at the left and right boundaries and via the sink.
 
@@ -28,7 +15,7 @@ The survival probability is defined by the spatial integral of the Green's funct
  S(t|x_0) = \int_{-L_l}^{0} p_l(x,t|x_0) \, dx \, + \, \int_{0}^{L_r} p_r(x,t|x_0) \, dx.
 \end{equation}
 
-The c.d.f. for the spatial coordinate $x$ is the integral of the Green's function from $-L_l$ to an arbitrary position $x^* \in [-L_l,L_r]$. Because we want the c.d.f. to be normelized, a.k. the c.d.f. $F \rightarrow 1$ as $x^* \rightarrow L_r$, we devide the integral with the survival probability,
+The c.d.f. for the spatial coordinate $x$ is the integral of the Green's function from $-L_l$ to an arbitrary position $x^* \in [-L_l,L_r]$. Because we want the c.d.f. to be normelized, a.k. the c.d.f. $F \rightarrow 1$ as $x^* \rightarrow L_r$, we renormalize the integral with the survival probability,
 \begin{equation}
  \begin{split}
   F(x^*,t|x_0) & = \frac{1}{S(t|x_0)} \int_{-L_l}^{x*} p_l(x,t|x_0) \, dx \quad (x^* \leq 0), \\

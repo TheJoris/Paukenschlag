@@ -12,9 +12,9 @@ The differential equation governing the domain for a particle diffusing in 1D wi
  \frac{\partial p(x,t|x_0)}{\partial t} = D \, \nabla ^2 p(x,t|x_0) - k \, \delta (x - x_s) p(x,t|x_0).
  \elabel{DE_I}
 \end{equation}
-Furthermore, their is an absorbing boundary at $L_l$ (left boundary) and another at $L_r$ (right boundary),
+Furthermore, their is an absorbing boundary at $-L_l$ (left boundary) and another at $L_r$ (right boundary),
 \begin{eqnarray}
- p(L_l,t|x_0) & = & 0 \\
+ p(-L_l,t|x_0) & = & 0 \\
  p(L_r,t|x_0) & = & 0.
 \elabel{BC_I}
 \end{eqnarray}
@@ -34,7 +34,7 @@ The initial condition is given by an unit instantaneous source at $x_0$
 
 \subsection{Obtaining the Green's function}
 
-Solving equation (\eref{DE_I}) directly is difficult due to the term containing both the delta function and the function we want to solve for. We can however split the full domain $[L_l,L_r]$ in to the sub-domains $[L_l,x_s]$ and $[x_s,L_r]$, with the delta sink in between. The delta-sink is now introduced into the problem by the continuity conditions which have to hold between the two domains. 
+Solving equation (\eref{DE_I}) directly is difficult due to the term containing both the delta function and the function we want to solve for. We can however split the full domain $[-L_l,L_r]$ in to the sub-domains $[-L_l,x_s]$ and $[x_s,L_r]$, with the delta sink in between. The delta-sink is now introduced into the problem by the continuity conditions which have to hold between the two domains. 
 
 \subsubsection{Deriving the continuity conditions}
 
@@ -50,7 +50,7 @@ which means that probability density is conserved everywhere (ignoring boundarie
 \end{gather}
 introducing $P$ for the primitive of p w.r.t. $x$
 \begin{equation}
-\left[ -D \partial_x p(x,t|x_0)  \right]_{x_s - \epsilon}^{x_s + \epsilon} + \partial_t \left. P(x,t|x_0) \right|_{x_s - \epsilon}^{x_s + \epsilon} = -k p(x_s,t|x_0) \nonumber,
+\left. -D \partial_x p(x,t|x_0)  \right|_{x_s - \epsilon}^{x_s + \epsilon} + \partial_t \left. P(x,t|x_0) \right|_{x_s - \epsilon}^{x_s + \epsilon} = -k p(x_s,t|x_0) \nonumber,
 \end{equation}
 and multiplying the second term on the left hand side with $2\epsilon/2\epsilon$, we get
 \begin{gather}
@@ -62,11 +62,12 @@ Now taking the limit $\epsilon \rightarrow 0$,
  \lim_{\epsilon \to 0} J_r(x_s + \epsilon,t|x_0) - J_l(x_s - \epsilon,t|x_0) + \partial_t p(x_s,t|x_0) 2\epsilon = -k p(x_s,t|x_0) \nonumber \\
  J_r(x_s,t|x_0) - J_l(x_s,t|x_0) = -k p(x_s,t|x_0).
 \end{gather}
-Clearly, the sink causes a discontinuity in the flux from the left to the right domain $J_l$, and vice versa for $J_r$, at the boundary. We use this result for the continuity conditions between the two domains, which are:
+Clearly, the sink causes a discontinuity in the flux from the left to the right domain $J_l$, and vice versa for $J_r$, at the boundary. We use this result to state the continuity conditions which must hold between the two domains:
+\newline
 
 (I) The solution for the left domain $p_l$ has to equal the solution for the right domain $p_r$ at $x_s$,
 \begin{equation} 
- p_l(x_s,t|x_0,\tau) = p_r(x_s,t|x_0) 
+ p_l(x_s,t|x_0) = p_r(x_s,t|x_0) 
  \elabel{Cont_I}
 \end{equation}.
 (II) The flux from the left domain at $x_s$ should equal the flux from the right domain minus the flux which left via the sink,
@@ -117,7 +118,7 @@ When we integrate function $f$ of a complex variable $z$ counter-clockwise aroun
  \elabel{RES_I}
 \end{equation}
 
-Investigating our solutions (\eref{SOL_R}) and (\eref{SOL_L}), we find that they are rational functions where both the numerator and denominator are holomorphic. We denote the numerator by $g_{r/l}(x,q|x_0)$ and the denominator by $h(q)$, where the subscript $r/l$ of the numerator indicates the solution for the right or the left domain. Both solutions have the same denominator apart from the factor $2 D q$ in the right domain, which we ignore for now because it cancels later on. Our solutions $p_{r/l}$ can thus be written as
+Investigating our solutions \erefstwo{SOL_R}{SOL_L}, we find that they are rational functions where both the numerator and denominator are holomorphic. We denote the numerator by $g_{r/l}(x,q|x_0)$ and the denominator by $h(q)$, where the subscript $r/l$ of the numerator indicates the solution for the right or the left domain. Both solutions have the same denominator apart from the factor $2 D q$ in the right domain, which we ignore for now because it cancels later on. Our solutions $p_{r/l}$ can thus be written as
 \begin{equation} 
  \hat{p}_{r/l}(x,q|x_0) = \frac{g_{r/l}(x,q|x_0)}{h(q)}.
 \end{equation}
@@ -132,9 +133,9 @@ where the $\beta_i$ 's are the positions of the simple poles and are the roots o
  \elabel{ROOT_I}
 \end{equation}
 
-The above equation only holds for real $q$ when $q = 0$, but this root can be ignored because $g(x=0,q|x_0) = 0$. The relation does have however, an infinite number of solutions when $q$ is purely imaginary. Remember that $q = \sqrt{s/D}$, which means that there are only poles for real $s < 0$. Looking at equation (\eref{INT_I}), the negative $s$ will give us a solution in the time domain which is monotonically decaying. This is obvious because for $t > 0$ we only have sinks and no source terms. Hence, from now on, we assume $q$ to be of the form $q = i \bar{q}, \, \bar{q} \in \mathbb{R}_{>0}$.
+The above equation only holds for real $q$ when $q = 0$, but this root can be ignored because $g(x,q=0|x_0) = 0$. However, the equation has an infinite number of solutions when $q$ is purely imaginary. Remember that $q = \sqrt{s/D}$, which means that there are only poles for real $s < 0$. Looking at \eref{INT_I}, the negative $s$ will give a solution in the time domain which is monotonically decaying. This is obvious because for $t > 0$ we only have sinks and no source terms. Hence, from now on, we assume $q$ to be of the form $q = i \bar{q}, \, \bar{q} \in \mathbb{R}_{>0}$.
 
-If we first apply the transformation $q \rightarrow i \bar{q}$ and than use equalities (\eref{RES_I}) and (\eref{RES_II}), the integral (\eref{INT_I}) becomes
+If we first apply the transformation $q \rightarrow i \bar{q}$ and than use \erefstwo{RES_I}{RES_II}, the integral in \eref{INT_I} becomes
 \begin{equation} 
  \frac{1}{2 \pi i} \oint_{\gamma}
  \, e^{- D \bar{q}^2 t} \, \frac{g(x,i \bar{q}|x_0)}{h(i \bar{q})} \, 2 D i \bar{q} \, d\bar{q} = \sum_{i=1}^{\infty} e^{ - D \bar{q}^2 t} \, \left. \frac{g(x,i \bar{q}|x_0)}{\partial_q h(i \bar{q})} 2 D i \bar{q} \right|_{\bar{q} = \beta_i},
@@ -192,7 +193,12 @@ To illustrate how the Green's function behaves, we show in \fref{sink} how the p
 \end{figure}
 
 \subsection{Solution for a sink in an unbounded domain}
-For completes and its usefulness in \GFRD, we end this derivation with the Green's function for an absorbing sink at $x_s$ in an infinite domain
+For completes and its usefulness in \GFRD, we end this derivation with the Green's function for an absorbing sink at $x_s$ in an infinite domain. The solution in Laplace space reads
+\begin{equation}
+ \hat{p}(z,s|\sigma) = \frac{1}{2 D_1 q}e^{-q|z|} - \frac{k_+}{4 D^2}\frac{e^{-q|z|}}{q(q+\frac{k_+}{2 D_1})}, \quad q=\sqrt{\frac{s}{D_1}},
+ \elabel{LSOL_NB}
+\end{equation}
+which we can transform to the time domain using a table in \cite{Carslaw1959}
 \begin{multline}
  p(x,t|x_0) = \frac{1}{\sqrt{4 \pi D t}}e^{\frac{-(x-x_0)^2}{4 D t}} - \frac{k}{4 D}e^{\frac{k}{2 D}(|x-x_s|+|x_s-x_0|)+\frac{k^2 t}{4 D}} \\
 \mathrm{erfc}\left( \frac{|x-x_s|+|x_s-x_0|}{\sqrt{4 D t}}+\frac{k}{2D}\sqrt{D t} \right).

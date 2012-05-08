@@ -3,7 +3,7 @@
 \subsection{Introduction}
 
 \subsubsection{Reversible reactions}
-We want to design a simple Brownian Dynamics algorithm designed for simulating second order reactions of the form
+We want to design a simple Brownian Dynamics algorithm designed for simulating second order chemical reactions of the form
 \begin{equation}
 {\rm A} + {\rm B} \rates{k_{\rm on}}{k_{\rm off}} {\rm C}
 \end{equation}
@@ -11,103 +11,104 @@ where two particle A and B can form a complex with the macroscopic forward rate 
 \begin{equation}
 {\rm A} + {\rm B} \rates{k_{\rm D}}{k_{\rm D,b}} A \cdots B \rates{k_{\rm a}}{k_{\rm d}} {\rm C}.
 \end{equation}
-From left to right this equation describes the diffusive movement of the particles toward each other with a rate $k_D$, forming the intermediate state $A \cdots B$ with the particles in contact, and then, can form a complex C with the intrinsic association rate $k_a$. The equation in reverse reads: the dissociation of the complex C to the intermediate state with an intrinsic dissociation rate $k_d$, and the diffusion of the particles into the bulk with a rate $k_{D,b}$. These intrinsic rates $k_a$ and $k_d$ are, when the system is in equilibrium, related to the macroscopic rates $k_{\rm on}$ and $k_{\rm off}$ via the relation \cite{Agmon1990}
+From left to right this equation describes the diffusive movement of the particles toward each other with a rate $k_D$, forming the intermediate state $A \cdots B$ with the particles in contact, and then, can form a complex C with the intrinsic association rate $k_a$. The equation in reverse reads: the dissociation of the complex C to the intermediate state with an intrinsic dissociation rate $k_d$, and the diffusion of the particles into the bulk with a rate $k_{D,b}$. These intrinsic rates $k_a$ and $k_d$ are, when the system is in equilibrium, related to the macroscopic rates $k_{\rm on}$ and $k_{\rm off}$ via the relation
 \begin{equation}
 K_{eq} = \frac{k_{\rm on}}{k_{\rm off}} = \frac{k_{\rm a}}{k_{\rm d}}.
 \end{equation}
+The algorithm needs to simulate both the formation and destruction of the intermediate complex $A\cdots B$, our the advanceing our receding between two particles. Furthermore, when two particles formed an intermediate complex or are 'at contact', we need to determine the probability by which they react. We derive this probability using detailed balance.
 
-\subsection{Detailed Balance}
+\subsection{Detailed balance}
 
-The key principle we want to enforce with our algorithm is the detailed balance relation between the unbound state of an isolated pair of particles and their bound state when the particles form a complex, given that the system is in equilibrium. We denote the unbound state by the probability density function $P_u(\vec{r})$, which gives the probability density that two particles A and B are separated by an inter-particle vector $\vec{r}$. The probability for the particles to be in the bound state C is $P_b$. The detailed balance relation between these two states is
+The key principle we want to enforce with our algorithm is the detailed balance relation between the unbound state of an isolated pair of particles and their bound state when the particles formed a complex, given that the system is in equilibrium. We denote the unbound state by the probability density function $P_u(\vec{r})$, which gives the probability density that two particles A and B are separated by an inter-particle vector $\vec{r}$. The probability for the particles to be in the bound state C is $P_b$. The detailed balance relation between these two states is
 \begin{equation}
- P_{ \rm{u} }(\vec{r})d\vec{r} \,\, P_{ \rm{u} \rightarrow \rm{b} }(\vec{r}) = P_{ \rm{b} } \,\, P_{ \rm{b} \rightarrow \rm{u} }(\vec{r})d\vec{r}
+ P_{ \rm{u} }(\vec{r})d\vec{r} \,\, P_{ \rm{u} \to \rm{b} }(\vec{r}) = P_{ \rm{b} } \,\, P_{ \rm{b} \to \rm{u} }(\vec{r})d\vec{r}
 \elabel{DBeqn}
 \end{equation}
-where $P_{ \rm{u} \rightarrow \rm{b} }(\vec{r})$ is the transition probability for the unbound state to change into the bound state and $P_{ \rm{b} \rightarrow \rm{u}}(\vec{r})d\vec{r}$ is the transition probability from the bound state to the unbound state. The explicit form of these functions will define how the forward and backward reactions take place in our BD scheme, and we will continue describing them. 
+where $P_{ \rm{u} \to \rm{b} }(\vec{r})$ is the transition probability for the unbound state to change into the bound state or forward move and $P_{ \rm{b} \to \rm{u}}(\vec{r})d\vec{r}$ is the transition probability from the bound state to the unbound state called backward move. The explicit form of these functions will define how the forward and backward reactions take place in our BD scheme, and we will continue describing them. 
 
 \subsubsection{Free movement}
 In this analysis we will assume the A particle to be fixed at the origin, and every timestep $\Delta t$ the B particle diffuses around with diffusion constant $D$ in the d-dimensional space (d = 1,2 or 3) it lives in. The stepsize of the move is drawn from the free propagator of Brownian motion 
 \begin{equation}
 P^{\rm free}(\vec{r},\Delta t|\vec{r_0}) = \frac{1}{(4 \pi D \Delta t)^{d/2}}{\rm exp}(-\frac{(\vec{r}-\vec{r_0})^2}{4 D \Delta t}) 
 \end{equation}
-and the step direction is random. When the particle core of the particle overlaps with another core the move is rejected and the particle is placed at the original position. The propagator to make a free move with possibly a bounce is thus
+and the step direction is random. When the particle core of the particle overlaps with another core the move is rejected and the particle is placed at the original position. The full propagator to make a free move with possibly a bounce is thus
 \begin{multline}
  P^{\rm move}(\vec{r},\Delta t|\vec{r_0}) = P^{\rm free}(\vec{r},\Delta t|\vec{r_0}) \, \theta(r - \sigma) \, + \\ \int_{V} d\vec{r'}P^{\rm free}(\vec{r'},\Delta t|\vec{r_0}) \, \theta(\sigma - r')\delta(\vec{r}-\vec{r_0}),
 \elabel{move_prop}
 \end{multline}
-where $\sigma$ is sum of the radii of the geminate pair. 
+where $\sigma$ is sum of the radii of the particle pair. 
 
 \subsubsection{Forward move}
-If, after a move, their is another particle or surface inside the reaction volume of the particle, defined as the spherical shell around the particle with thickness $\delta$, the particle will attempt a reaction. This reaction attempt is accepted with a probability $P_{\rm acc}$. Thus, two particles initially in the unbound state $u$, separated by an inter-particle vector $\vec{r}$, move into the bound state with a probability
+Two particles can attempt a reaction when they lie in each other's {\it reaction volume}. The reactiom volume, denoted by $V^*$, is a spherical shell around each particle with a thickness $\delta$. The reaction attempt is accepted with a probability $P^{\rm acc}_{{\rm u}^* \to {\rm b}}$. Thus, two particles initially in the unbound state $u$, separated by an inter-particle vector $\vec{r_0}$, move into the bound state with a probability
 \begin{equation}
-P_{ \rm{u} \rightarrow \rm{b} }(\vec{r}) = P^{\rm move}_{{\rm u} \rightarrow {\rm u}^*}({\rm u}^*,\Delta t|\vec{r}) P^{\rm acc}_{{\rm u}^* \rightarrow {\rm b}}.
+P_{ \rm{u} \to \rm{b} }(\vec{r_0}) = P^{\rm move}_{{\rm u} \to {\rm u}^*}({\rm u}^*,\Delta t|\vec{r_0}) P^{\rm acc}_{{\rm u}^* \to {\rm b}}.
 \end{equation}
-here ${\rm u}^*$ denotes the state when the inter-particle vector lies inside the reaction volume. 
+here ${\rm u}^*$ denotes the intermediate complex our the state where the inter-particle vector lies inside the reaction volume. 
 
 \subsubsection{Backward move}
-The backward move starts with the dissociation of the complex with a probability $k_d \Delta t$. After which the two product particles are placed at a distance $r'$, inside the reaction volume, drawn from the flat distribution $(V^*)^{-1} \theta(\sigma + \delta - r')d\vec{r'}$. Here $V^*$ is the volume of the reaction volume, and serves to normalize the distribution. Thus the transition probability from being bound to being in the unbound state $u^*$ at position $\vec{r'}$ is
+The backward move starts with the dissociation of the complex with a probability $k_d \Delta t$. After which the two product particles are placed at a distance $r'$, inside the reaction volume, drawn from the flat distribution $(V^*)^{-1} \theta(\sigma + \delta - r')\theta(r' - \sigma)d\vec{r'}$, where $V^*$ normalizes the distribution. Thus the transition probability from being bound to being in the unbound state $u^*$ at position $\vec{r'}$ is
 \begin{equation}
- P^{\rm acc}_{b \rightarrow u^*}(\vec{r'})d\vec{r'} = k_d \Delta t \, \frac{\theta(\sigma + \delta - r') \, \theta(r' - \sigma) d\vec{r'}}{V^*}.
+ P^{\rm acc}_{b \to u^*}(\vec{r'})d\vec{r'} = k_d \Delta t \, \frac{\theta(\sigma + \delta - r') \, \theta(r' - \sigma) d\vec{r'}}{V^*}.
 \end{equation}
 After dissociating the B particle make's a move from $\vec{r'}$ to $\vec{r}$. Thus, the total transition probability from being bound to being unbound at an i.p.v. $\vec{r}$, is given by
 \begin{equation}
-P_{ \rm{b} \rightarrow \rm{u}}(\vec{r})d\vec{r} =  \int_{V} d\vec{r'} P^{\rm acc}_{b \rightarrow u^*}(\vec{r'}) P^{\rm move}_{u^* \rightarrow u}(\vec{r},\Delta t|\vec{r'})d\vec{r}.
+P_{ \rm{b} \to \rm{u}}(\vec{r})d\vec{r} =  \int_{V} d\vec{r'} P^{\rm acc}_{b \to u^*}(\vec{r'}) P^{\rm move}_{u^* \to u}(\vec{r},\Delta t|\vec{r'})d\vec{r},
 \end{equation}
-We integrate over all intermediate dissociation positions $\vec{r'}$, to condition on the move propagator that the particle starts inside the reaction volume.
+where we integrated over all intermediate positions inside the reaction volume.
 
 \subsubsection{Solving the detailed balance equation}
-Now we have defined both transition probabilities, we can solve the detailed balance equation (\eref{DBeqn}) for the acceptance probability of a forward move $P^{\rm acc}_{{\rm u}^* \rightarrow {\rm b}}$. We first use the important relation found in \cite{Morelli2008a} for a system in equilibrium
+Now we have defined both transition probabilities, we can solve the detailed balance equation (\eref{DBeqn}) for the acceptance probability of a forward move $P^{\rm acc}_{{\rm u}^* \to {\rm b}}$. We first use the important relation found in \cite{Morelli2008a} for a system in equilibrium
 \begin{equation}
  \frac{P_b}{P_u(\vec{r})d\vec{r}} = \frac{K_{\rm eq}}{d\vec{r}} = \frac{k_a}{k_d d\vec{r}},
 \end{equation}
 such that we can write
 \begin{equation}
- \frac{P_b}{P_u(\vec{r})d\vec{r}} = \frac{P_{ \rm{u} \rightarrow \rm{b} }(\vec{r})}{P_{ \rm{b} \rightarrow \rm{u} }(\vec{r})d\vec{r}} = \frac{k_a}{k_d d\vec{r}}.
+ \frac{P_b}{P_u(\vec{r})d\vec{r}} = \frac{P_{ \rm{u} \to \rm{b} }(\vec{r})}{P_{ \rm{b} \to \rm{u} }(\vec{r})d\vec{r}} = \frac{k_a}{k_d d\vec{r}}.
 \end{equation}
-Secondly, we show in \aref{newBD:fwdbwdeq} that the movement step in both transitions, apart from a normalization factor, equal and thus cancel. We are left with
+Secondly, we show in \aref{newBD:fwdbwdeq} that the movement step in both transition probabilities, apart from a normalization factor, equal and thus cancel. We are left with
 \begin{equation}
- \frac{P^{\rm acc}_{{\rm u}^* \rightarrow {\rm b}}}{k_d \Delta t/V^* \,\, d\vec{r}} = \frac{k_a}{k_d d\vec{r}}.
+ \frac{P^{\rm acc}_{{\rm u}^* \to {\rm b}}}{k_d \Delta t/V^* \,\, d\vec{r}} = \frac{k_a}{k_d d\vec{r}}.
 \elabel{semi-pivotal}
 \end{equation}
-Solving for the acceptance probability we find the pivotal result of our analysis
+Solving for the acceptance probability we find the principal result of our analysis
 \begin{equation}
- P^{\rm acc}_{{\rm u}^* \rightarrow {\rm b}} = \frac{k_a \Delta t}{V^*}
+ P^{\rm acc}_{{\rm u}^* \to {\rm b}} = \frac{k_a \Delta t}{V^*}.
 \elabel{pivotal}
 \end{equation}
 
-\subsection{Structures}
+\subsection{Interactions with structures}
 
-\subsubsection{Interaction between bulk particles and structures}
-Apart from reactions between particles, we also want to simulate interactions between particles and structures such as rods and planes. 
+\subsubsection{Interaction between particles and structures}
+Apart from reactions between particles, we also want to simulate interactions between particles and structures such as rods and planes. By an interaction, we mean the binding of a particle from the bulk with a structure, after which it can diffuse one or two dimensionally on this structure. Vice versa, a particle can fall from a structure, and start diffusing three dimensionally in the bulk.
 
-A particle can interact with a plane when the projection of it's center of mass lies in the plane and is separated less than a distance $\delta$. Due to the symmetry of the interaction, it is essentially a 1D problem, where the particle can interact with both sides of the plane. Therefore, the reaction volume is $V^*=2 \delta$.
+A particle can interact with a plane when the projection of it's center of mass lies in the plane and is separated less than a distance $\delta$. Due to the symmetry of the interaction, it is essentially a 1D problem. Since the particle can interact with both sides of the plane, the reaction volume is $V^*=2 \delta$.
 
-A particle interacts with a rod when it's c.o.m. lies on the central axis of the rod. This time, not the c.o.m., but the surface of the particle has to be within a distance $\delta$ of the surface of the rod to interact: $|{\bf r}_{\rm part}-{\bf r}_{\rm rod}| \leq \sigma_{rod}+\sigma_{part} + \delta $. If the particle would interact with it's c.o.m., it's cross section would depend on the rod radius only, and the probability of the particle finding the rod would be very small. Especially when we model DNA which has a very small radius indeed. Again, the cross section through the particle perpendicular to the main axis of the rod, reduces the interaction to a problem of two reacting particles in 2D. 
+A particle can interact with a rod when the projection of it's c.o.m. lies on the central axis of the rod. This time, not the c.o.m., but the surface of the particle has to be within a distance $\delta$ of the surface of the rod to interact: $|{\bf r}_{\rm part}-{\bf r}_{\rm rod}| \leq \sigma_{rod}+\sigma_{part} + \delta$. If the particle would interact with it's c.o.m., the cross section of the interaction would depend on the rod radius only, and the probability of the particle finding the rod would be very small. Especially when we model DNA, which has a very small radius indeed. If we look at the cross section through the particle, and perpendicular to the main axis of the rod, the problem is essentially a 2D diffusion-reaction problem. The reaction volume is thus an annulus, with inner radius $\sigma_{rod} + \sigma_{part}$, and the outer radius a $\delta$ longer.
 
-\subsubsection{Interaction between bulk particles and particles on structures}
-A particle living on a surface, which reacts with particles from the bulk, can have a complex reaction volume. For instance, a particle living on a rod, has a sphere minus a the cylinder protruding it as reaction volume. However, because the surface of the particle on which reactions are possible scales approximately with the same factor $\alpha$ as the reaction volume, they cancel in the acceptance probability, and we can just use the 3D acceptance probability for any surface-bulk direct binding process.
+\subsubsection{Interaction between particles and particles on structures}
+A particle living on a structure, which reacts with particles from the bulk, can have a complex reaction volume. For instance, a particle living on a rod, has a sphere minus a the cylinder protruding it as reaction volume. However, the surface of the particle on which reactions are possible, scales approximately with the same factor as the reaction volume. These factors cancel in the acceptance probability, and we can just use the 3D acceptance probability for any surface-bulk direct binding process
 \begin{equation}
- P^{\rm acc} = \frac{k'_a \Delta t}{V'^*} \sim \frac{ \alpha 4 \pi \sigma^2 \tilde{k}_a \Delta t}{\alpha 4 \pi \sigma^2 \delta} \sim \frac{k_a \Delta t}{V^*}
+ P^{\rm acc}_{\rm direct\:binding} = \frac{k'_a \Delta t}{V'^*} \sim \frac{ \alpha 4 \pi \sigma^2 \tilde{k}_a \Delta t}{\alpha 4 \pi \sigma^2 \delta} \sim \frac{k_a \Delta t}{V^*}.
 \end{equation}
 
 
 \subsection{Algorithm outline}
-Given is a simulation box containing surfaces and $N$ particles living either in the bulk (3D motion), on a plane (2D) or on a rot (1D) at time $t$. To propagate this system in time one timestep $\Delta t$, we start with generating a list of these particles in random order. We continue by propagating each particle sequentially in the order of the list. The propagation of a single particle can lead to the formation of a complex with another particle, or the dissociation of a complex in to two separate particles. 
+Given is a simulation box containing structures and $N$ particles living either in the bulk (3D motion), on a plane (2D) or on a rot (1D) at time $t$. To propagate this system in time one timestep $\Delta t$, we start with generating a list of these particles in random order. We continue by propagating each particle sequentially in the order of the list. The propagation of a single particle can lead to the formation of a complex with another particle, or the dissociation of a complex in to two separate particles. 
 
 The formation of a complex between particles A and B is simulated via:
 
 \begin{enumerate}
 \item Generate a trial displacement $\Delta x$ in each Cartesian coordinate the particle is allowed to move in with a length drawn from a Gaussian distribution with zero mean (or $v \Delta t$, in the case with drift) and standard deviation $\sqrt{2D\Delta t}$: $\vec{x}_{\rm new} = \vec{x}_{\rm old} + \Delta \vec{x}(D,v,\Delta t)$.
-\item If the displacement leads to an overlap of the particle core with either another particle's core or the surface of a rod, the move is rejected and the particle is placed at it's old position. If the center of mass of the particle crosses a plane, the move is also rejected. If none of the above is the case, the move is accepted and the particle is placed at it's new position.
-\item Check if their are one or more particles or surfaces within the reaction volume. If their are one or more objects in the volume, attempt a reaction with each particle $i$ with an acceptance probability $P_{\rm acc}^i = 0.5 k_{a}^i \Delta t/V_{\rm react, i}$. We assume the total acceptance probability always adds up to less than one. 
-\item If one attempt is accepted, particles A and B are removed and a particle of type $C$ is placed at the center of mass between A and B. Both particles are also removed from the propagation sequence list. 
+\item If the displacement leads to an overlap of the particle core with another particle's core, the move is rejected and the particle is placed at it's old position. If the center of mass of the particle crosses a plane, or shell overlaps with a rod, the move is also rejected. If none of the above is the case, the move is accepted and the particle is placed at it's new position.
+\item Check if their are one or more particles or structures within the reaction volume. If their are one or more objects in the volume, attempt a reaction with each particle $i$ with an acceptance probability $P_{\rm acc}^i = k_{a}^i \Delta t/V_{\rm react, i}$. We assume the total acceptance probability always adds up to less than one. 
+\item If an attempt is accepted, particles A and B are removed and a particle of type $C$ is placed at the center of mass between A and B. Both particles are also removed from the propagation sequence list. 
 \end{enumerate}
 
 The dissociation of a C particle into a geminate pair A and B, manifests itself via:
 
 \begin{enumerate}
-\item The dissociation of the complex can occur each timestep with a probability $k_d \Delta t$. If accepted, the C particle is replaced by an A and a B particle with the c.o.m. at the position of the C particle. The particles are placed at a random position in a uniform distribution inside the reaction volume.
-\item After dissociation at least one particle can make a move using the free propagator. The other particle only moves in 50 percent of the cases. 
+\item The dissociation of the complex can occur each timestep with a probability $k_d \Delta t$. If accepted, the C particle is replaced by an A and a B particle with the c.o.m. at the position of the C particle. The particles are placed at a random position with a uniform distribution inside the reaction volume.
+\item After dissociation at least one particle can make a move using the free propagator. To fullfill detailed balance, the other particle only moves in 50 percent of the cases. 
 \end{enumerate}
 Continue with the next particle in the list until the list is empty.
 
@@ -115,16 +116,17 @@ Continue with the next particle in the list until the list is empty.
 \subsection{Correcting for the double reaction attempt}
 
 \subsubsection{Forward move}
-The algorithm described above simulates the particle dynamics sequentially. Thus, for a geminate pair, the number of reaction attempts per timestep will be greater than one: in the case the first reaction attempt failed, the second particle is allowed to make another attempt. As a result, the influx into the bound state will be greater than derived above, and the acceptance probability has to be decreased to compensate for this. 
+The algorithm described above simulates the particle dynamics sequentially. Thus, for a geminate pair, the number of reaction attempts per timestep will be greater than one: in case the first reaction attempt failed, the second particle is allowed to make another attempt. As a result, the influx into the bound state will be greater than derived above, and the acceptance probability has to be decreased to compensate for this. 
 
-In the limit of small acceptance probabilities, the average number of moves per timestep made by the geminate pair is two. Given that the pair is in equilibrium, this means that there are made two equal reaction attempts as described in the mathematical analysis above. Therefore we divide the acceptance probability we found earlier (\eref{pivotal}) by two.
+In the limit of small acceptance probabilities, the average number of moves per timestep made by the geminate pair is two. Given that the pair is in equilibrium, this means that there are made two equal reaction attempts as defined in the mathematical analysis above. Therefore, we divide the acceptance probability we found earlier (\eref{pivotal}) by two.
 
 \subsubsection{Backward move}
-In the backstep, the product particles from the dissociated complex, after being placed in their reaction volume, have to make a step with the free propagator in order for detailed balance to hold. This is because they made a diffusion step in the forward move prior to forming a complex. In the forward step either only one particle made a move and reacted, or both particles moved and the second particle reacted. In the limit of small acceptance probabilities, the first and second particle will initiate a reaction with equal probability, and the average number of moves made before reaction is one and a half (1.5). Therefore, in the backstep, we let one particle move and the other one with a 50 percent probability.
+In the backstep, after the decay products of the complex are placed in the reaction volume, they have to make a step with the free propagator in order for detailed balance to hold. This is because they made a diffusion step in the forward move prior to forming a complex. In the forward step either only one particle made a move and reacted, or both particles moved and the second particle reacted. In the limit of small acceptance probabilities, the first and second particle will initiate a reaction with equal probability, and the average number of moves made before reaction is one and a half. Therefore, in the backstep, we let one particle move and the other one with a 50 percent probability.
 
 
 \subsection{Choosing the timestep for a multi domain in eGFRD}
-Given a multi domain containing multiple particles and possibly a surface, we want to choose a timestep as large as possible while taking into account the following constraints:
+
+\GFRD\, uses Brownian Dynamics when three or more particles are too close together to form a pair domain, and when seperate single domains would be inefficient. Here the algorithm forms a multi-domain: a connected set of spherical domains around each particle. Given such a domain, we want to choose the largest possible timestep while taking into account the following constraints
 \begin{equation}
  \Delta t \leq \frac{(\alpha \sigma_{\rm min})^2 }{D_{max}}.
  \elabel{BDcntrI}
@@ -138,7 +140,7 @@ Where $\sigma_{min}$ is the smallest particle radius and $D_{max}$ the maximum d
 
 The first constraint sets the average max stepsize to a fraction $\alpha$ of the minimal particle radius in the multi. This prohibits particles from stepping over other particles and makes sure the particle doesn't escape the multi with to great a step. The second constraint sets the highest acceptance probability in the multi equal to $\beta$. This to ensure that the correction made for the double reaction attempts is valid. 
 
-We set the reaction length $\delta$ equal to $\alpha \, \sigma_{\rm min}$, or the maximal stepsize. A particle will generate an escape event when it's reaction volume lies outside the multi domain. When a particle escapes, it makes an error because particles in a multi can, by design, only initiate reactions with other particles inside the same multi domain. Choosing $\delta$ this way we minimize this error while not decreasing the timestep below the constraint in \eref{BDcntrI}.
+We let the reaction length $\delta$ equal to $\alpha \, \sigma_{\rm min}$, or the maximal stepsize set in \eref{BDcntrI}. A particle will generate an escape event when it's reaction volume lies outside the multi domain. When a particle escapes, it underestimates the reaction probability because particles in a multi can, by design, only initiate reactions with other particles inside the same multi domain. Choosing $\delta$ this way we minimize this error while not decreasing the timestep below the constraint set in \eref{BDcntrI}.
 
 In \GFRD\, we choose $\alpha = 0.05$ and $\beta = 0.01$.
 
@@ -147,3 +149,5 @@ Show 2D irr pos density plot with analytic result.
 Show Pbound v.s. increasing ka or N
 
 Compare 1D diffusion with old and new algorithm. Reversible: same timestep, error in Surival prob. Performance in rounds/second.
+
+Detailed blance failure.

@@ -1,20 +1,7 @@
-% \setcounter{figure}{0}
-% \setcounter{equation}{0}
-% \setcounter{table}{0}
-% \renewcommand{\theequation}{SI-\arabic{equation}}
-% \renewcommand{\thefigure}{SI-\arabic{figure}}\renewcommand{\figurename}{Figure}
-% \renewcommand{\thetable}{SI-\arabic{table}}
-% \setcounter{section}{0}
-% \renewcommand{\thesection}{SI-\Alph{section}}
-% \setcounter{subsection}{0}
-% \renewcommand{\thesubsection}{SI-\arabic{subsection}}
-% \setcounter{subsubsection}{0}
-% \renewcommand{\thesubsubsection}{SI-\arabic{subsubsection}}
+\section{Noise in transcriptional regulation}
 
-\section{Appendix: Noise in transcriptional regulation}
-
-\subsection{\alabel{noise:corr_time} The correlation time (from \cite{DeRonde2012})}
-The time-average of an observable $A\br{t}$\cite{Frenkel2002} is defined as
+\subsection{\alabel{noise:corr_time} Variance, correlation time and power spectra}
+From the appendix of \cite{DeRonde2012}. The time-average of an observable $A\br{t}$\cite{Frenkel2002} is defined as
 \begin{align}
 \elabel{si:time_av_mean}
 A_T=\frac{1}{T}\int_0^T dt A\br{t}
@@ -123,16 +110,16 @@ where $\mathscr{L}_{\vect{r}}$ is the 'diffusion operator' acting on the coordin
 \pdiff{p(\vect{r},t|\vect{r_0})}{t} = \int d\vect{r}' \left(\pdiff{}{t} p(\vect{r},t-t'|\vect{r}') \right) p(\vect{r}',t'|\vect{r_0}) \\
  = \int d\vect{r}' \left( - \pdiff{}{t'} p(\vect{r},t - t'|\vect{r}') p(\vect{r}',t'|\vect{r_0}) \right) + p(\vect{r},t - t'|\vect{r}') \left( \pdiff{}{t'} p(\vect{r}',t'|\vect{r_0}) \right) 
 \end{multline}
-where, in the second line, we let the time derivative act on $t'$. Furthermore we let it act on both Green's functions and compensate with the second term. Because $p(\vect{r},t|\vect{r_0})$ describes a Markov process, it doesn't depend on the intermediate time $t'$, so the first term cancels. Invoking the diffusion equation for the time operator in the remaining term we get
+where, in the second line, we let the time derivative act on $t'$. Furthermore we let it act on both Green's functions and compensate with the second term. The integral over ${\bf r'}$ acts on all terms. Because $p(\vect{r},t|\vect{r_0})$ describes a Markov process, it doesn't depend on the intermediate time $t'$, so the first term cancels. Invoking the diffusion equation for the time operator in the remaining term we get
 \begin{eqnarray}
  \pdiff{p(\vect{r},t|\vect{r_0})}{t} & = & \int d\vect{r}' p(\vect{r},t - t'|\vect{r}') \left[ \mathscr{L}_{\vect{r}'}^{\phantom{\dag}} p(\vect{r}',t'|\vect{r_0}) \right] \\
  & = & \int d\vect{r}' \left[ \mathscr{L}_{\vect{r'}}^{\dag} p(\vect{r},t - t'|\vect{r}') \right] \, p(\vect{r}',t'|\vect{r_0}). \elabel{bsm_1}
 \end{eqnarray}
 In the second line we applied integration by parts twice and threw away the boundary terms. If we let the arbitrary timepoint $t'$ go to zero in \eref{bsm_1}, the second Green's function changes into $\delta(\vect{r}-\vect{r}')$ and the integral vanisches. The result is the backward Kolmogorov equation
 \begin{eqnarray}
- \pdiff{p(\vect{r},t|\vect{r_0})}{t} & = & \mathscr{L}_{\vect{r_0}}^{\dag} p(\vect{r},t|\vect{r_0}) \\
- & = & r_0^{1-d} e^{V(r_0)} \pdiff{}{r_0} D r_0^{d-1} e^{-V(r_0)} \pdiff{}{r_0} p(\vect{r},t|\vect{r_0}).
  \elabel{backward_eqn}
+ \pdiff{p(\vect{r},t|\vect{r_0})}{t} & = & \mathscr{L}_{\vect{r_0}}^{\dag} p(\vect{r},t|\vect{r_0}) \\
+ & = & r_0^{1-d} e^{V(r_0)} \pdiff{}{r_0} D r_0^{d-1} e^{-V(r_0)} \pdiff{}{r_0} p(\vect{r},t|\vect{r_0}). 
 \end{eqnarray}
 Integrating both sides to $\vect{r}$ we get
 \begin{equation}
@@ -153,7 +140,7 @@ where $p$ has a radiation boundary at $\sigma$. The time derivative of the influ
 When we evaluate \eref{S_eqn} at $r_0=\sigma$, we see, using Kolmogorov \eref{backward_eqn}, that the time derivatives of both quantaties obey the same differential equation. Furthermore, in the limit $t \to 0$, both \eref{bsm_3} and \eref{bsm_k} equal. We conclude that \eref{bsm_k} must hold.
 
 
-\subsection{\alabel{noise:Seq_approx} Approximating the $\mathscr{S}_{\rm irr}(t|{\rm eq})$ function}
+\subsection{\alabel{noise:Seq_approx} Approximating the survival probability in equilibrium}
 We want to approximate the survival probability of a promoter in equilibrium sollution
 \begin{equation}
  \mathscr{S}_{\rm irr}(t|{\rm eq}) = {\rm exp}\left(-c \int_0^t k_{{\rm irr}}(t') dt'\right) = {\rm exp}\left(-c k_+ \int_0^t S(t'|\sigma) dt'\right)
@@ -216,15 +203,3 @@ We want evaluate the fourier transform of the delta function used in solving \er
  = f(\sigma, z) {\rm J_0}(k \sigma)
 \end{multline}
 The first equality is the defenition of the Fourier integral in the plane perpendicular to the DNA. In the second line we write out the innerproduct, where the angle bewteen {\bf k} and {\bf r} is shifted w.r.t. $\theta$. Since we integrate the full circle this shift cancels, and we get a Bessel function of the first kind. The integral over $r$ amount to replacing every accurance of $r$ with $\sigma$.
-
-
-\subsection{\alabel{noise:1dsystem} 1D domain with sink, in time and Laplace domain}
-The Green's function, in an unbounded domain, with an irreversible sink and the initial condition both at the origin, is given by
-\begin{multline}
- p(z,t|z_0=0) = \frac{1}{\sqrt{4 \pi D_1 t}}e^{\frac{-z^2}{4 D_1 t}} - \frac{k_+}{4 D_1}e^{\frac{k_+}{2 D_1}(|z|)+\frac{k_+^2 t}{4 D_1}} \\
-\mathrm{erfc}\left( \frac{|z|}{\sqrt{4 D_1 t}}+\frac{k_+}{2 D_1}\sqrt{D_1 t} \right).
-\end{multline}
-Transforming this to Laplace space
-\begin{equation}
- \hat{p}(z,s|\sigma) = \frac{1}{2 D_1 q}e^{-q|z|} - \frac{k_+}{4 D^2}\frac{e^{-q|z|}}{q(q+\frac{k_+}{2 D_1})}, \quad q=\sqrt{\frac{s}{D_1}}.
-\end{equation}
