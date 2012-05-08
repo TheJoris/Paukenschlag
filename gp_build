@@ -43,7 +43,7 @@ set style line 15 lw 2 lt 1 lc rgb 'gray90'
 set style line 16 lw 4 lt 1 lc rgb '#FF0000'
 set style line 17 lw 2 lt 2 lc rgb '#FF040E'
 set style line 18 lw 2 lt 1 lc rgb '#006868'
-set style line 19 lw 4 lt 1 lc rgb '#68FFAA'
+set style line 19 lw 4 lt 2 lc rgb '#68FFAA'
 set style line 20 lw 2 lt 1 lc rgb '#FFE9E5'
 "
 
@@ -464,3 +464,60 @@ EOF
 epstopdf SinkPbound.eps
 fi
 
+
+#Survival prob in eq, ignoring time dep. rebinding.
+if [[ $plot -eq 7 ]]
+then
+
+gnuplot << EOF -persist
+
+$lines1
+$lines2
+
+set terminal postscript eps enhanced color "CMSS10, 15"\
+fontfile "$fontfile1" fontfile "$fontfile2" fontfile "$fontfile3"
+set out "SeqApprx.eps"
+
+set size 1,1
+set origin 0,0
+#set nokey
+set multiplot
+
+set size 1,1
+set origin 0,0
+
+#set format y "10^{%L}"
+#set format x "10^{%L}"
+
+#set yrange [-2:2]
+#set xrange [0:1]
+
+#set ytics 2 format "%g"
+#set xtics 2 format "%g"
+set xlabel "t [s] "
+set ylabel "Survival Probability"
+#set rmargin 4
+#set key bottom left
+
+#set arrow nohead from -6,0 to 0,0 ls 14
+
+plot "./SeqApprx.dat" using 1:2 with lines ls 16 title "{/Symbol G}(t|eq)",\
+"./SeqApprx.dat" using 1:3 with lines ls 19 title "S(t|{/Symbol s})"
+
+set size 0.5,0.5
+set origin .4,.4
+set format x "10^{%L}"
+set yrange [.4:1.05]
+set ytic (.4,.6,.8,1)
+set xtic (1e-8,5e-7,1e-6)
+set noxlabel
+set noylabel
+set nokey
+
+plot "./SeqApprxInset.dat" using 1:2 with lines ls 16 title "{/Symbol G}(t|eq)",\
+"./SeqApprxInset.dat" using 1:3 with lines ls 19 title "S(t|{/Symbol s})"
+
+EOF
+
+epstopdf SeqApprx.eps
+fi

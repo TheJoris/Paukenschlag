@@ -159,7 +159,7 @@ and in the limit $c\to0$, only the term linear in $t$ remains. We end with
  \lim_{c\to0} \mathscr{S}_{\rm irr}(t|{\rm eq}) = {\rm exp}\left(-c k_+ S(\infty|\sigma) \, t \right).
  \elabel{Seq_app2}
 \end{equation}
-Another way to appreciate this approximation, is to observe that the time at which the steady-state is reached is independent of the concentration (\eref{bsm_k}). When we lower the concentration, the time at which the promoter is almost certainly occupied, increases. Therefore, in the low concentration limit, the time interval in which the system is not in steady-state, compared to the average time in which a TF from the bulk binds to the promoter, becomes insignificantly small.
+Another way to appreciate this approximation, is to observe that the time at which the steady-state is reached is independent of the concentration (\eref{bsm_k}). When we lower the concentration, the time at which the promoter is almost certainly occupied, increases. Therefore, in the low concentration limit, the time interval in which the system is not in steady-state, compared to the average time in which a TF from the bulk binds to the promoter, becomes insignificantly small. This is illustrated in \fref{SeqApprx}.
 
 Finally, Laplace transforming \eref{Seq_app2}, we get
 \begin{equation}
@@ -178,6 +178,12 @@ is equal to the $t\to\infty$ limit of the time dependent rate coefficient,
 \begin{equation}
  k_{\infty} = \lim_{t \to \infty} k_{{\rm irr}}(t) = k_+ S(\infty|\sigma).
 \end{equation}
+
+\begin{figure}[hb]
+\centering
+\includegraphics[scale=.75]{SeqApprx}
+\caption{\flabel{SeqApprx} Plot showing timescale seperation between the survival probability of a promoter in equilibrium, and with only one TF at contact. TF's come from the bulk in the order of seconds, while a rebinding event takes place in the order of micro seconds, as is shown in the inset.}
+\end{figure}
 
 
 \subsection{\alabel{noise:promtoconc} Relating promoter state noise to fluctuations in concentration}
