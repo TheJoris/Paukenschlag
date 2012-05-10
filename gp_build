@@ -12,8 +12,8 @@
 
 plot=$1
 
-prefix2="/usr/share/texmf-texlive/fonts/type1/bluesky/cm"
-prefix1="/usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm"
+prefix1="/usr/share/texmf-texlive/fonts/type1/bluesky/cm"
+prefix2="/usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm"
 
 fontfile1="$prefix1/cmmib10.pfb"
 fontfile2="$prefix1/cmti12.pfb"
@@ -474,7 +474,7 @@ gnuplot << EOF -persist
 $lines1
 $lines2
 
-set terminal postscript eps enhanced color "CMSS10, 15"\
+set terminal postscript eps enhanced color "CMBX10, 15"\
 fontfile "$fontfile1" fontfile "$fontfile2" fontfile "$fontfile3"
 set out "SeqApprx.eps"
 
@@ -502,7 +502,7 @@ set ylabel "Survival Probability"
 #set arrow nohead from -6,0 to 0,0 ls 14
 
 plot "./SeqApprx.dat" using 1:2 with lines ls 16 title "{/Symbol G}(t|eq)",\
-"./SeqApprx.dat" using 1:3 with lines ls 19 title "S(t|{/Symbol s})"
+"./SeqApprx.dat" using 1:3 with lines ls 19 title "S(t|z_0)"
 
 set size 0.5,0.5
 set origin .4,.4

@@ -1,6 +1,6 @@
 \section{Introduction}
 
-The important concept of biology is that the microscopic behavior of small molecules governs the macroscopic behavior of living organisms. A key example is the way cells regulate protein levels by enhancing or repressing the expression of their genes. This is done by the binding of transcription factor proteins (TF) to specific sites on the DNA; the so called promoters. Because the number of TF's in a cell is typically very low, whether their is a TF present on a promoter or not varies considerably over time. These fluctuations propagate downstream to the actual protein syntheses, and in effect influences the organisms behavior. Understanding how the microscopic behavior of TF's sets the noise in transcriptional regulation is an important step in understanding cellar function.
+An important concept of biology is that the microscopic behavior of small molecules governs the macroscopic behavior of living organisms. A key example is the way cells regulate protein levels by enhancing or repressing the expression of their genes. This is done by the binding of transcription factor proteins (TF) to specific sites on the DNA; the so called promoters. Because the number of TF's in a cell is typically very low, whether their is a TF present on a promoter or not varies considerably over time. These fluctuations propagate downstream to the actual protein syntheses, and in effect influences the organisms behavior. Understanding how the microscopic behavior of TF's sets the noise in transcriptional regulation is an important step in understanding cellar function.
 
 \subsection{Motivation}
 Our investigation of the noise will be of two parts. First we investigate how to simulate the microscopic behavior of TF's around the promoter site. Second, we derive an analytic expression for the fundamental limit in the noise of transcriptional regulation. To specify our motifs, we continue elaborating on the problems which need to be solved.
@@ -11,7 +11,7 @@ The simulations are done with the \GFRD\, algorithm, which we describe in detail
 The second task has to do with crowding. \GFRD\, works well for systems where the particle density is very low. However, when three or more particles get too close, the efficiency of the algorithm breaks down, and the simulator switches locally to Brownian dynamics (BD). The old Brownian Dynamics algorithm implemented in \GFRD \cite{Morelli2008a}, only supported diffusion and reactions in 3D, but required integrals hard or even impossible to obtain for different geometries. In particular for the case of particles diffusing in two dimensions or simulating interactions with rod shaped objects (modeling DNA). We want to modify the algorithm such that we circumvent the hard integrals but keep the simplicity and compatibility with \GFRD.
 
 \subsubsection{Fundamental limit}
-The analysis of how accurate a biological system can measure a concentration starts with a seminal work by Berg and Purcell \cite{Berg1977}. To introduce the reader with the concept of noise, we repeat their intuitive derivation. 
+The analysis of how accurate a biological system can measure a concentration starts with the seminal work by Berg and Purcell \cite{Berg1977}. To introduce the reader with the concept of noise, we repeat their intuitive derivation. 
 
 A bacterium searching for food needs to measure the average ligand concentration $\bar{c}$ in it's surrounding. For simplicity, we envision a receptor (biological sensor) on it's membrane as a box with linear dimension $a$. The average number of molecules inside the box which we expect to count is $\overline{N} \sim \bar{c} a^3$. Because the arrival and leaving of ligand molecules to the receptor is a Poisson process, the noise in a single measurement $\delta N_1 \sim \sqrt{\overline{N}}$. A ligand close to the receptor, takes a time $\tau_D \sim a^2/D$ to diffuse outside the box. Therefore, by measuring a time $\tau$, we can take $N_{\rm meas} \sim \tau/\tau_D$ independent measurements, and the noise will decrease by $1/\sqrt{\overline{N}}$. Hence, the noise in the concentration perceived by a receptor integrating over a time $\tau$ is
 \begin{equation}
@@ -20,7 +20,7 @@ A bacterium searching for food needs to measure the average ligand concentration
 This derivation however, does not consider the accuracy by which the receptor measures the molecules inside the volume $a^3$. Neither has the dimension $a$ a clear physical interpretation. A more rigorous approach to obtain the noise was done by Bialek and Setayeshgar \cite{Bialek2005}, and specifically for a promoter by Tka$\check{\rm c}$ik and Bialek in \cite{Tkacik2009}. However, by using a different method, de Ronde et al. recently obtained a different result \cite{DeRonde2012} and proved Bialek and Setayeshgar to be false. We will use the methods developed by de Ronde to obtain the noise in the occupancy of a promoter and compare our results with those of Tka$\check{\rm c}$ik.
 
 \subsection{Research questions}
-The above brings us to formulating the research questions
+The above brings us to formulating the research questions.
 \begin{itemize}
  \item What is the fundamental lower bound set by physics, in the noise of transcriptional regulation?
  \subitem What is the difference between a promoter and a receptor with respect to noise?
@@ -28,8 +28,8 @@ The above brings us to formulating the research questions
  \subitem How does our result compare to that found by Tka$\check{\rm c}$ik?
 
  \item Can we simulate transcriptional regulation in \GFRD ?
- \subitem How to model a promoter site?
- \subitem What is the Green's function for a domain containing one promoter and one TF?
+ \subitem How to represent a promoter site within the framework of \GFRD?
+ \subitem What is the Green's function for a domain containing one promoter and one transcription factor?
  
  \item Can we design a Brownian Dynamics algorithm which
  \subitem can be used in all the geometries we want to model?

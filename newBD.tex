@@ -3,7 +3,7 @@
 \subsection{Introduction}
 
 \subsubsection{Reversible reactions}
-We want to design a simple Brownian Dynamics algorithm designed for simulating second order chemical reactions of the form
+We want to design a simple Brownian Dynamics algorithm for simulating second order chemical reactions of the form
 \begin{equation}
 {\rm A} + {\rm B} \rates{k_{\rm on}}{k_{\rm off}} {\rm C}
 \end{equation}
@@ -11,15 +11,18 @@ where two particle A and B can form a complex with the macroscopic forward rate 
 \begin{equation}
 {\rm A} + {\rm B} \rates{k_{\rm D}}{k_{\rm D,b}} A \cdots B \rates{k_{\rm a}}{k_{\rm d}} {\rm C}.
 \end{equation}
-From left to right this equation describes the diffusive movement of the particles toward each other with a rate $k_D$, forming the intermediate state $A \cdots B$ with the particles in contact, and then, can form a complex C with the intrinsic association rate $k_a$. The equation in reverse reads: the dissociation of the complex C to the intermediate state with an intrinsic dissociation rate $k_d$, and the diffusion of the particles into the bulk with a rate $k_{D,b}$. These intrinsic rates $k_a$ and $k_d$ are, when the system is in equilibrium, related to the macroscopic rates $k_{\rm on}$ and $k_{\rm off}$ via the relation
+From left to right this equation describes the diffusive movement of the particles toward each other with a rate $k_D$, forming the intermediate state $A \cdots B$ with the particles in contact, and then, can form a complex C with the intrinsic association rate $k_a$. The equation in reverse reads: the dissociation of the complex C to the intermediate state with an intrinsic dissociation rate $k_d$, and the diffusion of the particles into the bulk with a rate $k_{D,b}$. These intrinsic rates $k_a$ and $k_d$ are, when the system is in equilibrium, related to the macroscopic rates $k_{\rm on}$ and $k_{\rm off}$ via the detailed-balance relation
 \begin{equation}
 K_{eq} = \frac{k_{\rm on}}{k_{\rm off}} = \frac{k_{\rm a}}{k_{\rm d}}.
 \end{equation}
-The algorithm needs to simulate both the formation and destruction of the intermediate complex $A\cdots B$, our the advanceing our receding between two particles. Furthermore, when two particles formed an intermediate complex or are 'at contact', we need to determine the probability by which they react. We derive this probability using detailed balance.
+
+\subsubsection{General idea}
+The algorithm needs to simulate both the formation and destruction of the intermediate complex $A\cdots B$ by diffusion. Furthermore, when two particles formed an intermediate complex or are 'at contact', we need to determine the probability by which they react. We discetize time in steps of $\Delta t$. Each timestep, all particles can make a move using the free propegator of brownian motion. Each particle has a spherical region with thickness $\delta$ around it, called the \emph{reaction volume}. When a particle is inside a reaction volume after making a move, it can react with a certain probability. We derive this probability using detailed balance. See picture.
+
 
 \subsection{Detailed balance}
 
-The key principle we want to enforce with our algorithm is the detailed balance relation between the unbound state of an isolated pair of particles and their bound state when the particles formed a complex, given that the system is in equilibrium. We denote the unbound state by the probability density function $P_u(\vec{r})$, which gives the probability density that two particles A and B are separated by an inter-particle vector $\vec{r}$. The probability for the particles to be in the bound state C is $P_b$. The detailed balance relation between these two states is
+The key principle we want to enforce with our algorithm is the detailed balance relation between the unbound state of an isolated pair of particles and their bound state when the particles form a complex, given that the system is in equilibrium. We denote the unbound state by the probability density function $P_u(\vec{r})$, which gives the probability density that two particles A and B are separated by an inter-particle vector $\vec{r}$. The probability for the particles to be in the bound state C is $P_b$. The detailed balance relation between these two states is
 \begin{equation}
  P_{ \rm{u} }(\vec{r})d\vec{r} \,\, P_{ \rm{u} \to \rm{b} }(\vec{r}) = P_{ \rm{b} } \,\, P_{ \rm{b} \to \rm{u} }(\vec{r})d\vec{r}
 \elabel{DBeqn}
@@ -36,28 +39,28 @@ and the step direction is random. When the particle core of the particle overlap
  P^{\rm move}(\vec{r},\Delta t|\vec{r_0}) = P^{\rm free}(\vec{r},\Delta t|\vec{r_0}) \, \theta(r - \sigma) \, + \\ \int_{V} d\vec{r'}P^{\rm free}(\vec{r'},\Delta t|\vec{r_0}) \, \theta(\sigma - r')\delta(\vec{r}-\vec{r_0}),
 \elabel{move_prop}
 \end{multline}
-where $\sigma$ is sum of the radii of the particle pair. 
+where $\sigma$ is sum of the radii of the particle pair, and $\theta(r - \sigma)$ the Heavyside- or step function. The probability ditribution of the free propegator is cutoff at distances smaller than $\sigma$ in the first term, and the total probability inside this area is placed at the starting position $r_0$ by the second term.
 
 \subsubsection{Forward move}
-Two particles can attempt a reaction when they lie in each other's {\it reaction volume}. The reactiom volume, denoted by $V^*$, is a spherical shell around each particle with a thickness $\delta$. The reaction attempt is accepted with a probability $P^{\rm acc}_{{\rm u}^* \to {\rm b}}$. Thus, two particles initially in the unbound state $u$, separated by an inter-particle vector $\vec{r_0}$, move into the bound state with a probability
+Two particles can attempt a reaction when they lie in each other's {\it reaction volume}. The reactiom volume, denoted by $u^*$, is a spherical shell around each particle with a thickness $\delta$. The reaction attempt is accepted with a probability $P^{\rm acc}_{{\rm u}^* \to {\rm b}}$. Thus, two particles initially in the unbound state $u$, separated by an inter-particle vector $\vec{r}$, move into the bound state $b$ with a probability
 \begin{equation}
-P_{ \rm{u} \to \rm{b} }(\vec{r_0}) = P^{\rm move}_{{\rm u} \to {\rm u}^*}({\rm u}^*,\Delta t|\vec{r_0}) P^{\rm acc}_{{\rm u}^* \to {\rm b}}.
+P_{ \rm{u} \to \rm{b} }(\vec{r}) = P^{\rm move}_{{\rm u} \to {\rm u}^*}({\rm u}^*,\Delta t|\vec{r}) P^{\rm acc}_{{\rm u}^* \to {\rm b}}.
 \end{equation}
-here ${\rm u}^*$ denotes the intermediate complex our the state where the inter-particle vector lies inside the reaction volume. 
+Here $P^{\rm move}_{{\rm u} \to {\rm u}^*}({\rm u}^*,\Delta t|\vec{r})$ gives the probability of ending up somewhere inside the reaction volume, given that you started at $\vec{r}$. Note that the particle could have started inside the reaction volume, such that $u^* \subset u$.
 
 \subsubsection{Backward move}
-The backward move starts with the dissociation of the complex with a probability $k_d \Delta t$. After which the two product particles are placed at a distance $r'$, inside the reaction volume, drawn from the flat distribution $(V^*)^{-1} \theta(\sigma + \delta - r')\theta(r' - \sigma)d\vec{r'}$, where $V^*$ normalizes the distribution. Thus the transition probability from being bound to being in the unbound state $u^*$ at position $\vec{r'}$ is
+The dissociation of a complex is modeled as a Poisson process, and can occur each timestep with a probability
 \begin{equation}
- P^{\rm acc}_{b \to u^*}(\vec{r'})d\vec{r'} = k_d \Delta t \, \frac{\theta(\sigma + \delta - r') \, \theta(r' - \sigma) d\vec{r'}}{V^*}.
+ P^{\rm acc}_{\rm b \to u^*} = k_d \Delta t.
 \end{equation}
-After dissociating the B particle make's a move from $\vec{r'}$ to $\vec{r}$. Thus, the total transition probability from being bound to being unbound at an i.p.v. $\vec{r}$, is given by
+When the dissociation is accepted, the products particles are placed a distance $r'$ apart, inside the reaction volume. Hereafter, the B particle make's a move from $\vec{r'}$ to $\vec{r}$ via the propegator in \eref{move_prop}. The total transition probability from the bound state $b$, via the intermediate state $u^*$, and ending in unbound state $u$ at $\vec{r}d\vec{r}$, is given by
 \begin{equation}
-P_{ \rm{b} \to \rm{u}}(\vec{r})d\vec{r} =  \int_{V} d\vec{r'} P^{\rm acc}_{b \to u^*}(\vec{r'}) P^{\rm move}_{u^* \to u}(\vec{r},\Delta t|\vec{r'})d\vec{r},
+P_{ \rm{b} \to \rm{u}}(\vec{r})d\vec{r} =  P^{\rm acc}_{b \to u^*}\,P^{\rm move}_{u^* \to u}(\vec{r},\Delta t|u^*)d\vec{r},
 \end{equation}
-where we integrated over all intermediate positions inside the reaction volume.
+The second factor gives the probability of ending up at $\vec{r}d\vec{r}$,given that you started inside $u^*$.
 
 \subsubsection{Solving the detailed balance equation}
-Now we have defined both transition probabilities, we can solve the detailed balance equation (\eref{DBeqn}) for the acceptance probability of a forward move $P^{\rm acc}_{{\rm u}^* \to {\rm b}}$. We first use the important relation found in \cite{Morelli2008a} for a system in equilibrium
+Now that we have defined both transition probabilities, we can solve the detailed balance equation (\eref{DBeqn}) for the acceptance probability of a forward move $P^{\rm acc}_{{\rm u}^* \to {\rm b}}$. We first use the important relation found in \cite{Morelli2008a} for a system in equilibrium
 \begin{equation}
  \frac{P_b}{P_u(\vec{r})d\vec{r}} = \frac{K_{\rm eq}}{d\vec{r}} = \frac{k_a}{k_d d\vec{r}},
 \end{equation}
@@ -65,7 +68,11 @@ such that we can write
 \begin{equation}
  \frac{P_b}{P_u(\vec{r})d\vec{r}} = \frac{P_{ \rm{u} \to \rm{b} }(\vec{r})}{P_{ \rm{b} \to \rm{u} }(\vec{r})d\vec{r}} = \frac{k_a}{k_d d\vec{r}}.
 \end{equation}
-Secondly, we show in \aref{newBD:fwdbwdeq} that the movement step in both transition probabilities, apart from a normalization factor, equal and thus cancel. We are left with
+Substituting our definition for the transition probabilities in the last equality, we find
+\begin{equation}
+ \frac{P^{\rm acc}_{{\rm u}^* \to {\rm b}}}{P^{\rm acc}_{b \to u^*}} \: \frac{P^{\rm move}_{{\rm u} \to {\rm u}^*}({\rm u}^*,\Delta t|\vec{r})}{P^{\rm move}_{u^* \to u}(\vec{r},\Delta t|u^*)d\vec{r}} = \frac{k_a}{k_d d\vec{r}}.
+\end{equation}
+We show in \aref{newBD:fwdbwdeq}, that the movement steps in both the transition probabilities only differ by a factor $V^*$. The complicated propegators cancel, and we are left with
 \begin{equation}
  \frac{P^{\rm acc}_{{\rm u}^* \to {\rm b}}}{k_d \Delta t/V^* \,\, d\vec{r}} = \frac{k_a}{k_d d\vec{r}}.
 \elabel{semi-pivotal}
@@ -75,6 +82,7 @@ Solving for the acceptance probability we find the principal result of our analy
  P^{\rm acc}_{{\rm u}^* \to {\rm b}} = \frac{k_a \Delta t}{V^*}.
 \elabel{pivotal}
 \end{equation}
+
 
 \subsection{Interactions with structures}
 
