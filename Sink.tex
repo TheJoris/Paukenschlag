@@ -3,7 +3,7 @@
 
 \subsection{Introduction}
 
-We want to be able to model promoter site's in \GFRD. A promoter site is simulated as a sink situated on a rod. A particle diffusing along this rod, can, as it walks over the sink, either react with it or just move over it. Their is thus a reactive flux proportional to the probability of the particle being at the sink and the rate constant $k$. Next to the sink, the full \GFRD\, domain will also contain two absorbing boundaries. The fluxes at these three points are used to determine the event type at the next event time.
+We want to be able to model a promoter site in \GFRD. A promoter site is simulated as a sink situated on a rod. A particle diffusing along this rod, can, as it walks over the sink, either react with it or just move over it. There is a reactive flux proportional to the probability of the particle being at the sink and the rate constant $k$. Next to the sink, the full \GFRD\, domain will also contain two absorbing boundaries. The fluxes at these three points are used to determine the event type at the next event time.
 
 \subsubsection{Formal definition of the domain}
 
@@ -12,7 +12,7 @@ The differential equation governing the domain for a particle diffusing in 1D wi
  \frac{\partial p(x,t|x_0)}{\partial t} = D \, \nabla ^2 p(x,t|x_0) - k \, \delta (x - x_s) p(x,t|x_0).
  \elabel{DE_I}
 \end{equation}
-Furthermore, their is an absorbing boundary at $-L_l$ (left boundary) and another at $L_r$ (right boundary),
+Furthermore, there is an absorbing boundary at $-L_l$ (left boundary) and another at $L_r$ (right boundary),
 \begin{eqnarray}
  p(-L_l,t|x_0) & = & 0 \\
  p(L_r,t|x_0) & = & 0.
@@ -105,7 +105,7 @@ where the unknowns $A,B$ and $E,F$ can be functions of $q$, and $q=\sqrt{s/D}$. 
 
 \subsubsection{Transforming the Laplace solution to the time domain}
 
-In order to transform our solution in Laplace space back to the time domain, solving the Bromwich integral is paramount
+In order to transform our solution in Laplace space back to the time domain, we have to solve the Bromwich integral
 \begin{equation}
  \frac{1}{2 \pi i} \int_{-\infty i + \gamma}^{+\infty i + \gamma} \, e^{s t} \, \hat{p}(x,s|x_0) \, ds.
  \elabel{INT_I}
@@ -133,7 +133,7 @@ where the $\beta_i$ 's are the positions of the simple poles and are the roots o
  \elabel{ROOT_I}
 \end{equation}
 
-The above equation only holds for real $q$ when $q = 0$, but this root can be ignored because $g(x,q=0|x_0) = 0$. However, the equation has an infinite number of solutions when $q$ is purely imaginary. Remember that $q = \sqrt{s/D}$, which means that there are only poles for real $s < 0$. Looking at \eref{INT_I}, the negative $s$ will give a solution in the time domain which is monotonically decaying. This is obvious because for $t > 0$ we only have sinks and no source terms. Hence, from now on, we assume $q$ to be of the form $q = i \bar{q}, \, \bar{q} \in \mathbb{R}_{>0}$.
+The above equation only holds for real $q$ when $q = 0$, but this root can be ignored because $g(x,q=0|x_0) = 0$. However, the equation has an infinite number of solutions when $q$ is purely imaginary. Remember that $q = \sqrt{s/D}$, which means that there are only poles for real $s < 0$. Looking at \eref{INT_I}, the negative $s$ will give a solution in the time domain which is monotonically decaying. This is obvious, because for $t > 0$ we only have sinks and no source terms. Hence, from now on, we assume $q$ to be of the form $q = i \bar{q}, \, \bar{q} \in \mathbb{R}_{>0}$.
 
 If we first apply the transformation $q \rightarrow i \bar{q}$ and than use \erefstwo{RES_I}{RES_II}, the integral in \eref{INT_I} becomes
 \begin{equation} 
@@ -160,11 +160,11 @@ To validate our solution, we first check if it obeys the imposed boundary condit
 
 The most important condition is that the flux imbalance at the position of the sink is proportional to the probability density at that point, \eref{Cont_II}. To check, we differentiate both the numerators with respect to $x$, let $x=0$, and subtract them to get
 \begin{equation}
- 2 \mathrm{D} s^2 \mathrm{Cos}[\mathrm{L_l} s] \mathrm{Sin}[s (\mathrm{L_r}-\mathrm{x_0})]-2 \left(\mathrm{D} s^2 \mathrm{Cos}[\mathrm{L_l} s]+\mathrm{k} s \mathrm{Sin}[\mathrm{L_l} s]\right) \mathrm{Sin}[s (\mathrm{L_r}-\mathrm{x_0})].
+ 2 D s^2 \mathrm{cos}[L_l s] \, \mathrm{sin}[s (L_r-x_0)]-2 \Big(D s^2 \mathrm{cos}[L_l s]+k s \mathrm{sin}[L_l s]\Big) \mathrm{sin}[s (L_r-x_0)].
 \end{equation}
 The first and second term in this equation cancel, leaving the third term which is equal to $k/D \, p_l(x=0,t|x_0)$, as was required. 
 
-To validate it's implementation in \GFRD\,, we do a simple simulation with one particle and one sink on a finite rod. We measure the time the particle was bound with the sink, and calculate the average occupancy. This we can check with the analytical result for an equilibrated system,
+To validate it's implementation in \GFRD\,, we do a simple simulation with one particle and one sink on a finite rod. The particle can bind and unbind from the sink. We measure the time the particle was bound with the sink, and calculate the average occupancy. This we can check with the analytical result for an equilibrated system,
 \begin{equation}
 \bar{n} = \frac{k_+ c}{k_+ c + k_-}.
 \end{equation}
@@ -204,4 +204,6 @@ which we can transform to the time domain using a table in \cite{Carslaw1959}
 \mathrm{erfc}\left( \frac{|x-x_s|+|x_s-x_0|}{\sqrt{4 D t}}+\frac{k}{2D}\sqrt{D t} \right).
 \elabel{FSOL_NB}
 \end{multline}
-We note that we can map this solution to the solution of a radiation boundary condition at $x_s$ in a semi-infinite domain when we change $k \rightarrow 2 k$ and multiply the second term with 1/2. The survival probability function $S(t|x_0)$ of the above function is equal to that of the radiation boundary when we double the rate $k$.
+We can map this solution to the solution of a radiation boundary condition at $x_s$ in a semi-infinite domain when we change the free propegator in the first term with the propegator for a reflective wall at $x_s$. Furthermore, the second term has to be multiplied with 2 and the rate $k$ needs to be doubled $k \rightarrow 2 k$. Intuitively, the probability for a particle to be at $x_s$ is two times as large in the semi-infinite domain, as it is in the full domain. Therefore, the outflux is also two times as large, and we have to double the reaction rate and the second term in \eref{FSOL_NB} to account for this.
+
+The survival probability function $S(t|x_0)$ of the above function is equal to that of a semi-infinite system with a radiation boundary at $x_s$ when we double the rate $k$.

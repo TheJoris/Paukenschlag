@@ -42,7 +42,7 @@ and the step direction is random. When the particle core of the particle overlap
 where $\sigma$ is sum of the radii of the particle pair, and $\theta(r - \sigma)$ the Heavyside- or step function. The probability ditribution of the free propegator is cutoff at distances smaller than $\sigma$ in the first term, and the total probability inside this area is placed at the starting position $r_0$ by the second term.
 
 \subsubsection{Forward move}
-Two particles can attempt a reaction when they lie in each other's {\it reaction volume}. The reactiom volume, denoted by $u^*$, is a spherical shell around each particle with a thickness $\delta$. The reaction attempt is accepted with a probability $P^{\rm acc}_{{\rm u}^* \to {\rm b}}$. Thus, two particles initially in the unbound state $u$, separated by an inter-particle vector $\vec{r}$, move into the bound state $b$ with a probability
+Two particles can attempt a reaction when they lie in each other's {\it reaction volume}. The reactiom volume, denoted by $u^*$, is a spherical shell around each particle with a thickness $\delta$ and volume $V^*$. The reaction attempt is accepted with a probability $P^{\rm acc}_{{\rm u}^* \to {\rm b}}$. Thus, two particles initially in the unbound state $u$, separated by an inter-particle vector $\vec{r}$, move into the bound state $b$ with a probability
 \begin{equation}
 P_{ \rm{u} \to \rm{b} }(\vec{r}) = P^{\rm move}_{{\rm u} \to {\rm u}^*}({\rm u}^*,\Delta t|\vec{r}) P^{\rm acc}_{{\rm u}^* \to {\rm b}}.
 \end{equation}
@@ -82,14 +82,22 @@ Solving for the acceptance probability we find the principal result of our analy
  P^{\rm acc}_{{\rm u}^* \to {\rm b}} = \frac{k_a \Delta t}{V^*}.
 \elabel{pivotal}
 \end{equation}
+For a system with a concentration $\bar{c}$ of B particles, the average number of particles inside the reaction volume is $\bar{c}\,V^*$. Each iteraction of the alogrithm, the influx towards the bound state is $\bar{c}\,V^*\,P^{\rm acc}_{{\rm u}^* \to {\rm b}}$, which, accoring to our last result is equal to $\bar{c}\,k_a \Delta t$. 
 
+\subsubsection{Relating $\mathbf{ P^{\rm acc}}$ with Green's functions}
+Our result in \eref{pivotal} states the probability by which to react, given that you are in the reaction volume. In a non-discrete picture, the reaction between the particles is described using a Green's function with an radiation boundary condition; $p_{\rm rad}(\vec{r},t|\vec{r_0})$. The reactive flux towards the bound state is, by defenition of the radiation boundary, $k_a \, p_{\rm rad}(\sigma,t|\vec{r_0})$, where $\sigma$ is the sum of both particle radii and $k_a$ the intrinsic association rate. The probability that the particles are in contact or inside an infinite decimal thin shell around the reactive surface is $\Omega d\sigma \, p_{\rm rad}(\sigma,t|\vec{r_0})$, where $\Omega$ is the inner surface of the volume with thickness $d\sigma$. The influx into the bound state during a time $dt$, given that the particles are in contact, is \cite{Becker2011}
+\begin{equation}
+ P^{\rm acc}_{\rm Green's} = \frac{J_{\rm out}dt}{P({\rm inside\:\Omega d\sigma})} = \frac{k_a p_{\rm rad}(\sigma,t|\vec{r_0})dt}{\Omega d\sigma \, p_{\rm rad}(\sigma,t|\vec{r_0})} = \frac{k_a dt}{\Omega d\sigma}.
+ \elabel{GFvsBD}
+\end{equation}
+The final expression is equal to \eref{pivotal} when we change the infinite decimal quantaties $dt$ and $d\sigma$ to the finite sizes $\Delta t$ and $\delta$. Our acceptance probability in Brownian dynamics is therefore a discretized version of the one used in a Green's function formalism such as \GFRD. 
 
 \subsection{Interactions with structures}
 
 \subsubsection{Interaction between particles and structures}
-Apart from reactions between particles, we also want to simulate interactions between particles and structures such as rods and planes. By an interaction, we mean the binding of a particle from the bulk with a structure, after which it can diffuse one or two dimensionally on this structure. Vice versa, a particle can fall from a structure, and start diffusing three dimensionally in the bulk.
+Apart from reactions between particles, we also want to simulate interactions between particles and structures such as rods and planes. By an interaction, we mean the binding of a particle from the bulk with a structure, after which it can diffuse one or two dimensionally on this structure. Vice versa, a particle can dissociate from a structure, and start diffusing three dimensionally in the bulk.
 
-A particle can interact with a plane when the projection of it's center of mass lies in the plane and is separated less than a distance $\delta$. Due to the symmetry of the interaction, it is essentially a 1D problem. Since the particle can interact with both sides of the plane, the reaction volume is $V^*=2 \delta$.
+A particle can interact with a plane when the projection of it's center of mass lies in the plane and is separated less than a distance $\delta$. Wether the particle is inside the reaction volume or not only depends on the diffusion allong the axis perpendicular to the plane. Therefore, the interaction is essentially a 1D problem. Since the particle can interact with both sides of the plane, the reaction volume is $V^*=2 \delta$.
 
 A particle can interact with a rod when the projection of it's c.o.m. lies on the central axis of the rod. This time, not the c.o.m., but the surface of the particle has to be within a distance $\delta$ of the surface of the rod to interact: $|{\bf r}_{\rm part}-{\bf r}_{\rm rod}| \leq \sigma_{rod}+\sigma_{part} + \delta$. If the particle would interact with it's c.o.m., the cross section of the interaction would depend on the rod radius only, and the probability of the particle finding the rod would be very small. Especially when we model DNA, which has a very small radius indeed. If we look at the cross section through the particle, and perpendicular to the main axis of the rod, the problem is essentially a 2D diffusion-reaction problem. The reaction volume is thus an annulus, with inner radius $\sigma_{rod} + \sigma_{part}$, and the outer radius a $\delta$ longer.
 
@@ -130,6 +138,9 @@ In the limit of small acceptance probabilities, the average number of moves per 
 
 \subsubsection{Backward move}
 In the backstep, after the decay products of the complex are placed in the reaction volume, they have to make a step with the free propagator in order for detailed balance to hold. This is because they made a diffusion step in the forward move prior to forming a complex. In the forward step either only one particle made a move and reacted, or both particles moved and the second particle reacted. In the limit of small acceptance probabilities, the first and second particle will initiate a reaction with equal probability, and the average number of moves made before reaction is one and a half. Therefore, in the backstep, we let one particle move and the other one with a 50 percent probability.
+
+\subsubsection{Simultanious update}
+A better solution to the double reaction attempt problem, is to first move all the particles in a random order, and than check for a reaction between all the particle pairs that lay inside a reaction volume. This way, we only check for a reaction once, and don't need to correct with a factor two. Furthermore, we can make the timestep $\Delta t$ larger because we don't need our acceptance probabilities to be small, allowing for a faster propegation. In the dissociation step, both particles move becuase we know for certain that both of them moved in the forward step.We did some simple simulation to show that this is indeed correct, but have not implemented it in \GFRD.
 
 
 \subsection{Choosing the timestep for a multi domain in eGFRD}
