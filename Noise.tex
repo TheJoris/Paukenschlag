@@ -166,7 +166,7 @@ We see that the noise decreases only with the square root of the measurement tim
 
 
 \subsubsection{1D diffusion with exchange to a perfectly mixed bulk}
-Here we imagine a system where TF's diffuse along an infinite strand of DNA and can fall off with a uniform rate $k_d$. When they fall off they are placed at a random position in the bulk. The survival probability for a TF initially at the promoter site is given by \eref{LSx0}, where, due to the uniform decay, the Laplace variable $s$ is shifted by $k_d$: $\sqrt{s/D} \to \sqrt{(s+k_d)/D}$. The required long time limit of the survival probability is now larger than zero
+Here we imagine a system where TF's diffuse along an infinite strand of DNA and can fall off with a uniform rate $k_d$. When they fall off they are placed at a random position in the bulk. The survival probability for a TF initially at the promoter site is given by \eref{LSx0}, where, due to the uniform dissociation from the DNA, the Laplace variable $s$ is shifted by $k_d$: $\sqrt{s/D} \to \sqrt{(s+k_d)/D}$. The required long time limit of the survival probability is now larger than zero
 \begin{equation}
  \lim_{s\to0} s \, \hat{S}_{\rm rad}(s|z_0) = S_{\rm rad}(\infty|z_0) = \frac{\sqrt{4 D_1 k_d}}{\sqrt{4 D_1 k_d} + k_+}.
 \end{equation}
@@ -187,9 +187,9 @@ and the noise in the 'equivalent concentration' of the cytoplasm $c$
 
 
 \subsubsection{1D diffusion with reversible binding to the DNA}
-This time, we want to evaluate the noise in the occupancy of a promoter site where particles do not escape after falling from the DNA, but are placed at contact with it. This way, a TF starting at the promoter site can switch several times between sliding along the DNA and making excursions in the cytoplasm before either rebinding or escaping, see \fref{promoter_schematic}. 
+This time, we want to evaluate the noise in the occupancy of a promoter site where particles do not escape after falling from the DNA, but are placed at contact with it. This way, a TF starting at the promoter site can switch several times between sliding along the DNA and making excursions in the cytoplasm before either rebinding or escaping, as is sketched in \fref{promoter_schematic}. 
 
-To calculate the variance in the promoter occupancy, we need the corrrelation time. The correlation time is inversely proportional to the probability by which a single TF, starting on the promoter site, escapes: $\tau_c = \tau_c^* / S(\infty|z_0)$. To find this long time limit of the survival probability, we write down the full system of diffusion equations governing the behavior of a single TF starting on the promoter site. It turns out we can solve these equations, and find an exact solution for $S(\infty|z_0)$. Some of the mathematics in our derivation is inspired by the paper of Tka$\check{\rm c}$ik \cite{Tkacik2009}. 
+To calculate the variance in the promoter occupancy, we need the corrrelation time. Remember that the correlation time is inversely proportional to the probability by which a single TF, starting on the promoter site, escapes: $\tau_c = \tau_c^* / S(\infty|z_0)$. To find this long time limit of the survival probability, we write down the full system of diffusion equations governing the behavior of a single TF starting on the promoter site. It turns out we can solve these equations, and find an exact solution for $S(\infty|z_0)$. Some of the mathematics in our derivation is inspired by the paper of Tka$\check{\rm c}$ik \cite{Tkacik2009}. 
 
 \begin{figure}[ht]
 \centering
@@ -208,7 +208,7 @@ We start with writing down the differential equations describing the full system
  & \quad - \Big[ k_a P_{3}(z, {\bf r}, t|z_0,r_0) - k_d P_{1}(z,t|z_0) \Big] \frac{\delta(|{\bf r}| - \sigma)}{2 \pi \sigma}.
 \end{split}
 \end{equation}
-Here $P_1(z, t|z_0)$ is the Green's function describing the 1D sliding of the TF along the DNA, starting on the sink positioned at $z_0$. We model the DNA as an infinite long rod along the z-axis with a radius $\sigma$. The probability exchange between the DNA and bulk happens at a distance $\sigma$ from the z-axis, dictated by the delta function. Excursions in the cytoplasm are described by $P_3(z, {\bf r}, t|z_0,r_0)$, where $r_0=0$, stating that the particle starts on the DNA. First we Laplace transform with respect to time
+Here $P_1(z, t|z_0)$ is the Green's function describing the 1D sliding of the TF along the DNA, starting on the sink positioned at $z_0$. We model the DNA as an infinite long rod along the z-axis. The probability exchange between the DNA and bulk happens at a distance $\sigma$ from the z-axis, dictated by the delta function. Excursions in the cytoplasm are described by $P_3(z, {\bf r}, t|z_0,r_0)$, where $r_0=0$, stating that the particle starts on the DNA. First we Laplace transform with respect to time
 \begin{eqnarray*}
  s \, \hat{P}_{1}(z) - \delta(z - z_0) & = & D_1 \frac{\partial^2\hat{P}_1(z)}{\partial^2 z}  - k_+ \hat{P}_1(z) \delta(z - z_0) - k_d \hat{P}_1(z) + k_a \hat{P}_3(z, |{\bf r}| = \sigma) \\
  s \, \hat{P}_3(z,{\mathbf r}) & = & D_3 \nabla^2 \hat{P}_3(z, {\bf r}) - \left[ k_a \hat{P}_3(z,{\bf r}) - k_d \hat{P}_1(z) \right] \frac{\delta(|{\bf r}| - \sigma)}{2 \pi \sigma},
@@ -221,22 +221,22 @@ where we explicitly included the initial condition of one particle placed in con
 \end{eqnarray}
 Here $q$ is the spatial Fourier variable conjugate to $z$, and ${\bf k}$ is conjugate to ${\bf r}$. $J_0(k\sigma)$ is the zeroth order bessel function of the first kind, resulting from the Fourier integral as is shown in \aref{noise:delta_int}. We take both the promoter and initial position to be at the origin: $z_0 = 0$. Observe that the cytoplasmic density $\tilde{P}_3$ appears as a function of $q$ only in the equation for $\tilde{P}_1$. In order to solve for $\tilde{P}_1$, we first solve the second equation for $\tilde{P}_3(q,{\bf k})$, 
 \begin{equation}
- \tilde{P}_3(q,{\bf k}) = \frac{k_d \tilde{P}_1(q) - k_a\tilde{P}_3(q)}{s + D_3(q^2 + k^2)} J_{0}(k \sigma ),
+ \tilde{P}_3(q,{\bf k}) = \frac{k_d \tilde{P}_1(q) - k_a\tilde{P}_3(q)}{s + D_3(q^2 + k^2)} J_{0}(k \sigma ).
 \end{equation}
-and Fourier back-transform both sides in ${\bf k}$
+Fourier back-transforming both sides of the equation in ${\bf k}$, at $|{\bf r}|=\sigma$,
 \begin{eqnarray}
  \elabel{FourierBackC}
- \tilde{P}_3(q) & = & \int \frac{d^2 k}{(2 \pi)^2} \tilde{P}_3(q,{\bf k}) \\
- & = & \frac{k_d \tilde{P}_1(q) - k_a\tilde{P}_3(q)}{2 \pi D_3} \, K_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right),
+ \tilde{P}_3(q) & = & \int \frac{d^2 k}{(2 \pi)^2} {\rm exp}(-i\,{\bf k}\cdot{\bf r}) \delta(|{\bf r}|-\sigma) \tilde{P}_3(q,{\bf k}) \\
+ & = & \frac{k_d \tilde{P}_1(q) - k_a\tilde{P}_3(q)}{2 \pi D_3} \, I_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right) K_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right),
 \end{eqnarray}
-where $K_0$ is the zeroth order modified bessel function of the second kind. Solving the above for $\tilde{P}_3(q)$, and substituting into \eref{FDE_dna}, we solve this for $\tilde{P}_1(q)$. Again, back-transforming this equation in $q$, we find
+where $I_0$ and $K_0$ are the zeroth order modified bessel functions of the first and second kind respectivily. Solving the above for $\tilde{P}_3(q)$, and substituting the result into \eref{FDE_dna}, we obtain the solution for $\tilde{P}_1(q)$. Again, back-transforming this equation in $q$, we find
 \begin{equation}
  \tilde{P}_1(z_0,s|z_0) = \int \frac{d\,q}{2 \pi} \frac{1-k_+ \tilde{P}_1(z_0,s|z_0)}{s + D_1 q^2+k_d F^{-1}(q,s)}
  \elabel{FDE_dna2}
 \end{equation}
 where
 \begin{equation}
-F(q,s) = 1 + \frac{k_a}{2 \pi D_3} \, K_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right).
+F(q,s) = 1 + \frac{k_a}{2 \pi D_3} \, I_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right) K_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right).
 \end{equation}
 Finally, we can solve \eref{FDE_dna2} for $\tilde{P}_1(z_0, s|z_0)$ to obtain the probability density at the promoter site in Laplace space. In the limit $s \to 0$, our expression becomes
 \begin{equation}
@@ -244,14 +244,15 @@ Finally, we can solve \eref{FDE_dna2} for $\tilde{P}_1(z_0, s|z_0)$ to obtain th
 \end{equation}
 where
 \begin{gather}
- I(\alpha,\beta) = \int_0^{\infty} \frac{dt}{t^2 + \beta[1 + \alpha \, K_0(t)]^{-1}} \\
+ I(\alpha,\beta) = \int_0^{\infty} \frac{dt}{t^2 + \beta[1 + \alpha \, I_0(t) K_0(t)]^{-1}} \\
  \alpha = \frac{k_a}{2 \pi D_3} \elabel{EqAlpha} \\
  \beta = \frac{\sigma^2 k_d}{D_1} \elabel{EqBeta}.
 \end{gather}
-The flux into the promoter is $k_+\,P_1(z_0,t|z_0)$, and the total flux which leaks away through the promoter is equal to the $s \to 0$ limit in $k_+ \,P_1(z_0,s|z_0)$. This relates to the long time limit of the survival probability via
-\begin{equation}
-  \lim_{t \to \infty}S_{\rm rad}(t|z_0) = 1 - k_+ \, \int_0^{\infty} \xi(z_0, t|z_0) dt = 1 - k_+ \lim_{s \to 0} \tilde{\xi}(z_0, s|z_0) = \frac{\frac{\pi D_1}{\sigma I(\alpha,\beta)}}{\frac{\pi D_1}{\sigma I(\alpha,\beta)} + k_+}.
-\end{equation}
+The flux into the promoter at any given time is $k_+\,P_1(z_0,t|z_0)$, and the total flux which leaks away through the promoter is equal to the $s \to 0$ limit in $k_+ \,\hat{P}_1(z_0,s|z_0)$. This relates to the long time limit of the survival probability via
+\begin{gather}
+  \lim_{t \to \infty}S_{\rm rad}(t|z_0) = 1 - k_+ \, \int_0^{\infty} P_1(z_0, t|z_0) dt = 1 - k_+ \lim_{s \to 0} \hat{P}_1(z_0, s|z_0) \\
+= \frac{\frac{\pi D_1}{\sigma I(\alpha,\beta)}}{\frac{\pi D_1}{\sigma I(\alpha,\beta)} + k_+}.
+\end{gather}
 Comparing with \eref{Sinfty}, the diffusion limited rate constant is
 \begin{equation}
  k_D = \frac{\pi D_1}{\sigma I(\alpha,\beta)}.
@@ -381,7 +382,7 @@ The correlation time for this system is
 Note that this expression for the correlation time is equivalent to that found in \eref{CT1} using the method by de Ronde et al. 
 
 \subsubsection{Why do both methods give the same result?}
-The important difference between the two methods, is that in the method of van Zon, a TF following a rebinding trajectory, will always find an unoccupied promoter when it returns. There is no hindrance by the other particles from the equilibrium. De Ronde, a priori, does allow for this by writing the survival probability of a promoter in equilibrium with one particle at the promoter site as a product of two survival probabilities; one for a single particle starting on the promoter, and one for the promoter in an equilibrium of particles (\eref{Def_Ssi}). As it turns out however, by using the low concentration limit, the time dependent behaviour at small time is coarse-grained out, in the same way as was done by van Zon.
+The important difference between the two methods, is that in the method of van Zon, a TF following a rebinding trajectory, will always find an unoccupied promoter when it returns. There is no hindrance by the other particles from the equilibrium. De Ronde, a priori, does allow for this by writing the survival probability of a promoter just after a TF dissociated from it as a product of two survival probabilities; one for a single particle starting on the promoter, and one for the promoter in an equilibrium of particles (\eref{Def_Ssi}). As it turns out however, by using the low concentration limit, the time dependent behaviour at small time is coarse-grained out, in the same way as was done by van Zon.
 
 To see this, we start from the relation used in the derivation of the correlation function \eref{SeqSsi}
 \begin{equation}
