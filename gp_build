@@ -9,11 +9,13 @@
 # 4 - Potentially difference between Gasper and Joris
 # 5 - Tablaux for saturation vs correlation time
 # 6 - Pbound with a sink
+# 7 - Plot of S(t|eq) and S(t|\sigma), timescale seperation.
+# 8 - Comparing rdens plots between newBD2D and GF'n 2DRadInf.
 
 plot=$1
 
-prefix2="/usr/share/texmf-texlive/fonts/type1/bluesky/cm"
-prefix1="/usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm"
+prefix1="/usr/share/texmf-texlive/fonts/type1/bluesky/cm"
+prefix2="/usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm"
 
 fontfile1="$prefix1/cmmib10.pfb"
 fontfile2="$prefix1/cmti12.pfb"
@@ -58,7 +60,7 @@ set style line 6 lw 2 lt 4 lc rgb 'gray50'
 set style line 7 lw 2 lt 1 lc rgb '#FF040E'
 set style line 8 lw 2 lt 1 lc rgb '#006868'
 set style line 9 lw 4 lt 1 lc rgb '#68FFAA'
-set style line 10 lw 4 lt 1 lc rgb '#FFE9E5'
+set style line 10 lw 2 lt 4 lc rgb 'gray50'
 "
 
 # Linetype library:
@@ -94,8 +96,7 @@ $lines2
 
 gnuplot << EOF -persist
 
-set terminal postscript eps enhanced color "CMSS10, 15"\
-fontfile "$fontfile1" fontfile "$fontfile2" fontfile "$fontfile3"
+set terminal postscript eps enhanced color
 set out "NoisePlotFull.eps"
 
 #$lines2
@@ -106,7 +107,7 @@ set xrange [0:1]
 #set ytics 2 format "%g"
 #set xtics 2 format "%g"
 set xlabel "n"
-set ylabel "S_{n}(0)"
+set ylabel "P_{n}(0)"
 #set key outside Left samplen 1 spacing 1.2 width -0.5
 
 #set arrow nohead from -6,0 to 0,0 ls 14
@@ -133,8 +134,7 @@ gnuplot << EOF -persist
 $lines1
 $lines2
 
-set terminal postscript eps enhanced color "CMSS10, 15"\
-fontfile "$fontfile1" fontfile "$fontfile2" fontfile "$fontfile3"
+set terminal postscript eps enhanced color
 set out "PowerPlot.eps"
 
 set log xy
@@ -160,6 +160,11 @@ EOF
 epstopdf PowerPlot.eps
 fi
 
+
+
+
+
+
 #Power spectra plot with inset.
 if [[ $plot -eq 3 ]]
 then
@@ -169,8 +174,7 @@ gnuplot << EOF -persist
 $lines1
 $lines2
 
-set terminal postscript eps enhanced color "CMSS10, 15"\
-fontfile "$fontfile1" fontfile "$fontfile2" fontfile "$fontfile3"
+set terminal postscript eps enhanced color
 set out "PowerPlot2.eps"
 
 set size 1,1
@@ -198,8 +202,8 @@ set rmargin 4
 
 #set arrow nohead from -6,0 to 0,0 ls 14
 
-plot "./PowerPlotExt_ana.dat" with lines ls 16 title "Extrinsic analytical",\
-"./PowerPlotInt_ana.dat" with lines ls 19 title "Intrinsic analytical",\
+plot "./PowerPlotExt_ana.dat" with lines ls 16 title "Low frequency, analytical",\
+"./PowerPlotInt_ana.dat" with lines ls 19 title "High frequency, analytical",\
 "./PowerPlotTot_sim.dat" with lines ls 11 title "Simulated"
 
 set size 0.4,0.4
@@ -222,6 +226,10 @@ epstopdf PowerPlot2.eps
 fi
 
 
+
+
+
+
 # Potentially difference between Gasper and Joris
 if [[ $plot -eq 4 ]]
 then
@@ -231,8 +239,7 @@ $lines2
 
 gnuplot << EOF -persist
 
-set terminal postscript eps enhanced color "CMSS10, 15"\
-fontfile "$fontfile1" fontfile "$fontfile2" fontfile "$fontfile3"
+set terminal postscript eps enhanced color
 set out "GaspervsJoris.eps"
 
 #$lines2
@@ -243,7 +250,7 @@ set xrange [0:1]
 #set ytics 2 format "%g"
 #set xtics 2 format "%g"
 set xlabel "n"
-set ylabel "S_{n}(0)"
+set ylabel "P_{n}(0)"
 set key left top
 
 #set arrow nohead from -6,0 to 0,0 ls 14
@@ -260,17 +267,19 @@ epstopdf GaspervsJoris.eps
 fi
 
 
+
+
+
+
 #Tableaux for saturation vs diffusive on-rate. -LE MACHINE!
 if [[ $plot -eq 5 ]]
 then
 
 gnuplot << EOF -persist
 
-$lines1
 $lines3
 
-set terminal postscript eps enhanced color "CMSS10, 15"\
-fontfile "$fontfile1" fontfile "$fontfile2" fontfile "$fontfile3"
+set terminal postscript eps enhanced color
 set out "TableauxNoiseCmp.eps"
 
 # x = kdD
@@ -313,10 +322,10 @@ set parametric
 
 set trange[0:.5]
 
-plot kdhalf(1e-10),t with lines ls 6,\
-kdhalf(1e-11),t with lines ls 6,\
-kdhalf(1e-12),t with lines ls 6,\
-kdhalf(1e-13),t with lines ls 6
+plot kdhalf(1e-10),t with lines ls 10,\
+kdhalf(1e-11),t with lines ls 10,\
+kdhalf(1e-12),t with lines ls 10,\
+kdhalf(1e-13),t with lines ls 10
 
 unset parametric
 
@@ -342,10 +351,10 @@ set parametric
 
 set trange[0:10]
 
-plot kdhalf(1e-10),t with lines ls 6,\
-kdhalf(1e-11),t with lines ls 6,\
-kdhalf(1e-12),t with lines ls 6,\
-kdhalf(1e-13),t with lines ls 6
+plot kdhalf(1e-10),t with lines ls 10,\
+kdhalf(1e-11),t with lines ls 10,\
+kdhalf(1e-12),t with lines ls 10,\
+kdhalf(1e-13),t with lines ls 10
 
 unset parametric
 
@@ -420,6 +429,9 @@ fi
 
 
 
+
+
+
 #Pbound with a sink
 if [[ $plot -eq 6 ]]
 then
@@ -429,8 +441,7 @@ $lines3
 
 gnuplot << EOF -persist
 
-set terminal postscript eps enhanced color "CMSS10, 15"\
-fontfile "$fontfile1" fontfile "$fontfile2" fontfile "$fontfile3"
+set terminal postscript eps enhanced color
 set out "SinkPbound.eps"
 
 #$lines2
@@ -465,6 +476,16 @@ epstopdf SinkPbound.eps
 fi
 
 
+
+
+
+
+
+
+
+
+
+
 #Survival prob in eq, ignoring time dep. rebinding.
 if [[ $plot -eq 7 ]]
 then
@@ -474,8 +495,7 @@ gnuplot << EOF -persist
 $lines1
 $lines2
 
-set terminal postscript eps enhanced color "CMBX10, 15"\
-fontfile "$fontfile1" fontfile "$fontfile2" fontfile "$fontfile3"
+set terminal postscript eps enhanced color
 set out "SeqApprx.eps"
 
 set size 1,1
@@ -502,7 +522,7 @@ set ylabel "Survival Probability"
 #set arrow nohead from -6,0 to 0,0 ls 14
 
 plot "./SeqApprx.dat" using 1:2 with lines ls 16 title "{/Symbol G}(t|eq)",\
-"./SeqApprx.dat" using 1:3 with lines ls 19 title "S(t|z_0)"
+"./SeqApprx.dat" using 1:3 with lines ls 19 title "S(t|{/Symbol s)"
 
 set size 0.5,0.5
 set origin .4,.4
@@ -519,5 +539,78 @@ plot "./SeqApprxInset.dat" using 1:2 with lines ls 16 title "{/Symbol G}(t|eq)",
 
 EOF
 
+#latex SeqApprx.tex
+#dvipdf SeqApprx.dvi
 epstopdf SeqApprx.eps
+fi
+
+
+
+# 8 - Comparing rdens plots between newBD2D and GF'n 2DRadInf.
+if [[ $plot -eq 8 ]]
+then
+
+gnuplot << EOF -persist
+
+$lines1
+$lines3
+
+set terminal postscript eps enhanced color
+set out "newBD2D_rdens_compare.eps"
+
+set size 1,1
+set origin 0,0
+#set nokey
+set multiplot
+
+set size 1,1
+set origin 0,0
+
+set log y
+
+set format y "10^{%L}"
+#set format x "10^{%L}"
+
+set yrange [1e5:5e10]
+set xrange [1:3]
+
+#set ytics 2 format "%g"
+#set xtics 2 format "%g"
+set xlabel "r/R"
+set ylabel "p_{2D, rad}"
+#set rmargin 4
+set key top left
+
+#set arrow nohead from -6,0 to 0,0 ls 14
+
+plot "./newBD2D_rdenssim_1.dat" with points pt 1 ps 2 title "t_{sim} = 10^{-1} {/Symbol t}",\
+"./newBD2D_rdenssim_2.dat" with points pt 4 ps 2 title "t_{sim} = 10^{-2} {/Symbol t}",\
+"./newBD2D_rdenssim_3.dat" with points pt 6 ps 2 title "t_{sim} = 10^{-3} {/Symbol t}",\
+"./newBD2D_rdenssim_4.dat" with points pt 10 ps 2 title "t_{sim} = 10^{-4} {/Symbol t}",\
+"./newBD2D_rdensana_1.dat" with lines ls 1 notitle,\
+"./newBD2D_rdensana_2.dat" with lines ls 2 notitle,\
+"./newBD2D_rdensana_3.dat" with lines ls 3 notitle,\
+"./newBD2D_rdensana_4.dat" with lines ls 4 notitle
+
+set nolog y
+set size 0.5,0.5
+set origin .47,.47
+set format y "10^{%L}"
+set yrange [0:1e8]
+set xrange [1:3]
+set ytic (1e8,1e7)
+set xtic (1,1.5,2,2.5,3)
+#set xlabel "r/R" font "CMBX10, 10"
+#set ylabel "p_{irr}" font "CMBX10, 10"
+set key top right
+
+plot "./newBD2D_rdensana_1.dat" with lines ls 1 title "t_{sim} = 10^{-1} {/Symbol t}",\
+"./newBD2D_rdenssim_1.dat" with points pt 4 ps 1 title "{/Symbol D} t = 10^{-5} {/Symbol t}",\
+"./newBD2D_rdenssim_1b.dat" with points pt 1 ps 1 title "{/Symbol D} t = 10^{-4} {/Symbol t}",\
+"./newBD2D_rdenssim_1c.dat" with points pt 3 ps 1 title "{/Symbol D} t = 10^{-3} {/Symbol t}"
+
+
+EOF
+
+epstopdf newBD2D_rdens_compare.eps
 fi

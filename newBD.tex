@@ -140,7 +140,7 @@ In the limit of small acceptance probabilities, the average number of moves per 
 In the backstep, after the decay products of the complex are placed in the reaction volume, they have to make a step with the free propagator in order for detailed balance to hold. This is because they made a diffusion step in the forward move prior to forming a complex. In the forward step either only one particle made a move and reacted, or both particles moved and the second particle reacted. In the limit of small acceptance probabilities, the first and second particle will initiate a reaction with equal probability, and the average number of moves made before reaction is one and a half. Therefore, in the backstep, we let one particle move and the other one with a 50 percent probability.
 
 \subsubsection{Simultanious update}
-A better solution to the double reaction attempt problem, is to first move all the particles in a random order, and than check for a reaction between all the particle pairs that lay inside a reaction volume. This way, we only check for a reaction once, and don't need to correct with a factor two. Furthermore, we can make the timestep $\Delta t$ larger because we don't need our acceptance probabilities to be small, allowing for a faster propegation. In the dissociation step, both particles move becuase we know for certain that both of them moved in the forward step.We did some simple simulation to show that this is indeed correct, but have not implemented it in \GFRD.
+A better solution to the double reaction attempt problem, is to first move all the particles in a random order, and than check for a reaction between all the particle pairs that lay inside a reaction volume. This way, we only check for a reaction once, and don't need to correct with a factor two. Furthermore, we can make the timestep $\Delta t$ larger because we don't need our acceptance probabilities to be small, allowing for a faster propegation. In the dissociation step, both particles move because we know for certain that both of them moved in the forward step. We did some simple simulation to show that this is indeed correct, but have not implemented it in \GFRD.
 
 
 \subsection{Choosing the timestep for a multi domain in eGFRD}
@@ -164,6 +164,16 @@ We let the reaction length $\delta$ equal to $\alpha \, \sigma_{\rm min}$, or th
 In \GFRD\, we choose $\alpha = 0.05$ and $\beta = 0.01$.
 
 \subsection{Tests}
+\begin{figure}[hb]
+\centering
+\includegraphics[scale=.8]{newBD2D_rdens_compare}
+\caption{\flabel{newBD2D_rdens_compare} Radial probability distribution for a pair of irreversibly reacting particles in 2D. The four curves refer to different $t_{\rm sim}$ and where obtainded using timesteps  $\Delta t = 10^{-4} t_{\rm sim}$. Except for $t_{\rm sim} = .1\,\tau$, where we used $10^{-5} \tau$. Here, $\tau = R^2/D$ and $R=\sigma_A+\sigma_B$. Only the B particle moves with diffusion constant $D$, and starts at contact: $r_0=R$. The intrinsic association rate was set to $k_a = 100 R^2/\tau$. We compare simulation results (symbols) with a Green's function in 2D with a radiation boundary at radius $R$: $p_{\rm rad}(r,t|R)$ (lines). The inset shows the simulation results with $t_{\rm sim} = .1\,\tau$, against a linear axis, for different values of the timestep. Using larger timesteps, the algorithm underestimates the survival probability.}
+\end{figure}
+
+
+
+
+
 Show 2D irr pos density plot with analytic result.
 Show Pbound v.s. increasing ka or N
 
