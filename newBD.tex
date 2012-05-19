@@ -3,7 +3,7 @@
 \subsection{Introduction}
 
 \subsubsection{Reversible reactions}
-We want to design a simple Brownian Dynamics algorithm for simulating second order chemical reactions of the form
+We want to design a simple Brownian dynamics (BD) algorithm for simulating second order chemical reactions of the form
 \begin{equation}
 {\rm A} + {\rm B} \rates{k_{\rm on}}{k_{\rm off}} {\rm C}
 \end{equation}
@@ -11,13 +11,13 @@ where two particle A and B can form a complex with the macroscopic forward rate 
 \begin{equation}
 {\rm A} + {\rm B} \rates{k_{\rm D}}{k_{\rm D,b}} A \cdots B \rates{k_{\rm a}}{k_{\rm d}} {\rm C}.
 \end{equation}
-From left to right this equation describes the diffusive movement of the particles toward each other with a rate $k_D$, forming the intermediate state $A \cdots B$ with the particles in contact, and then, can form a complex C with the intrinsic association rate $k_a$. The equation in reverse reads: the dissociation of the complex C to the intermediate state with an intrinsic dissociation rate $k_d$, and the diffusion of the particles into the bulk with a rate $k_{D,b}$. These intrinsic rates $k_a$ and $k_d$ are, when the system is in equilibrium, related to the macroscopic rates $k_{\rm on}$ and $k_{\rm off}$ via the detailed-balance relation
+From left to right this equation describes the diffusive movement of the particles toward each other with a rate $k_D$, forming the intermediate state $A \cdots B$ with the particles in contact, and then, can form a complex C with the intrinsic association rate $k_a$. The equation in reverse reads: the dissociation of the complex C to the intermediate state with an intrinsic dissociation rate $k_d$, and the diffusion of the particles into the bulk with a rate $k_{D,b}$. In equilibrium, the intrinsic rates $k_a$ and $k_d$ are related to the macroscopic rates $k_{\rm on}$ and $k_{\rm off}$ via the detailed-balance relation
 \begin{equation}
 K_{eq} = \frac{k_{\rm on}}{k_{\rm off}} = \frac{k_{\rm a}}{k_{\rm d}}.
 \end{equation}
 
 \subsubsection{General idea}
-The algorithm needs to simulate both the formation and destruction of the intermediate complex $A\cdots B$ by diffusion. Furthermore, when two particles formed an intermediate complex or are 'at contact', we need to determine the probability by which they react. We discetize time in steps of $\Delta t$. Each timestep, all particles can make a move using the free propegator of brownian motion. Each particle has a spherical region with thickness $\delta$ around it, called the \emph{reaction volume}. When a particle is inside a reaction volume after making a move, it can react with a certain probability. We derive this probability using detailed balance. See picture.
+The algorithm needs to simulate both the formation and destruction of the intermediate complex $A\cdots B$ by diffusion. Furthermore, when two particles formed an intermediate complex or are 'at contact', we need to determine the probability by which they react. We discretize time in steps of $\Delta t$, and each timestep, all particles can make a move using the free propegator of brownian motion. In order to react, every particle has a spherical region with thickness $\delta$ around it, called the \emph{reaction volume}. When a particle is inside the reaction volume of another particle after making a move, it can react with a certain probability. We derive this probability using detailed balance. See picture.
 
 
 \subsection{Detailed balance}
@@ -27,7 +27,7 @@ The key principle we want to enforce with our algorithm is the detailed balance 
  P_{ \rm{u} }(\vec{r})d\vec{r} \,\, P_{ \rm{u} \to \rm{b} }(\vec{r}) = P_{ \rm{b} } \,\, P_{ \rm{b} \to \rm{u} }(\vec{r})d\vec{r}
 \elabel{DBeqn}
 \end{equation}
-where $P_{ \rm{u} \to \rm{b} }(\vec{r})$ is the transition probability for the unbound state to change into the bound state or forward move and $P_{ \rm{b} \to \rm{u}}(\vec{r})d\vec{r}$ is the transition probability from the bound state to the unbound state called backward move. The explicit form of these functions will define how the forward and backward reactions take place in our BD scheme, and we will continue describing them. 
+where $P_{ \rm{u} \to \rm{b} }(\vec{r})$ is the transition probability for the unbound state to change into the bound state, called the forward move, and $P_{ \rm{b} \to \rm{u}}(\vec{r})d\vec{r}$ is the transition probability from the bound state to the unbound state, which is called the backward move. The explicit form of these functions will define how the forward and backward reactions take place in our BD scheme, and we will continue describing them. 
 
 \subsubsection{Free movement}
 In this analysis we will assume the A particle to be fixed at the origin, and every timestep $\Delta t$ the B particle diffuses around with diffusion constant $D$ in the d-dimensional space (d = 1,2 or 3) it lives in. The stepsize of the move is drawn from the free propagator of Brownian motion 
@@ -39,7 +39,7 @@ and the step direction is random. When the particle core of the particle overlap
  P^{\rm move}(\vec{r},\Delta t|\vec{r_0}) = P^{\rm free}(\vec{r},\Delta t|\vec{r_0}) \, \theta(r - \sigma) \, + \\ \int_{V} d\vec{r'}P^{\rm free}(\vec{r'},\Delta t|\vec{r_0}) \, \theta(\sigma - r')\delta(\vec{r}-\vec{r_0}),
 \elabel{move_prop}
 \end{multline}
-where $\sigma$ is sum of the radii of the particle pair, and $\theta(r - \sigma)$ the Heavyside- or step function. The probability ditribution of the free propegator is cutoff at distances smaller than $\sigma$ in the first term, and the total probability inside this area is placed at the starting position $r_0$ by the second term.
+where $\sigma$ is sum of the radii of the particle pair, and $\theta(r - \sigma)$ the Heavyside- or step function. The probability distribution of the free propegator is cut off at distances smaller than $\sigma$ (core overlap) in the first term, and the total probability inside this area is placed at the starting position $r_0$ by the second term.
 
 \subsubsection{Forward move}
 Two particles can attempt a reaction when they lie in each other's {\it reaction volume}. The reactiom volume, denoted by $u^*$, is a spherical shell around each particle with a thickness $\delta$ and volume $V^*$. The reaction attempt is accepted with a probability $P^{\rm acc}_{{\rm u}^* \to {\rm b}}$. Thus, two particles initially in the unbound state $u$, separated by an inter-particle vector $\vec{r}$, move into the bound state $b$ with a probability
@@ -57,7 +57,7 @@ When the dissociation is accepted, the products particles are placed a distance 
 \begin{equation}
 P_{ \rm{b} \to \rm{u}}(\vec{r})d\vec{r} =  P^{\rm acc}_{b \to u^*}\,P^{\rm move}_{u^* \to u}(\vec{r},\Delta t|u^*)d\vec{r},
 \end{equation}
-The second factor gives the probability of ending up at $\vec{r}d\vec{r}$,given that you started inside $u^*$.
+The second factor gives the probability of ending up at $\vec{r}d\vec{r}$, given that you started inside $u^*$.
 
 \subsubsection{Solving the detailed balance equation}
 Now that we have defined both transition probabilities, we can solve the detailed balance equation (\eref{DBeqn}) for the acceptance probability of a forward move $P^{\rm acc}_{{\rm u}^* \to {\rm b}}$. We first use the important relation found in \cite{Morelli2008a} for a system in equilibrium
@@ -99,7 +99,7 @@ Apart from reactions between particles, we also want to simulate interactions be
 
 A particle can interact with a plane when the projection of it's center of mass lies in the plane and is separated less than a distance $\delta$. Wether the particle is inside the reaction volume or not only depends on the diffusion allong the axis perpendicular to the plane. Therefore, the interaction is essentially a 1D problem. Since the particle can interact with both sides of the plane, the reaction volume is $V^*=2 \delta$.
 
-A particle can interact with a rod when the projection of it's c.o.m. lies on the central axis of the rod. This time, not the c.o.m., but the surface of the particle has to be within a distance $\delta$ of the surface of the rod to interact: $|{\bf r}_{\rm part}-{\bf r}_{\rm rod}| \leq \sigma_{rod}+\sigma_{part} + \delta$. If the particle would interact with it's c.o.m., the cross section of the interaction would depend on the rod radius only, and the probability of the particle finding the rod would be very small. Especially when we model DNA, which has a very small radius indeed. If we look at the cross section through the particle, and perpendicular to the main axis of the rod, the problem is essentially a 2D diffusion-reaction problem. The reaction volume is thus an annulus, with inner radius $\sigma_{rod} + \sigma_{part}$, and the outer radius a $\delta$ longer.
+A particle can interact with a rod when the projection of it's c.o.m. lies on the central axis of the rod. This time, not the c.o.m., but the surface of the particle has to be within a distance $\delta$ of the surface of the rod to interact: $|{\bf r}_{\rm part}^{\rm c.o.m}-{\bf r}_{\rm rod}^{\perp}| \leq \sigma_{rod}+\sigma_{part} + \delta$. If the particle would interact with it's c.o.m., the cross section of the interaction would depend on the rod radius only, and the probability of the particle finding the rod would be very small. Especially when we model DNA, which has a very small radius indeed. If we look at the cross section through the particle, and perpendicular to the main axis of the rod, the problem is essentially a 2D diffusion-reaction problem. The reaction volume is thus an annulus, with inner radius $\sigma_{rod} + \sigma_{part}$, and the outer radius a $\delta$ longer.
 
 \subsubsection{Interaction between particles and particles on structures}
 A particle living on a structure, which reacts with particles from the bulk, can have a complex reaction volume. For instance, a particle living on a rod, has a sphere minus a the cylinder protruding it as reaction volume. However, the surface of the particle on which reactions are possible, scales approximately with the same factor as the reaction volume. These factors cancel in the acceptance probability, and we can just use the 3D acceptance probability for any surface-bulk direct binding process

@@ -83,7 +83,7 @@ Finally, to choose an event, while allowing for monomolecular reactions with tim
 \caption{\flabel{gfrd_pair} A pair-domain consists of two sub domains. The first in which the center of mass vector {\bf R} diffuses, centered around the starting point of the c.o.m. (cross). The second domain, centered on the position of {\bf R}, contains the diffusion of the inter-particle vector {\bf r}. The size of both domains is such that the sum of their lengths equals the size of the whole pair-domain. }
 \end{figure}
 
-\subsection{The scheduler}
+\subsection{Propagation of the domains}
 After initialization, every domain $i$ has an event and the time $t_i$ the event takes place. All the event's are in a scheduler, sorted by event time. Every round, the event with the smallest next-event time is executed. First, the particle in the 'active' domain is placed at a position depending on the event: 
 \begin{itemize}
  \item {\bf Escape} {\it (single)}: Placed on the boundary, where the angle's are chosen randomly.

@@ -3,11 +3,11 @@
 
 \subsection{Introduction}
 
-We want to be able to model a promoter site in \GFRD. A promoter site is simulated as a sink situated on a rod. A particle diffusing along this rod, can, as it walks over the sink, either react with it or just move over it. There is a reactive flux proportional to the probability of the particle being at the sink and the rate constant $k$. Next to the sink, the full \GFRD\, domain will also contain two absorbing boundaries. The fluxes at these three points are used to determine the event type at the next event time.
+We want to model a promoter site in \GFRD. A promoter site is simulated as a point like sink situated on a rod. A particle diffusing along this rod, can, as it walks over the sink, either react with it or just move over it. There is a reactive flux proportional to the probability of the particle being at the sink and the rate constant $k$. Next to the sink, the full \GFRD\, domain will also contain two absorbing boundaries. The fluxes at these three points are used to determine the event type at the next event time.
 
 \subsubsection{Formal definition of the domain}
 
-The differential equation governing the domain for a particle diffusing in 1D with diffusion constant $D$ in the presence of a sink at $x_s$ is
+The differential equation governing the domain for a particle diffusing in 1D with diffusion constant $D$ in the presence of a sink at $x_s$ with intrinsic association rate $k$ is
 \begin{equation}
  \frac{\partial p(x,t|x_0)}{\partial t} = D \, \nabla ^2 p(x,t|x_0) - k \, \delta (x - x_s) p(x,t|x_0).
  \elabel{DE_I}
@@ -81,6 +81,7 @@ Clearly, the sink causes a discontinuity in the flux from the left to the right 
 The difficult problem of solving (\eref{DE_I}) has now been simplified to solving the well known heat equation in both domains. To simplify even more we let the Laplace operator act on the time domain of the heat equation. The time variable $t$ is replaced by the Laplace variable $s$ in all functions (Laplace transformed functions are denoted by a hat on top $\hat{f}$) and the time derivative in the heat equation changes in a multiplicative factor
 \begin{equation}
  s \, \hat{p}(x,s|x_0) = D \, \nabla^2 \hat{p}(x,s|x_0).
+ \elabel{LDEQ}
 \end{equation}
 Furthermore we assume the delta-sink to be positioned at the origin $x_s=0$. Together with the boundary conditions (\eref{BC_I}) and the initial condition (\eref{IC_I}), where we assume the position of the initial delta peak to be in the right domain, we can write down an Ansatz in Laplace space for the two domains \cite{Carslaw1959}. For the right domain
 \begin{equation}
@@ -92,7 +93,7 @@ and the left domain
  \hat{p}_l(x,x_0,q) = E \, \mathrm{cosh} (q x) + F \, \mathrm{sinh} (q x),
 \elabel{Anz_L}
 \end{equation}
-where the unknowns $A,B$ and $E,F$ can be functions of $q$, and $q=\sqrt{s/D}$. The first term in the Anstatz for the right domain is the free propegator for a particle starting at $x_0$, and sets the initial condition of the problem. The hyperbolic functions are the most general solution of the diffusion equation. By filling in the Ansatz into the boundary and continuity conditions we find the four unknowns. Plugging these back into the Ansatz and simplifying, the solution in Laplace space becomes
+where the unknowns $A,B$ and $E,F$ can be functions of $q$, with $q=\sqrt{s/D}$. The first term in the Anstatz for the right domain is the free propegator for a particle starting at $x_0$, and sets the initial condition of the problem. The hyperbolic functions are the most general solution of the diffusion equation (\eref{LDEQ}). By filling in the Ansatz into the boundary and continuity conditions we find the four unknowns. Plugging these back into the Ansatz and simplifying, the solution in Laplace space becomes
 \begin{equation}
  \hat{p}_r(x,q|x_0) = -2 \, \frac{\mathrm{sinh} \, q(L_r - x)}{2 D q} \left( \frac{Dq \, \mathrm{sinh} \, q(L_l + x_0) + k \, \mathrm{sinh} \, q L_l \,\, \mathrm{sinh} \, q x_0}{Dq \, \mathrm{sinh} \, q(L_r + L_l) + k \, \mathrm{sinh} \,\, q L_l \, \mathrm{sinh} \, q L_r} \right)
  \elabel{SOL_R}
@@ -156,7 +157,7 @@ where $L=L_r + L_l$ in both equations. Note that when $p_r$ is evaluated for $x<
 
 
 \subsection{Validating the solution}
-To validate our solution, we first check if it obeys the imposed boundary conditions. Clearly, \erefstwo{FSOL_R}{FSOL_L} are zero at $L_r$ and $-L_l$ respectively, due to the overall sinus term. To check the continuity condition $p_r(x=0,t|x_0)=p_l(x=0,t|x_0)$, we interchange $x$ with $x_0$ in $p_r$ and evaluate both solutions at $x=0$. Only comparing numerators, the term proportional to $k$ vanishes in $p_r$, and both equations become the same. 
+To validate our solution, we first check if it obeys the imposed boundary conditions. Clearly, \erefstwo{FSOL_R}{FSOL_L} are zero at $L_r$ and $-L_l$ respectively, because each term in the solution is proportional to a sinus function which equals zero at these positions. To check the continuity condition $p_r(x=0,t|x_0)=p_l(x=0,t|x_0)$, we interchange $x$ with $x_0$ in $p_r$ and evaluate both solutions at $x=0$. Only comparing numerators, the term proportional to $k$ vanishes in $p_r$, and both equations become the same. 
 
 The most important condition is that the flux imbalance at the position of the sink is proportional to the probability density at that point, \eref{Cont_II}. To check, we differentiate both the numerators with respect to $x$, let $x=0$, and subtract them to get
 \begin{equation}
@@ -164,7 +165,7 @@ The most important condition is that the flux imbalance at the position of the s
 \end{equation}
 The first and second term in this equation cancel, leaving the third term which is equal to $k/D \, p_l(x=0,t|x_0)$, as was required. 
 
-To validate it's implementation in \GFRD\,, we do a simple simulation with one particle and one sink on a finite rod. The particle can bind and unbind from the sink. We measure the time the particle was bound with the sink, and calculate the average occupancy. This we can check with the analytical result for an equilibrated system,
+To validate it's implementation in \GFRD\,, we do a simple simulation with one particle and one sink on a finite rod. The particle can bind with the sink with intrinsic rate $k_+$. When the particle is bound with the promoter, it can unbind from it with an intrinsic rate $k_-$. We measure the time the particle was bound with the sink, and calculate the average occupancy. This we can check with the analytical result for an equilibrated system,
 \begin{equation}
 \bar{n} = \frac{k_+ c}{k_+ c + k_-}.
 \end{equation}
