@@ -3,8 +3,8 @@ def_graphic_ext=eps
 img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
-kileversion=2.1.0
-lastDocument=newBD.tex
+kileversion=2.0.85
+lastDocument=Noise.tex
 masterDocument=
 name=MasterThesis
 pkg_extIsRegExp=false
@@ -90,13 +90,13 @@ ReadWrite=true
 
 [item:App_Noise.tex]
 archive=true
-column=74
+column=104
 encoding=UTF-8
 highlight=LaTeX
-line=156
+line=152
 mode=LaTeX
 open=true
-order=4
+order=3
 
 [item:App_Sink.tex]
 archive=true
@@ -105,7 +105,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=0
 mode=LaTeX
-open=false
+open=true
 order=2
 
 [item:App_newBD.tex]
@@ -120,33 +120,33 @@ order=4
 
 [item:Introduction.tex]
 archive=true
-column=353
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=38
+line=0
 mode=LaTeX
-open=true
+open=false
 order=5
 
 [item:Noise.tex]
 archive=true
-column=237
+column=257
 encoding=UTF-8
 highlight=LaTeX
-line=168
+line=217
 mode=LaTeX
 open=true
-order=3
+order=4
 
 [item:Sink.tex]
 archive=true
-column=684
+column=531
 encoding=UTF-8
 highlight=LaTeX
-line=206
+line=5
 mode=LaTeX
 open=true
-order=2
+order=1
 
 [item:ThesisBase.tex]
 archive=true
@@ -170,13 +170,13 @@ order=0
 
 [item:eGFRD.tex]
 archive=true
-column=189
+column=196
 encoding=UTF-8
 highlight=LaTeX
-line=86
+line=59
 mode=LaTeX
 open=true
-order=1
+order=5
 
 [item:masterthesis.kilepr]
 archive=true
@@ -190,17 +190,17 @@ order=-1
 
 [item:newBD.tex]
 archive=true
-column=441
+column=350
 encoding=UTF-8
 highlight=LaTeX
-line=29
+line=41
 mode=LaTeX
 open=true
 order=6
 
 [view-settings,view=0,item:App_Noise.tex]
-CursorColumn=74
-CursorLine=156
+CursorColumn=104
+CursorLine=152
 
 [view-settings,view=0,item:App_Sink.tex]
 CursorColumn=0
@@ -211,12 +211,12 @@ CursorColumn=353
 CursorLine=38
 
 [view-settings,view=0,item:Noise.tex]
-CursorColumn=237
-CursorLine=168
+CursorColumn=257
+CursorLine=217
 
 [view-settings,view=0,item:Sink.tex]
-CursorColumn=684
-CursorLine=206
+CursorColumn=531
+CursorLine=5
 
 [view-settings,view=0,item:ThesisBase.tex]
 CursorColumn=0
@@ -227,9 +227,9 @@ CursorColumn=0
 CursorLine=0
 
 [view-settings,view=0,item:eGFRD.tex]
-CursorColumn=189
-CursorLine=86
+CursorColumn=196
+CursorLine=59
 
 [view-settings,view=0,item:newBD.tex]
-CursorColumn=441
-CursorLine=29
+CursorColumn=350
+CursorLine=41

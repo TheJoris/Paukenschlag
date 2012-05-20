@@ -14,13 +14,13 @@ We will first derive the correlation function, from which we can obtain the corr
 \subsection{Methods}
 
 \subsubsection{The correlation function}
-Here we derive the auto-correlation function for a switching process in Laplace space as was done by de Ronde et al.\cite{DeRonde2012}. Let's start with writing down the general expression for the correlation function of a switch
+Here we derive the auto-correlation function in Laplace space for a switching process, as was done by de Ronde et al.\cite{DeRonde2012}. Let's start with writing down the general expression for the correlation function of a switch
 \begin{eqnarray}
  C_n(\tau) & \equiv & \left\langle (n(\tau) - \bar{n})(n(0) - \bar{n}) \right\rangle \\
   	& = & \bar{n} \left( p_{*|*}(\tau)-\bar{n} \right).
  \elabel{corr_func}
 \end{eqnarray}
-The function $n(\tau)$ depicts the promoter state and is either one when the promoter is occupied and zero when it is free. In the first line we used that, for a stationary system, we can shift the time such that only one function depends on time. In the second line we introduced the conditional probability that given the promoter was bound at $t=0$, which is the probability that it is bound at a later time $\tau$. This conditional probability is equal to
+The function $n(\tau)$ depicts the promoter state and is either one when the promoter is occupied and zero when it is free. In the first line we used that, for a stationary system, we can shift the time such that only one function depends on time. In the second line we introduced the conditional probability that given the promoter was bound at $t=0$, what is the probability that it is bound at a later time $\tau$. This conditional probability is equal to
 \begin{equation}
  p_{*|*} = 1 - \mathscr{S}_{\rm rev}(\tau|*)
 \end{equation}
@@ -36,7 +36,7 @@ For the irreversible survival probability with one TF at contact with the promot
  \mathscr{S}_{\rm rad}(t|z_0) = \mathscr{S}_{\rm rad}(t|{\rm eq}) S(t|z_0)
  \elabel{Def_Ssi}
 \end{equation}
-where $\mathscr{S}_{\rm rad}(t|{\rm eq})$ is the survival probability of a free promoter site surrounded by an equilibrated solution of TF's. $S_{\rm rad}(t|z_0)$ is the survival probability with just one TF placed on the promoter site. This form implies that after a TF has dissociated from the promoter, all the other TF's are equilibrated. This is a good approximation when the average decay time $1/k_-$ is long enough for another particle decayed earlier to equilibrate. 
+where $\mathscr{S}_{\rm rad}(t|{\rm eq})$ is the survival probability of a free promoter site surrounded by an equilibrated solution of TF's. $S_{\rm rad}(t|z_0)$ is the survival probability with just one TF placed on the promoter site. This form implies that after a TF has dissociated from the promoter, all the other TF's are equilibrated. This is a good approximation when the average decay time $1/k_-$ is long enough for another particle decayed earlier, to equilibrate. 
 
 $\mathscr{S}_{\rm rad}(t|{\rm eq})$ can be found by solving the differential equation
 \begin{equation}
@@ -84,9 +84,9 @@ Using the approximation in \eref{Corr_approx}, the general expression for the co
  \lim_{c \to 0, s \to 0} \hat{C_n}(s) = \frac{\bar{n} \sigma_n^2}{k_+ \bar{\xi} \, S_{\rm rad}(\infty|z_0)} = \frac{\sigma_n^2 \tau_c^*}{S_{\rm rad}(\infty|z_0)},
  \elabel{CT1}
 \end{equation}
-where $\tau_c^*$ is the correlation time for the fast process, $\tau_c^* = k_+ \hat{\xi} + k_-$. Note that in geometries for which the particle always returns to the starting point, such as 1D and 2D diffusion problems, $S(t\to\infty|z_0)\to0$, and the correlation time $\tau_c$ diverges. Because a particle can't escape, it will allways be correlated with it's starting point. For these processes, we adopt a different defenition for the variance, as defined in \eref{EqProNoiseII}.
+where $\tau_c^*$ is the correlation time for the fast process, $\tau_c^* = k_+ \hat{\xi} + k_-$. Note that in geometries for which the particle always returns to the starting point, such as 1D and 2D diffusion problems, $S_{\rm rad}(t\to\infty|z_0)\to0$, and the correlation time $\tau_c$ diverges. Because a particle can't escape, it will allways be correlated with it's starting point. For these processes, we adopt a different defenition for the variance, as is defined in \eref{EqProNoiseII}.
 
-To summarize, given the large time limit of $S(t|z_0)$, we have, in the low $c$ limit, the correlation time.
+To summarize, given the large time limit of $S(t|z_0)$, we have, in the low concentration limit, the correlation time.
 
 
 \subsubsection{Defining noise}
@@ -100,7 +100,9 @@ Using Eq. 2.27 in \cite{Agmon1990}, the escape probability and the correlation t
  S_{\rm rad}(\infty|z_0) = \frac{k_D}{k_+ + k_D} \quad {\rm and} \quad \tau_c = \frac{k_+ + k_D}{(k_+ \bar{\xi} + k_-) k_D},
  \elabel{Sinfty}
 \end{equation}
-where $k_+$ and $k_-$ are the intrinsic association and dissociation rates of the promoter site respectively, and $k_D$ the rate at which TF's arrive at an 'absorbing' promoter ($k_+ \to \infty$) in steady-state. We note that for systems where $S(t\to\infty|z_0)\to0$, also $k_D\to0$, because particles 'from inifity' can't arrive fast enough to replenish the depletion due to the sink. Combining our relations in \eref{Sinfty} with \eref{EqProNoise}, \eref{EqxiNoise} and \eref{EqcNoise}, we arrive at general relations for the noise in the receptor
+where $k_+$ and $k_-$ are the intrinsic association and dissociation rates of the promoter site respectively, and $k_D$ the rate at which TF's arrive at an 'absorbing' promoter ($k_+ \to \infty$, a TF allways reacts when it `hit's` the promoter site.) in steady-state. We note that for systems where $S(t\to\infty|z_0)\to0$, also $k_D\to0$, because particles 'from inifity' can't arrive fast enough to replenish the depletion due to the sink. 
+
+Combining our relations in \eref{Sinfty} with \eref{EqProNoise}, \eref{EqxiNoise} and \eref{EqcNoise}, we arrive at general relations for the noise in the receptor
 \begin{eqnarray}
  \elabel{NoisePro}
  \left( \frac{\delta n}{\bar{n}} \right)^2 & = & 2 \bar{n}(1-\bar{n})\left[\left( \frac{1}{\bar{n} k_D T \bar{\xi}} \right)+\frac{1-\bar{n}}{k_- T \bar{n}^2} \right] \\
@@ -189,7 +191,7 @@ and the noise in the 'equivalent concentration' of the cytoplasm $c$
 \subsubsection{1D diffusion with reversible binding to the DNA}
 This time, we want to evaluate the noise in the occupancy of a promoter site where particles do not escape after falling from the DNA, but are placed at contact with it. This way, a TF starting at the promoter site can switch several times between sliding along the DNA and making excursions in the cytoplasm before either rebinding or escaping, as is sketched in \fref{promoter_schematic}. 
 
-To calculate the variance in the promoter occupancy, we need the corrrelation time. Remember that the correlation time is inversely proportional to the probability by which a single TF, starting on the promoter site, escapes: $\tau_c = \tau_c^* / S(\infty|z_0)$. To find this long time limit of the survival probability, we write down the full system of diffusion equations governing the behavior of a single TF starting on the promoter site. It turns out we can solve these equations, and find an exact solution for $S(\infty|z_0)$. Some of the mathematics in our derivation is inspired by the paper of Tka$\check{\rm c}$ik \cite{Tkacik2009}. 
+To calculate the variance in the promoter occupancy, we need the corrrelation time. Remember that the correlation time is inversely proportional to the probability by which a single TF, starting on the promoter site, escapes: $\tau_c = \tau_c^* / S_{\rm rad}(\infty|z_0)$. To find this long time limit of the survival probability, we write down the full system of diffusion equations governing the behavior of a single TF starting on the promoter site. It turns out we can solve these equations, and find an exact solution for $S_{\rm rad}(\infty|z_0)$. Some of the mathematics in our derivation is inspired by the paper of Tka$\check{\rm c}$ik \cite{Tkacik2009}. 
 
 \begin{figure}[ht]
 \centering
@@ -213,7 +215,7 @@ Here $P_1(z, t|z_0)$ is the Green's function describing the 1D sliding of the TF
  s \, \hat{P}_{1}(z) - \delta(z - z_0) & = & D_1 \frac{\partial^2\hat{P}_1(z)}{\partial^2 z}  - k_+ \hat{P}_1(z) \delta(z - z_0) - k_d \hat{P}_1(z) + k_a \hat{P}_3(z, |{\bf r}| = \sigma) \\
  s \, \hat{P}_3(z,{\mathbf r}) & = & D_3 \nabla^2 \hat{P}_3(z, {\bf r}) - \left[ k_a \hat{P}_3(z,{\bf r}) - k_d \hat{P}_1(z) \right] \frac{\delta(|{\bf r}| - \sigma)}{2 \pi \sigma},
 \end{eqnarray*}
-where we explicitly included the initial condition of one particle placed in contact with the promoter site on the DNA. We left away the Laplace variable $s$ and the initial conditions in the function arguments. Now we Fourier transform with respect to space
+where we explicitly included the initial condition of one particle placed in contact with the promoter site on the DNA. We left away the Laplace variable $s$ and the initial conditions in the function arguments. We continue by Fourier transforming with respect to space
 \begin{eqnarray}
  s \, \tilde{P}_1(q) - 1 & = & - D_1 q^2 \tilde{P}_1(q) - k_+ \tilde{P}_1(z_0) - k_d \tilde{P}_1(q) + k_a \tilde{P}_3(q) \elabel{FDE_dna} \\
  s \, \tilde{P}_3(q,{\bf k}) & = & - D_3 (q^2 + k^2) \tilde{P}_3(q, {\bf k}) - \left[ k_a \tilde{P}_3(q) - k_d \tilde{P}_1(q) \right] J_{0}(k \sigma). 

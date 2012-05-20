@@ -17,7 +17,7 @@ K_{eq} = \frac{k_{\rm on}}{k_{\rm off}} = \frac{k_{\rm a}}{k_{\rm d}}.
 \end{equation}
 
 \subsubsection{General idea}
-The algorithm needs to simulate both the formation and destruction of the intermediate complex $A\cdots B$ by diffusion. Furthermore, when two particles formed an intermediate complex or are 'at contact', we need to determine the probability by which they react. We discretize time in steps of $\Delta t$, and each timestep, all particles can make a move using the free propegator of brownian motion. In order to react, every particle has a spherical region with thickness $\delta$ around it, called the \emph{reaction volume}. When a particle is inside the reaction volume of another particle after making a move, it can react with a certain probability. We derive this probability using detailed balance. See picture.
+The algorithm needs to simulate both the formation and destruction of the intermediate complex $A\cdots B$ by diffusion. Furthermore, when two particles formed an intermediate complex or are 'at contact', we need to determine the probability by which they react. We discretize time in steps of $\Delta t$, and each timestep, all particles can make a move using the free propegator of Brownian motion. In order to react, every particle has a spherical region with thickness $\delta$ around it, called the \emph{reaction volume}. When a particle is inside the reaction volume of another particle after making a move, it can react with a certain probability. We derive this probability using detailed balance. See picture.
 
 
 \subsection{Detailed balance}
