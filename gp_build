@@ -10,7 +10,13 @@
 # 5 - Tablaux for saturation vs correlation time
 # 6 - Pbound with a sink
 # 7 - Plot of S(t|eq) and S(t|\sigma), timescale seperation.
-# 8 - Comparing rdens plots between newBD2D and GF'n 2DRadInf.
+# 8 - Comparing IRR rdens plots between newBD2D and GF'n 2DRadInf.
+# 9 - Comparing IRR rdens plots between newBD1D and GF'n 1DRadInf.
+#10 - Comparing REV rdens plots between newBD1D and GF'n 1DRevInf.
+#11 - Comparing IRR rdens plots between newBD1D and oldBD1D
+#12 - Comparing REV rdens plots between newBD1D and oldBD1D
+#13 - newBD1D, Pbound measurement default situation
+#14 - Comparison of Srad with the oldBD1D and newBD1D
 
 plot=$1
 
@@ -55,11 +61,11 @@ set style line 1 lw 4 lt 1 lc rgb '#CC5555'
 set style line 2 lw 4 lt 2 lc rgb '#55CC55'
 set style line 3 lw 4 lt 3 lc rgb '#5555CC'
 set style line 4 lw 4 lt 4 lc rgb '#CC55CC'
-set style line 5 lw 2 lt 2 lc rgb 'gray10'
-set style line 6 lw 2 lt 4 lc rgb 'gray50'
-set style line 7 lw 2 lt 1 lc rgb '#FF040E'
-set style line 8 lw 2 lt 1 lc rgb '#006868'
-set style line 9 lw 4 lt 1 lc rgb '#68FFAA'
+set style line 5 lw 4 lt 1 lc rgb '#CC5555'
+set style line 6 lw 4 lt 1 lc rgb '#55CC55'
+set style line 7 lw 4 lt 1 lc rgb '#5555CC'
+set style line 8 lw 4 lt 1 lc rgb '#CC55CC'
+set style line 9 lw 4 lt 5 lc rgb '#CC5555'
 set style line 10 lw 2 lt 4 lc rgb 'gray50'
 "
 
@@ -74,6 +80,9 @@ set style line 10 lw 2 lt 4 lc rgb 'gray50'
 #Convert all eps formats to pdf not done by gnuplot
 if [[ $plot -eq 0 ]]
 then
+
+epstopdf BDGeometry_Rod.eps
+epstopdf BDGeometry_Plane.eps
 
 epstopdf Sink_domain.eps
 epstopdf promoter_schematic.eps
@@ -96,7 +105,7 @@ $lines2
 
 gnuplot << EOF -persist
 
-set terminal postscript eps enhanced color
+set terminal postscript eps enhanced color font "Times-Roman, 18"
 set out "NoisePlotFull.eps"
 
 #$lines2
@@ -134,7 +143,7 @@ gnuplot << EOF -persist
 $lines1
 $lines2
 
-set terminal postscript eps enhanced color
+set terminal postscript eps enhanced color font "Times-Roman, 18"
 set out "PowerPlot.eps"
 
 set log xy
@@ -174,7 +183,7 @@ gnuplot << EOF -persist
 $lines1
 $lines2
 
-set terminal postscript eps enhanced color
+set terminal postscript eps enhanced color font "Times-Roman, 18"
 set out "PowerPlot2.eps"
 
 set size 1,1
@@ -239,7 +248,7 @@ $lines2
 
 gnuplot << EOF -persist
 
-set terminal postscript eps enhanced color
+set terminal postscript eps enhanced color font "Times-Roman, 18"
 set out "GaspervsJoris.eps"
 
 #$lines2
@@ -279,7 +288,7 @@ gnuplot << EOF -persist
 
 $lines3
 
-set terminal postscript eps enhanced color
+set terminal postscript eps enhanced color font "Times-Roman, 18"
 set out "TableauxNoiseCmp.eps"
 
 # x = kdD
@@ -441,7 +450,7 @@ $lines3
 
 gnuplot << EOF -persist
 
-set terminal postscript eps enhanced color
+set terminal postscript eps enhanced color font "Times-Roman, 18"
 set out "SinkPbound.eps"
 
 #$lines2
@@ -495,7 +504,7 @@ gnuplot << EOF -persist
 $lines1
 $lines2
 
-set terminal postscript eps enhanced color
+set terminal postscript eps enhanced color font "Times-Roman, 18"
 set out "SeqApprx.eps"
 
 set size 1,1
@@ -555,7 +564,7 @@ gnuplot << EOF -persist
 $lines1
 $lines3
 
-set terminal postscript eps enhanced color
+set terminal postscript eps enhanced color font "Times-Roman, 18"
 set out "newBD2D_rdens_compare.eps"
 
 set size 1,1
@@ -587,10 +596,10 @@ plot "./newBD2D_rdenssim_1.dat" with points pt 1 ps 2 title "t_{sim} = 10^{-1} {
 "./newBD2D_rdenssim_2.dat" with points pt 4 ps 2 title "t_{sim} = 10^{-2} {/Symbol t}",\
 "./newBD2D_rdenssim_3.dat" with points pt 6 ps 2 title "t_{sim} = 10^{-3} {/Symbol t}",\
 "./newBD2D_rdenssim_4.dat" with points pt 10 ps 2 title "t_{sim} = 10^{-4} {/Symbol t}",\
-"./newBD2D_rdensana_1.dat" with lines ls 1 notitle,\
-"./newBD2D_rdensana_2.dat" with lines ls 2 notitle,\
-"./newBD2D_rdensana_3.dat" with lines ls 3 notitle,\
-"./newBD2D_rdensana_4.dat" with lines ls 4 notitle
+"./BD2D_rdensana_1.dat" with lines ls 1 notitle,\
+"./BD2D_rdensana_2.dat" with lines ls 2 notitle,\
+"./BD2D_rdensana_3.dat" with lines ls 3 notitle,\
+"./BD2D_rdensana_4.dat" with lines ls 4 notitle
 
 set nolog y
 set size 0.5,0.5
@@ -602,15 +611,480 @@ set ytic (1e8,1e7)
 set xtic (1,1.5,2,2.5,3)
 #set xlabel "r/R" font "CMBX10, 10"
 #set ylabel "p_{irr}" font "CMBX10, 10"
-set key top right
+set key top right 
 
-plot "./newBD2D_rdensana_1.dat" with lines ls 1 title "t_{sim} = 10^{-1} {/Symbol t}",\
-"./newBD2D_rdenssim_1.dat" with points pt 4 ps 1 title "{/Symbol D} t = 10^{-5} {/Symbol t}",\
-"./newBD2D_rdenssim_1b.dat" with points pt 1 ps 1 title "{/Symbol D} t = 10^{-4} {/Symbol t}",\
-"./newBD2D_rdenssim_1c.dat" with points pt 3 ps 1 title "{/Symbol D} t = 10^{-3} {/Symbol t}"
+plot "./BD2D_rdensana_1.dat" with lines ls 1 title "{/Times=13 t_{sim} = 10^{-1} {/Symbol t}}",\
+"./newBD2D_rdenssim_1.dat" with points pt 4 ps 1 title "{/Times=13 {/Symbol D} t = 10^{-5} {/Symbol t}}",\
+"./newBD2D_rdenssim_1b.dat" with points pt 1 ps 1 title "{/Times=13 {/Symbol D} t = 10^{-4} {/Symbol t}}",\
+"./newBD2D_rdenssim_1c.dat" with points pt 3 ps 1 title "{/Times=13 {/Symbol D} t = 10^{-3} {/Symbol t}}"
 
 
 EOF
 
 epstopdf newBD2D_rdens_compare.eps
+fi
+
+
+
+
+# 9 - Comparing IRR rdens plots between newBD1D and GF'n 1DRadInf.
+if [[ $plot -eq 9 ]]
+then
+
+gnuplot << EOF -persist
+
+$lines1
+$lines3
+
+set terminal postscript eps enhanced color font "Times-Roman, 18"
+set out "newBD1Dirr_rdens_compare.eps"
+
+set size 1,1
+set origin 0,0
+#set nokey
+set multiplot
+
+set size 1,1
+set origin 0,0
+
+set log y
+
+set format y "10^{%L}"
+#set format x "10^{%L}"
+
+set yrange [1e5:1e9]
+set xrange [0:6]
+
+#set ytics 2 format "%g"
+#set xtics 2 format "%g"
+set xlabel "r/R"
+set ylabel "p_{1D, rad}"
+#set rmargin 4
+set key top left
+
+#set arrow nohead from -6,0 to 0,0 ls 14
+
+R=1
+
+plot "./newBD1Dirr_rdenssim_1.dat" u (\$1-R):2 with points pt 1 ps 2 title "t_{sim} = 10^{1} {/Symbol t}",\
+"./newBD1Dirr_rdenssim_2.dat" u (\$1-R):2 with points pt 4 ps 2 title "t_{sim} = 10^{0} {/Symbol t}",\
+"./newBD1Dirr_rdenssim_3.dat" u (\$1-R):2 with points pt 6 ps 2 title "t_{sim} = 10^{-1} {/Symbol t}",\
+"./newBD1Dirr_rdenssim_4.dat" u (\$1-R):2 with points pt 10 ps 2 title "t_{sim} = 10^{-2} {/Symbol t}",\
+"./BD1Dirr_rdensana_1.dat" with lines ls 1 notitle,\
+"./BD1Dirr_rdensana_2.dat" with lines ls 2 notitle,\
+"./BD1Dirr_rdensana_3.dat" with lines ls 3 notitle,\
+"./BD1Dirr_rdensana_4.dat" with lines ls 4 notitle
+
+set nolog y
+set size 0.5,0.5
+set origin .48,.48
+set format y "10^{%L}"
+set yrange [0:.8e6]
+set xrange [1:15]
+set ytic (1e4,.7e6)
+#set xtic (0,1,2,3,5,10,15)
+#set xlabel "r/R" font "CMBX10, 10"
+#set ylabel "p_{irr}" font "CMBX10, 10"
+set key top right
+set title "{/Symbol D} t = 10^{-5} {/Symbol t}, t_{sim}=10^{1} {/Symbol t}"
+
+plot "./BD1Dirr_rdensana_1a.dat" with lines ls 1 notitle,\
+"./newBD1Dirr_rdenssim_1.dat" u (\$1-R):2 with points pt 4 ps 1 title "{/Times=13 {/Symbol D} t = 10^{-5} {/Symbol t}}",\
+"./newBD1Dirr_rdenssim_1b.dat" u (\$1-R):2 with points pt 1 ps 1 title "{/Times=13 {/Symbol D} t = 10^{-6} {/Symbol t}}",\
+"./newBD1Dirr_rdenssim_1c.dat" u (\$1-R):2 with points pt 3 ps 1 title "{/Times=13 {/Symbol D} t = 10^{-7} {/Symbol t}}"
+
+EOF
+
+epstopdf newBD1Dirr_rdens_compare.eps
+fi
+
+
+
+
+# 10 - Comparing REV rdens plots between newBD1D and GF'n 1DRadInf.
+if [[ $plot -eq 10 ]]
+then
+
+gnuplot << EOF -persist
+
+$lines1
+$lines3
+
+set terminal postscript eps enhanced color font "Times-Roman, 18"
+set out "newBD1Drev_rdens_compare.eps"
+
+set size 1,1
+set origin 0,0
+#set nokey
+set multiplot
+
+set size 1,1
+set origin 0,0
+
+set log y
+
+set format y "10^{%L}"
+#set format x "10^{%L}"
+
+set yrange [1e5:1e9]
+set xrange [0:6]
+
+#set ytics 2 format "%g"
+#set xtics 2 format "%g"
+set xlabel "r/R"
+set ylabel "p_{1D, rev}"
+#set rmargin 4
+#set key bottom middle
+set key top right
+
+#set arrow nohead from -6,0 to 0,0 ls 14
+
+R=1
+
+plot "./newBD1Drev_rdenssim_1.dat" u (\$1-R):2 with points pt 1 ps 2 title "t_{sim} = 10^{1} {/Symbol t}",\
+"./newBD1Drev_rdenssim_2.dat" u (\$1-R):2 with points pt 4 ps 2 title "t_{sim} = 10^{0} {/Symbol t}",\
+"./newBD1Drev_rdenssim_3.dat" u (\$1-R):2 with points pt 6 ps 2 title "t_{sim} = 10^{-1} {/Symbol t}",\
+"./newBD1Drev_rdenssim_4.dat" u (\$1-R):2 with points pt 10 ps 2 title "t_{sim} = 10^{-2} {/Symbol t}",\
+"./BD1Drev_rdensana_1.dat" with lines ls 1 notitle,\
+"./BD1Drev_rdensana_2.dat" with lines ls 2 notitle,\
+"./BD1Drev_rdensana_3.dat" with lines ls 3 notitle,\
+"./BD1Drev_rdensana_4.dat" with lines ls 4 notitle
+
+set nolog y
+set noxlabel
+#set noylabel
+set size 0.35,0.35
+set origin .33,.1
+set format y "10^{%L}"
+set yrange [0:1e8]
+set xrange [0:15]
+set ytic (1e7,1e8)
+set xtic (0,4,8,12,16)
+#set xlabel "r/R" font "CMBX10, 10"
+#set ylabel "p_{irr}" font "CMBX10, 10"
+#set key top right
+set nokey
+
+plot "./BD1Drev_rdensana_1a.dat" with lines ls 1 title "{/Times=13 t_{sim} = 10^{1} {/Symbol t}}",\
+"./newBD1Drev_rdenssim_1.dat" u (\$1-R):2 with points pt 4 ps 1 title "{/Times=13 {/Symbol D} t = 10^{-5} {/Symbol t}}"
+
+EOF
+
+epstopdf newBD1Drev_rdens_compare.eps
+fi
+
+
+
+
+# 11 - Comparing IRR rdens plots between newBD1D and oldBD1D.
+if [[ $plot -eq 11 ]]
+then
+
+gnuplot << EOF -persist
+
+$lines1
+$lines3
+
+set terminal postscript eps enhanced color font "Times-Roman, 18"
+set out "BD1Dirr_rdens_compare.eps"
+
+set size 1,1
+set origin 0,0
+#set nokey
+set multiplot
+
+set size 1,1
+set origin 0,0
+
+set log y
+
+set format y "10^{%L}"
+#set format x "10^{%L}"
+
+set yrange [1e5:1e9]
+set xrange [0:6]
+
+#set ytics 2 format "%g"
+#set xtics 2 format "%g"
+set xlabel "r/R"
+set ylabel "p_{1D, rad}"
+#set rmargin 4
+set key top left
+
+#set arrow nohead from -6,0 to 0,0 ls 14
+
+R=1
+
+plot "./newBD1Dirr_rdenssim_1.dat" u (\$1-R):2 with lines ls 9 title "t_{sim} = 10^{1} {/Symbol t}",\
+"./newBD1Dirr_rdenssim_2.dat" u (\$1-R):2 with lines ls 2 title "t_{sim} = 10^{0} {/Symbol t}",\
+"./newBD1Dirr_rdenssim_3.dat" u (\$1-R):2 with lines ls 3 title "t_{sim} = 10^{-1} {/Symbol t}",\
+"./newBD1Dirr_rdenssim_4.dat" u (\$1-R):2 with lines ls 4 title "t_{sim} = 10^{-2} {/Symbol t}",\
+"./oldBD1Dirr_rdenssim_1.dat" u (\$1-R):2 with linespoints ls 5 notitle,\
+"./oldBD1Dirr_rdenssim_2.dat" u (\$1-R):2 with linespoints ls 6 notitle,\
+"./oldBD1Dirr_rdenssim_3.dat" u (\$1-R):2 with linespoints ls 7 notitle,\
+"./oldBD1Dirr_rdenssim_4.dat" u (\$1-R):2 with linespoints ls 8 notitle
+
+set nolog y
+set size 0.5,0.5
+set origin .47,.47
+set format y "10^{%L}"
+set yrange [0:.8e6]
+set xrange [1:15]
+set ytic (1e4,.7e6)
+#set xtic (0,1,2,3,5,10,15)
+#set xlabel "r/R" font "CMBX10, 10"
+#set ylabel "p_{irr}" font "CMBX10, 10"
+set key top right
+set title "{/Symbol D} t = 10^{-5} {/Symbol t}, t_{sim}=10^{1} {/Symbol t}"
+
+plot "./BD1Dirr_rdensana_1a.dat" u (\$1):2 with lines ls 10 title "P_{1D, Rad}",\
+"./newBD1Dirr_rdenssim_1.dat" u (\$1-R):2 with lines ls 9 title "newBD",\
+"./oldBD1Dirr_rdenssim_1.dat" u (\$1-R):2 with linespoints ls 1 title "oldBD"
+
+EOF
+
+epstopdf BD1Dirr_rdens_compare.eps
+fi
+
+
+
+
+# 12 - Comparing REV rdens plots between newBD1D and oldBD1D
+if [[ $plot -eq 12 ]]
+then
+
+gnuplot << EOF -persist
+
+$lines1
+$lines3
+
+set terminal postscript eps enhanced color font "Times-Roman, 18"
+set out "BD1Drev_rdens_compare.eps"
+
+set size 1,1
+set origin 0,0
+#set nokey
+set multiplot
+
+set size 1,1
+set origin 0,0
+
+set log y
+
+set format y "10^{%L}"
+#set format x "10^{%L}"
+
+set yrange [1e5:1e9]
+set xrange [0:6]
+
+#set ytics 2 format "%g"
+#set xtics 2 format "%g"
+set xlabel "r/R"
+set ylabel "p_{1D, rev}"
+#set rmargin 4
+set key top right
+
+#set arrow nohead from -6,0 to 0,0 ls 14
+
+R=1
+
+plot "./newBD1Drev_rdenssim_1.dat" u (\$1-R):2 with lines ls 9 title "t_{sim} = 10^{1} {/Symbol t}",\
+"./newBD1Drev_rdenssim_2.dat" u (\$1-R):2 with lines ls 2 title "t_{sim} = 10^{0} {/Symbol t}",\
+"./newBD1Drev_rdenssim_3.dat" u (\$1-R):2 with lines ls 3 title "t_{sim} = 10^{-1} {/Symbol t}",\
+"./newBD1Drev_rdenssim_4.dat" u (\$1-R):2 with lines ls 4 title "t_{sim} = 10^{-2} {/Symbol t}",\
+"./oldBD1Drev_rdenssim_1.dat" u (\$1-R):2 with linespoints ls 5 notitle,\
+"./oldBD1Drev_rdenssim_2.dat" u (\$1-R):2 with linespoints ls 6 notitle,\
+"./oldBD1Drev_rdenssim_3.dat" u (\$1-R):2 with linespoints ls 7 notitle,\
+"./oldBD1Drev_rdenssim_4.dat" u (\$1-R):2 with linespoints ls 8 notitle
+
+EOF
+
+epstopdf BD1Drev_rdens_compare.eps
+fi
+
+
+
+#13 - newBD1D, Pbound measurement default situation
+if [[ $plot -eq 13 ]]
+then
+
+$lines1
+$lines3
+
+gnuplot << EOF -persist
+
+set terminal postscript eps enhanced color font "Times-Roman, 18"
+set out "newBD1D_pbound_default.eps"
+
+set size 1,1
+set origin 0,0
+#set nokey
+set multiplot
+
+set size 1,1
+set origin 0,0
+
+set log x
+
+n(x)=x*c/(x*c + kd)
+
+#set ytics 2 format "%g"
+#set xtics 2 format "%g"
+set xlabel "k_a"
+set ylabel "P_{bound}"
+set key top left
+
+#set arrow nohead from -6,0 to 0,0 ls 14
+
+set format x "10^{%L}"
+
+R=2e-9
+c=1/(5e-8-1.5*R)
+kd=5e4
+#plot "./Results.dat"
+plot "./newBD1D_pbound_default.dat" using 2:3 ls 7 title "simulations",\
+"./newBD1D_pbound_DBerror.dat" using 2:3 with linespoints ls 5 title "simulations, at contact",\
+n(x) with lines ls 1 title "theory"
+
+set font "Times-Roman, 13"
+set size 0.45,0.45
+set origin .5,.16
+unset log x
+set format x "{/Times=13 %g}"
+set format y "{/Times=13 %g}"
+#set ytic (1e4,.7e6)
+set xrange[-5.25:-.75]
+set yrange[0.494:0.504]
+#set yrange[0.47:0.53]
+set xtic (-1,-2,-3,-4,-5,-6)
+set ytic ( 0.502, 0.5, 0.498, 0.496 )
+set ylabel "{/Times=15 P_{bound}}"
+set xlabel "{/Times=15 {/Symbol D}t/{/Symbol t}}"
+set nokey
+
+plot "./newBD1D_pbound_dtcheck2.dat" using 1:3:(sqrt(\$4)) with yerrorbar,\
+"./newBD1D_pbound_dtcheck2.dat" using 1:3 with lines ls 1,\
+.5 with lines ls 9
+
+
+EOF
+
+epstopdf newBD1D_pbound_default.eps
+fi
+
+
+
+
+#14 - Comparison of Srad with the oldBD1D and newBD1D
+if [[ $plot -eq 14 ]]
+then
+
+$lines1
+$lines3
+
+gnuplot << EOF -persist
+
+set terminal postscript eps enhanced color font "Times-Roman, 18"
+set out "BD1DSsigma.eps"
+
+set size 1,1
+set origin 0,0
+
+set size 1,1
+set origin 0,0
+#set nokey
+set multiplot
+
+set log x
+
+Srad(t)= exp(k**2*t/D1)*erfc((2*k*t)/sqrt(4*D1*t))
+
+#set ytics 2 format "%g"
+#set xtics 2 format "%g"
+set xlabel "t[s]"
+set ylabel "S_{rad}(t|{/Symbol s})"
+set key bottom left
+
+#set arrow nohead from -6,0 to 0,0 ls 14
+
+set format x "10^{%L}"
+
+D1=1E-12
+k=1E-3
+
+plot "./newBD1DSsigma.dat" u 1:2 with linespoints ls 2 title "newBD",\
+"./oldBD1DSsigma.dat" using 1:2 with linespoints ls 3 title "oldBD",\
+Srad(x) with lines ls 1 title "theory"
+
+
+set size 0.5,0.5
+set origin .47,.4
+#set ytic (1e4,.7e6)
+#set xtic (0,1,2,3,5,10,15)
+#set xlabel "r/R" font "CMBX10, 10"
+set ylabel "Error[%]"
+set nokey
+set title "Error in newBD and oldBD"
+
+plot "./BD1DSsigma_compare.dat" u 1:(100*(\$3-Srad(\$1))/Srad(\$1)) with linespoints ls 2 title "Error in newBD",\
+"./BD1DSsigma_compare.dat" u 1:(100*(\$2-Srad(\$1))/Srad(\$1)) with linespoints ls 3 title "Error in oldBD"
+
+EOF
+
+epstopdf BD1DSsigma.eps
+fi
+
+
+
+#15 - performance comparison for reversible system.
+if [[ $plot -eq 15 ]]
+then
+
+$lines1
+$lines3
+
+gnuplot << EOF -persist
+
+set terminal postscript eps enhanced color font "Times-Roman, 18"
+set out "BD1D_performance.eps"
+
+set size 1,1
+set origin 0,0
+
+set size 1,1
+set origin 0,0
+#set nokey
+
+D1=1E-12
+k=1E-3
+Srad(t)= exp(k**2*t/D1)*erfc((2*k*t)/sqrt(4*D1*t))
+
+#set ytics 2 format "%g"
+#set xtics 2 format "%g"
+set xlabel "simulated time[s]"
+set ylabel "wall time"
+set key top left
+
+#set arrow nohead from -6,0 to 0,0 ls 14
+
+set format x "10^{%L}"
+set xtic( 4E-8, 4E-7, 4E-6, 4E-5 )
+
+#set log y
+set log x
+
+#set parametric
+
+#set trange[0:2E5]
+
+#plot 1E-7,t with lines ls 10
+
+#unset parametric
+
+plot "./BD1D_performance.dat" u 1:2 with linespoints ls 1 title "newBD",\
+ "./BD1D_performance.dat" u 1:3 with linespoints ls 2 title "oldBD"
+
+EOF
+
+epstopdf BD1D_performance.eps
 fi

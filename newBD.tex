@@ -101,6 +101,19 @@ A particle can interact with a plane when the projection of it's center of mass 
 
 A particle can interact with a rod when the projection of it's c.o.m. lies on the central axis of the rod. This time, not the c.o.m., but the surface of the particle has to be within a distance $\delta$ of the surface of the rod to interact: $|{\bf r}_{\rm part}^{\rm c.o.m}-{\bf r}_{\rm rod}^{\perp}| \leq \sigma_{rod}+\sigma_{part} + \delta$. If the particle would interact with it's c.o.m., the cross section of the interaction would depend on the rod radius only, and the probability of the particle finding the rod would be very small. Especially when we model DNA, which has a very small radius indeed. If we look at the cross section through the particle, and perpendicular to the main axis of the rod, the problem is essentially a 2D diffusion-reaction problem. The reaction volume is thus an annulus, with inner radius $\sigma_{rod} + \sigma_{part}$, and the outer radius a $\delta$ longer.
 
+\begin{figure}[ht]
+\begin{minipage}[ht]{.5\linewidth}
+\centering
+\includegraphics[scale=.5]{BDGeometry_Plane}
+\end{minipage}
+\begin{minipage}[ht]{.5\linewidth}
+\centering
+\includegraphics[scale=.5]{BDGeometry_Rod}
+\end{minipage}
+\caption{\flabel{BDGeometry} The crossection through the center of mass of a particle (green) and ({\bf left}) the central axis of a rod (blue) or ({\bf right}) perpendicular throug a plane.}
+\end{figure}
+
+
 \subsubsection{Interaction between particles and particles on structures}
 A particle living on a structure, which reacts with particles from the bulk, can have a complex reaction volume. For instance, a particle living on a rod, has a sphere minus a the cylinder protruding it as reaction volume. However, the surface of the particle on which reactions are possible, scales approximately with the same factor as the reaction volume. These factors cancel in the acceptance probability, and we can just use the 3D acceptance probability for any surface-bulk direct binding process
 \begin{equation}
@@ -155,7 +168,7 @@ and
  \frac{k_{a}^{max} \Delta t}{\delta} = \beta,
  \elabel{BDcntrII}
 \end{equation}
-Where $\sigma_{min}$ is the smallest particle radius and $D_{max}$ the maximum diffusion constant found in the multi domain. $k_{a}^{max}$ is the maximum intrinsic forward rate of a bimolecular reaction possible in the multi, where we have divided out the surface factor ($[k_{a}^{max}] = Length/Time $).
+Where $\sigma_{min}$ is the smallest particle radius and $D_{max}$ the maximum diffusion constant found in the multi domain. $k_{a}^{max}$ is the maximum intrinsic association rate of a bimolecular reaction possible in the multi, where we have divided out the surface factor ($[k_{a}^{max}] = Length/Time $).
 
 The first constraint sets the average max stepsize to a fraction $\alpha$ of the minimal particle radius in the multi. This prohibits particles from stepping over other particles and makes sure the particle doesn't escape the multi with to great a step. The second constraint sets the highest acceptance probability in the multi equal to $\beta$. This to ensure that the correction made for the double reaction attempts is valid. 
 
@@ -163,20 +176,59 @@ We let the reaction length $\delta$ equal to $\alpha \, \sigma_{\rm min}$, or th
 
 In \GFRD\, we choose $\alpha = 0.05$ and $\beta = 0.01$.
 
+
+
 \subsection{Tests}
-\begin{figure}[hb]
+
+\begin{figure}[ht]
+\begin{minipage}[ht]{.5\linewidth}
 \centering
-\includegraphics[scale=.8]{newBD2D_rdens_compare}
-\caption{\flabel{newBD2D_rdens_compare} Radial probability distribution for a pair of irreversibly reacting particles in 2D. The four curves refer to different $t_{\rm sim}$ and where obtainded using timesteps  $\Delta t = 10^{-4} t_{\rm sim}$. Except for $t_{\rm sim} = .1\,\tau$, where we used $10^{-5} \tau$. Here, $\tau = R^2/D$ and $R=\sigma_A+\sigma_B$. Only the B particle moves with diffusion constant $D$, and starts at contact: $r_0=R$. The intrinsic association rate was set to $k_a = 100 R^2/\tau$. We compare simulation results (symbols) with a Green's function in 2D with a radiation boundary at radius $R$: $p_{\rm rad}(r,t|R)$ (lines). The inset shows the simulation results with $t_{\rm sim} = .1\,\tau$, against a linear axis, for different values of the timestep. Using larger timesteps, the algorithm underestimates the survival probability.}
+\includegraphics[scale=.5]{newBD2D_rdens_compare}
+\end{minipage}
+\begin{minipage}[ht]{.5\linewidth}
+\centering
+\includegraphics[scale=.5]{newBD1D_pbound_default}
+\end{minipage}
+\caption{\flabel{newBD2D_rdens_compare} {\bf left}: Radial probability distribution for a pair of irreversibly reacting particles on a plane (2D). The four curves refer to different $t_{\rm sim}$ and where obtainded using timesteps  $\Delta t = 10^{-4} t_{\rm sim}$. Except for $t_{\rm sim} = .1\,\tau$, where we used $10^{-5} \tau$. Here, $\tau = R^2/D$ and $R=\sigma_A+\sigma_B$. The reaction length $\delta=0.01 R$. Only the B particle moves with diffusion constant $D$, and starts at contact: $r_0=R$. The intrinsic association rate was set to $k_a = 100 R^2/\tau$. We compare simulation results (symbols) with a Green's function in 2D with a radiation boundary at radius $R$: $p_{\rm rad}(r,t|R)$ (lines) \cite{Beck1992}. The inset shows the simulation results with $t_{\rm sim} = .1\,\tau$, against a linear axis, for different values of the timestep. Using larger timesteps, the algorithm underestimates the survival probability.
+{\bf right}: Comparison between simulation and theory of the average occupancy of the complex state. The simulation is done in a 1D domain with length $L=20 R$, where one particle is fixed at the origin and one particle is allowed to move. The intrinsic dissociation rate was set at $k_d=.1/\tau$, and we varied the association rate. Plot shows excellent agreement with the theoretical prediction (\eref{occupancy_ana}). When we place the particles at contact after dissociation, and break detailed balance, the occupancy of the complex state is overestimated, as is clear for occupancies above 0.5.}
 \end{figure}
 
 
 
+\begin{figure}[hb]
+\begin{minipage}[ht]{.5\linewidth}
+\centering
+\includegraphics[scale=.5]{newBD1Dirr_rdens_compare}
+\end{minipage}
+\begin{minipage}[ht]{.5\linewidth}
+\centering
+\includegraphics[scale=.5]{newBD1Drev_rdens_compare}
+\end{minipage}
+\caption{\flabel{newBD1D_rdens_compare} Probability distribution for a irreversible (left) and reversible (right) reaction on a line (1D). Just as in the case for 2D, in both plots the four curves refer to different $t_{\rm sim}$, where the timestep for each curve is $\Delta t = 10^{-4} \tau$. Except for $t_{\rm sim}=10^{-1}\tau$, where $\Delta t=10^{-5}\tau$. Particles start at contact. The intrinsic association rate is $k_a=5 R^2/\tau$, and the decay rate for the reversible case is $k_d=10/\tau$. We compare our simulation results (symbols) with the Green's functions (lines) in 1D on a semi-infinite domain with a radiation (left, \cite{Beck1992}) or reversible (right, \cite{Agmon1984,Kim2001}) boundary condition at $x=0$. For larger timesteps, the algorithm underestimates the survival probability, as is clear in the inset of the irreversible plot. With a high dissociation rate however, the error in the survival probability is much less as is shown in the inset of the right figure.}
+\end{figure}
 
 
-Show 2D irr pos density plot with analytic result.
-Show Pbound v.s. increasing ka or N
 
-Compare 1D diffusion with old and new algorithm. Reversible: same timestep, error in Surival prob. Performance in rounds/second.
+\begin{figure}[hb]
+\begin{minipage}[ht]{.5\linewidth}
+\centering
+\includegraphics[scale=.5]{BD1Dirr_rdens_compare}
+\end{minipage}
+\begin{minipage}[ht]{.5\linewidth}
+\centering
+\includegraphics[scale=.5]{BD1Drev_rdens_compare}
+\end{minipage}
+\caption{\flabel{BD1D_rdens_compare} Comparison between our BD algorithm and the old algorithm by Morelli \cite{Morelli2008a}, for a 1D system. Parameters and setup are the same as described in \fref{newBD1D_rdens_compare}. Again, the right figure shows the probability density of an irreversible system and the left figure for a reversible system. The inset shows that the algorithm by Morelli (oldBD), underestimates the survival probability more than our algorithm (newBD). In the reversible case, both algorithms perform really well.}
+\end{figure}
 
-Detailed blance failure.
+\begin{figure}[hb]
+\begin{minipage}[ht]{.5\linewidth}
+\centering
+\includegraphics[scale=.5]{BD1DSsigma}
+\end{minipage}
+\begin{minipage}[ht]{.5\linewidth}
+\centering
+\includegraphics[scale=.5]{BD1D_performance}
+\end{minipage}
+\caption{\flabel{BD1DSsigma} Survival probability.}
+\end{figure}
