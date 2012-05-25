@@ -17,8 +17,13 @@ K_{eq} = \frac{k_{\rm on}}{k_{\rm off}} = \frac{k_{\rm a}}{k_{\rm d}}.
 \end{equation}
 
 \subsubsection{General idea}
-The algorithm needs to simulate both the formation and destruction of the intermediate complex $A\cdots B$ by diffusion. Furthermore, when two particles formed an intermediate complex or are 'at contact', we need to determine the probability by which they react. We discretize time in steps of $\Delta t$, and each timestep, all particles can make a move using the free propegator of Brownian motion. In order to react, every particle has a spherical region with thickness $\delta$ around it, called the \emph{reaction volume}. When a particle is inside the reaction volume of another particle after making a move, it can react with a certain probability. We derive this probability using detailed balance. See picture.
+The algorithm needs to simulate both the formation and destruction of the intermediate complex $A\cdots B$ by diffusion. Furthermore, when two particles formed an intermediate complex or are 'at contact', we need to determine the probability by which they react. We discretize time in steps of $\Delta t$, and each timestep, all particles can make a move using the free propegator of Brownian motion. In order to react, every particle has a spherical region with thickness $\delta$ around it, called the \emph{reaction volume}. When a particle is inside the reaction volume of another particle after making a move, it can react with a certain probability. We derive this probability using detailed balance. See \fref{BDReactions}.
 
+\begin{figure}[hb]
+\centering
+\includegraphics[scale=.5]{BDReactions2}
+\caption{\flabel{BDReactions} Each particle has a reaction volume with thickness $\delta$ around it. Two particles form an intermediate complex when the shell of one particle moves inside the reaction volume of the other. The particles can than react to form a complex with a probability proportional to the intrinsic association rate $k_a$. A complex can decay again into an intermediate complex with a rate $k_d$, whereafter the product particles can diffuse.}
+\end{figure}
 
 \subsection{Detailed balance}
 
@@ -110,7 +115,7 @@ A particle can interact with a rod when the projection of it's c.o.m. lies on th
 \centering
 \includegraphics[scale=.5]{BDGeometry_Rod}
 \end{minipage}
-\caption{\flabel{BDGeometry} The crossection through the center of mass of a particle (green) and ({\bf left}) the central axis of a rod (blue) or ({\bf right}) perpendicular throug a plane.}
+\caption{\flabel{BDGeometry} Crossection through the center of mass of a particle (green) and the structure (blue). A particle can bind to a plane when the projected point of it's center of mass lies on the plane and the vector between these two points lies inside the reaction volume: ${\bf r}_{\rm perp}<\delta$. To interact with a rod, the projection of the center of mass of a particle has to lie on the central axis of the rod. Furthermore, the }
 \end{figure}
 
 
@@ -190,7 +195,7 @@ In \GFRD\, we choose $\alpha = 0.05$ and $\beta = 0.01$.
 \includegraphics[scale=.5]{newBD1D_pbound_default}
 \end{minipage}
 \caption{\flabel{newBD2D_rdens_compare} {\bf left}: Radial probability distribution for a pair of irreversibly reacting particles on a plane (2D). The four curves refer to different $t_{\rm sim}$ and where obtainded using timesteps  $\Delta t = 10^{-4} t_{\rm sim}$. Except for $t_{\rm sim} = .1\,\tau$, where we used $10^{-5} \tau$. Here, $\tau = R^2/D$ and $R=\sigma_A+\sigma_B$. The reaction length $\delta=0.01 R$. Only the B particle moves with diffusion constant $D$, and starts at contact: $r_0=R$. The intrinsic association rate was set to $k_a = 100 R^2/\tau$. We compare simulation results (symbols) with a Green's function in 2D with a radiation boundary at radius $R$: $p_{\rm rad}(r,t|R)$ (lines) \cite{Beck1992}. The inset shows the simulation results with $t_{\rm sim} = .1\,\tau$, against a linear axis, for different values of the timestep. Using larger timesteps, the algorithm underestimates the survival probability.
-{\bf right}: Comparison between simulation and theory of the average occupancy of the complex state. The simulation is done in a 1D domain with length $L=20 R$, where one particle is fixed at the origin and one particle is allowed to move. The intrinsic dissociation rate was set at $k_d=.1/\tau$, and we varied the association rate. Plot shows excellent agreement with the theoretical prediction (\eref{occupancy_ana}). When we place the particles at contact after dissociation, and break detailed balance, the occupancy of the complex state is overestimated, as is clear for occupancies above 0.5.}
+{\bf right}: Comparison between simulation and theory of the average occupancy of the complex state. The simulation is done in a 1D domain with length $L=20 R$, where one particle is fixed at the origin and one particle is allowed to move. The intrinsic dissociation rate was set at $k_d=.1/\tau$, and we varied the association rate. Plot shows excellent agreement with the theoretical prediction (\eref{occupancy_ana}). When we place the particles at contact after dissociation (cubes), and break detailed balance, the occupancy of the complex state is overestimated, as is clear for occupancies above 0.5. The inset shows simulations performed with an }
 \end{figure}
 
 

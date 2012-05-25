@@ -17,6 +17,7 @@
 #12 - Comparing REV rdens plots between newBD1D and oldBD1D
 #13 - newBD1D, Pbound measurement default situation
 #14 - Comparison of Srad with the oldBD1D and newBD1D
+#15 - performance comparison for reversible system.
 
 plot=$1
 
@@ -83,6 +84,8 @@ then
 
 epstopdf BDGeometry_Rod.eps
 epstopdf BDGeometry_Plane.eps
+epstopdf BDReactions.eps
+epstopdf BDReactions2.eps
 
 epstopdf Sink_domain.eps
 epstopdf promoter_schematic.eps
@@ -956,7 +959,7 @@ set format y "{/Times=13 %g}"
 set xrange[-5.25:-.75]
 set yrange[0.494:0.504]
 #set yrange[0.47:0.53]
-set xtic (-1,-2,-3,-4,-5,-6)
+set xtic (-1,-2,-3,-4,-5)
 set ytic ( 0.502, 0.5, 0.498, 0.496 )
 set ylabel "{/Times=15 P_{bound}}"
 set xlabel "{/Times=15 {/Symbol D}t/{/Symbol t}}"
@@ -1081,8 +1084,8 @@ set log x
 
 #unset parametric
 
-plot "./BD1D_performance.dat" u 1:2 with linespoints ls 1 title "newBD",\
- "./BD1D_performance.dat" u 1:3 with linespoints ls 2 title "oldBD"
+plot "./BD1D_pbound_perf.dat" u 1:(\$3/(1-\$2)) with linespoints ls 1 title "newBD",\
+ "./BD1D_pbound_perf.dat" u 1:(\$5/(1-\$4)) with linespoints ls 2 title "oldBD"
 
 EOF
 
