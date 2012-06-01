@@ -159,7 +159,7 @@ and in the limit $c\to0$, only the term linear in $t$ remains. We arive at
  \lim_{c\to0} \mathscr{S}_{\rm rad}(t|{\rm eq}) = {\rm exp}\left(-c k_+ S_{\rm rad}(\infty|z_0) \, t \right).
  \elabel{Seq_app2}
 \end{equation}
-Another way to appreciate this approximation, is to observe that the time the concentration profile reaches steady-state, is dependent on the survival probaility $S(t|z_0)$ only, and not on the concentration (\eref{bsm_k}). The average time in which the promoter binds with a particle from the bulk, does depend on concentration, and increases with decreaing $c$. Therefore, in the low concentration limit, the time interval in which the system is not in steady-state, compared to the average time in which a TF from the bulk binds to the promoter, becomes vanishingly small. This timescale seperation is illustrated in \fref{SeqApprx}, where we plotted $S(t|\sigma)$ and $\mathscr{S}_{\rm rad}(t|{\rm eq})$ for a receptor. We plotted the functions for a receptor, and not for a promoter, because for the prior the full functions are known.
+Another way to appreciate this approximation, is to observe that the time in which the concentration profile reaches steady-state, is dependent on the survival probaility $S(t|z_0)$ only, and not on the concentration (See \eref{bsm_k}). The average time in which the promoter binds with a particle from the bulk, does depend on concentration, and increases with decreasing $c$. Therefore, in the low concentration limit, the time interval in which the system is not in steady-state, compared to the average time in which a TF from the bulk binds to the promoter, becomes vanishingly small. This timescale seperation is illustrated in \fref{SeqApprx}, where we plotted $S(t|\sigma)$ and $\mathscr{S}_{\rm rad}(t|{\rm eq})$.
 
 Finally, Laplace transforming \eref{Seq_app2}, we get
 \begin{equation}
@@ -179,15 +179,14 @@ is equal to the $t\to\infty$ limit of the time dependent rate coefficient,
  k_{\rm ss} = \lim_{t \to \infty} k_{\rm rad}(t) = k_+ S_{\rm rad}(\infty|z_0).
 \end{equation}
 
-\begin{figure}[hb]
+\begin{figure}[hb!]
 \centering
-\includegraphics[scale=.7]{SeqApprx}
-\caption{\flabel{SeqApprx} Plot showing timescale seperation between the survival probability of a promoter in equilibrium, and with only one TF at contact. TF's come from the bulk in the order of seconds, while a rebinding event takes place in the order of micro seconds, as is shown in the inset. At the timescale $\mathscr{S}_{\rm rad}(t|{\rm eq})$ decays, $S(t|\sigma)$ is constant, showing that the particle which started at contact, has already escaped. Functions are for a receptor, becuase only in this system we have the full functions.}
+\includegraphics[scale=.5]{SeqApprx}
+\caption{\flabel{SeqApprx} Plot showing timescale seperation between the survival probability of a promoter in equilibrium, and with only one TF at contact. TF's come from the bulk in the order of seconds, while a rebinding event takes place in the order of micro seconds, as is shown in the inset. At the timescale $\mathscr{S}_{\rm rad}(t|{\rm eq})$ decays, $S(t|\sigma)$ is constant, showing that the particle which started at contact, has already escaped. The functions are for a receptor, becuase we only have the full solution in time for this system, and not for a promoter.}
 \end{figure}
 
-
 \subsection{\alabel{noise:promtoconc} Relating promoter state noise to fluctuations in concentration}
-The relation between the variance in the concentration on the DNA and the variance in the promoter state is 
+The relation between the variance in the concentration on the DNA and the variance in the promoter state is (\fref{ntegenc})
 \begin{equation}
  \delta \xi = \left|\frac{\partial \xi}{\partial n}\right| \delta n \quad \Rightarrow \quad  \delta \xi = \frac{\bar{\xi}}{(1-\bar{n})\bar{n}}\delta n,
  \elabel{EqxiNoise}
@@ -197,6 +196,13 @@ and fluctuations in the bulk, using detailed balance, via
  \bar{\xi} k_d = \bar{c} k_a \quad \Rightarrow \quad \delta c = \frac{k_a}{k_d} \, \frac{\bar{c}}{(1-\bar{n})\bar{n}}\delta n.
  \elabel{EqcNoise}
 \end{equation}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=.6]{ntegenc2}
+\caption{\flabel{ntegenc} Average occupancy of the promoter as a function of concentration. From this relation we can rely fluctuations in the promoter state to fluctuations in the transcription factor concentration.}
+\end{figure}
+
 
 
 \subsection{\alabel{noise:delta_int} Performing the integral over $\delta(r-\sigma)$}

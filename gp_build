@@ -82,18 +82,24 @@ set style line 10 lw 2 lt 4 lc rgb 'gray50'
 if [[ $plot -eq 0 ]]
 then
 
+epstopdf AmolfLogo_pms.eps
+epstopdf Universiteit_van_Amsterdam.eps
+
+epstopdf gfrd_single.eps
+epstopdf gfrd_pair.eps
+epstopdf gfrd_domain.eps
+epstopdf gfrd_domain2.eps
+
 epstopdf BDGeometry_Rod.eps
 epstopdf BDGeometry_Plane.eps
 epstopdf BDReactions.eps
 epstopdf BDReactions2.eps
 
 epstopdf Sink_domain.eps
+
 epstopdf promoter_schematic.eps
 
-epstopdf gfrd_single.eps
-epstopdf gfrd_pair.eps
-epstopdf gfrd_domain.eps
-epstopdf gfrd_domain2.eps
+epstopdf ntegenc2.eps
 
 fi
 
