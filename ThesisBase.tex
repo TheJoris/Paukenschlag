@@ -10,8 +10,17 @@
 \usepackage{mathrsfs}
 \usepackage[svgnames]{xcolor}
 \usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
 
 \include{additions}
+
+\pagestyle{fancy}
+
+\fancyhead{}
+\fancyhead[LO,RE]{\slshape \leftmark}
+\fancyhead[RE,LO]{\slshape \rightmark}
+%\headrulewidth 0.4pt
+%\footrulewidth 0 pt
 
 \begin{document}
 
@@ -19,9 +28,15 @@
 %  \ldots
 %\end{abstract}
 
-\pagestyle{empty}
+\thispagestyle{empty}
+\titleGP
 \newpage
-%\titleGP
+
+%Extra empty page
+\thispagestyle{empty}
+\newpage
+\mbox{}
+\newpage 
 
 \tableofcontents
 
