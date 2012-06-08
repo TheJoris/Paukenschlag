@@ -3,8 +3,8 @@ def_graphic_ext=eps
 img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
-kileversion=2.0.85
-lastDocument=Noise.tex
+kileversion=2.1.0
+lastDocument=App_Noise.tex
 masterDocument=
 name=MasterThesis
 pkg_extIsRegExp=false
@@ -25,6 +25,14 @@ Mode=LaTeX
 ReadWrite=true
 
 [document-settings,item:App_Sink.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
+[document-settings,item:App_newBD.tex]
 Bookmarks=
 Encoding=UTF-8
 Highlighting=LaTeX
@@ -90,10 +98,10 @@ ReadWrite=true
 
 [item:App_Noise.tex]
 archive=true
-column=104
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=152
+line=251
 mode=LaTeX
 open=true
 order=3
@@ -110,30 +118,40 @@ order=2
 
 [item:App_newBD.tex]
 archive=true
-column=4
-encoding=UTF-8
-highlight=LaTeX
-line=15
-mode=
-open=false
-order=4
-
-[item:Introduction.tex]
-archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
 line=0
 mode=LaTeX
+open=true
+order=8
+
+[item:Conclusion.tex]
+archive=true
+column=6553714
+encoding=
+highlight=
+line=0
+mode=
 open=false
-order=5
+order=-1
+
+[item:Introduction.tex]
+archive=true
+column=353
+encoding=UTF-8
+highlight=LaTeX
+line=38
+mode=LaTeX
+open=true
+order=9
 
 [item:Noise.tex]
 archive=true
-column=257
+column=15
 encoding=UTF-8
 highlight=LaTeX
-line=217
+line=43
 mode=LaTeX
 open=true
 order=4
@@ -150,23 +168,23 @@ order=1
 
 [item:ThesisBase.tex]
 archive=true
-column=0
+column=1
 encoding=UTF-8
 highlight=LaTeX
-line=32
+line=31
 mode=LaTeX
 open=true
 order=0
 
 [item:additions.tex]
 archive=true
-column=70
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=77
+line=0
 mode=LaTeX
-open=false
-order=0
+open=true
+order=7
 
 [item:eGFRD.tex]
 archive=true
@@ -190,19 +208,23 @@ order=-1
 
 [item:newBD.tex]
 archive=true
-column=350
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=41
+line=23
 mode=LaTeX
 open=true
 order=6
 
 [view-settings,view=0,item:App_Noise.tex]
-CursorColumn=104
-CursorLine=152
+CursorColumn=0
+CursorLine=251
 
 [view-settings,view=0,item:App_Sink.tex]
+CursorColumn=0
+CursorLine=0
+
+[view-settings,view=0,item:App_newBD.tex]
 CursorColumn=0
 CursorLine=0
 
@@ -211,16 +233,16 @@ CursorColumn=353
 CursorLine=38
 
 [view-settings,view=0,item:Noise.tex]
-CursorColumn=257
-CursorLine=217
+CursorColumn=15
+CursorLine=43
 
 [view-settings,view=0,item:Sink.tex]
 CursorColumn=531
 CursorLine=5
 
 [view-settings,view=0,item:ThesisBase.tex]
-CursorColumn=0
-CursorLine=32
+CursorColumn=1
+CursorLine=31
 
 [view-settings,view=0,item:additions.tex]
 CursorColumn=0
@@ -231,5 +253,5 @@ CursorColumn=196
 CursorLine=59
 
 [view-settings,view=0,item:newBD.tex]
-CursorColumn=350
-CursorLine=41
+CursorColumn=0
+CursorLine=23

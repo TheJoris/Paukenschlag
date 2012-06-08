@@ -215,3 +215,46 @@ We want evaluate the fourier transform of the delta function used in solving \er
  = f(\sigma, z) {\rm J_0}(k \sigma)
 \end{multline}
 The first equality is the defenition of the Fourier integral in the plane perpendicular to the DNA. In the second line we write out the innerproduct, where the angle bewteen {\bf k} and {\bf r} is shifted w.r.t. $\theta$. Since we integrate the full circle this shift cancels, and we get a Bessel function of the first kind. The integral over $r$ amounts to replacing every accurance of $r$ with $\sigma$.
+
+
+
+
+\newpage
+\subsection{\alabel{noise:Seq_derived} Deriving the survival probability of a free promoter in equilibrium}
+
+Here we derive the expression (\eref{DE_Seq}) for the survival probability of a single promoter site in an equilibrium of particles on the DNA and the cytoplasm. Our system is described by two coupled functions; $P_1(z,t|{\rm eq})$ giving the probability density on the DNA and $P_3(z,r,t|{\rm eq})$ the density in the bulk. These functions describe a system wit h a flat distribution of particles on the DNA and in the bulk. Apart from a flat distribution as initial condition, the functions also fullfill a detailed balance between them
+\begin{eqnarray}
+ P_1(z,t=0|{\rm eq}) k_d & = & P_3(z,r,t|{\rm eq}) k_a \nonumber \\
+ \frac{1}{L} k_d & = & k_a \frac{1}{V} 
+ \elabel{DB_init}
+\end{eqnarray}
+
+The survival probability of a single promoter on a rod of length $L$ inside a box of volume $V$ containing $N$ particles in total is given by 
+\begin{equation}
+ S_N(t) = \left( \int_{-L/2}^{L/2} dz \left\{ \frac{1}{L} P_1(z,t|{\rm eq}) +  \int_{\sigma}^{R} \frac{k_a}{k_d} \frac{1}{V} P_3(z,r,t|{\rm eq}) \right\} \right)^N.
+\end{equation}
+Differentiating with respect to time, pulling out the factor $1/V$, and using the detailed balance relation in \eref{DB_init} gives
+\begin{equation}
+ \frac{dS_N(t)}{dt} = \frac{k_a}{k_d} \frac{N}{V} \left( \int_{-L/2}^{L/2} dz \left\{ \frac{dP_1(z,t|{\rm eq})}{dt} + \int_{\sigma}^{R} \frac{dP_3(z,r,t|{\rm eq})}{dt} \right\} \right) S_{N-1}(t).
+\end{equation}
+Since there is only an outfux at the promoter site, we can rewrite the time derivatives
+\begin{equation}
+ \frac{dS_N(t)}{dt} = -\frac{k_a}{k_d} \frac{N}{V}k_+ P_1(z_0,t|{\rm eq}) S_{N-1}(t).
+\end{equation}
+Taking the limit $L,V \to \infty$ and $\frac{k_a}{k_d} \bar{c} = \bar{\xi}$ we arive at the desired result
+\begin{equation}
+ \frac{dS(t)}{dt} = - \bar{\xi} k_{\rm rad}(t) S(t).
+\end{equation}
+
+
+
+
+
+
+
+
+
+
+
+
+
