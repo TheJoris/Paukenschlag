@@ -222,10 +222,16 @@ The first equality is the defenition of the Fourier integral in the plane perpen
 \newpage
 \subsection{\alabel{noise:Seq_derived} Deriving the survival probability of a free promoter in equilibrium}
 
-Here we derive the expression (\eref{DE_Seq}) for the survival probability of a single promoter site in an equilibrated system of particles on the DNA and in the cytoplasm. Our system is described by two coupled Green's functions; $P_1(z,t|{\rm eq})$ giving the probability density on the DNA and $P_3(z,r,t|{\rm eq})$ the probability density in the bulk. These functions describe a single particle problem where the particle is initially uniformly distributed over the system. Apart from a flat distribution as initial condition, the functions also fullfill a detailed balance relation
+Here we derive the expression (\eref{DE_Seq}) for the survival probability of a single promoter site in an equilibrated system of particles on the DNA and in the cytoplasm. Our system is described by two coupled Green's functions; $P_1(z,t|{\rm eq})$ giving the probability density on the DNA and $P_3(z,r,t|{\rm eq})$ the probability density in the bulk. These functions describe a single particle problem where the particle is initially uniformly distributed over the system. The system is a cylinder with radius $R$ and height $L$, containing a rod (the DNA) allong the central axis spaning the cylinder. By definition, the functions are normalized such that
+\begin{equation}
+ \frac{1}{L} \left. \int_{-L/2}^{L/2} dz P_1(z,t|{\rm eq})\right|_{t=0} = 1 \:\: , \:\: \left. \frac{2\pi}{V} \int_{-L/2}^{L/2} dz \int_{\sigma}^{R} rdr P_3(z,r,t|{\rm eq})\right|_{t=0} = 1
+\end{equation}
+In order to have the proper normalization on the DNA and in the cytoplasm, we have to solve
+
+
+Apart from a flat distribution as initial condition, the functions also fullfill a detailed balance relation
 \begin{eqnarray}
- \frac{1}{L} P_1(z,t=0|{\rm eq}) \, k_d & = & \frac{1}{V} P_3(z,r,t=0|{\rm eq}) \, k_a \nonumber \\
- \frac{1}{L} \, k_d & = & k_a \, \frac{1}{V} 
+ \frac{1}{L} P_1(z,t=0|{\rm eq}) \, k_d & = & \frac{1}{V} P_3(z,r,t=0|{\rm eq}) \, k_a
  \elabel{DB_init}
 \end{eqnarray}
 
