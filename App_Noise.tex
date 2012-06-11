@@ -222,23 +222,23 @@ The first equality is the defenition of the Fourier integral in the plane perpen
 \newpage
 \subsection{\alabel{noise:Seq_derived} Deriving the survival probability of a free promoter in equilibrium}
 
-Here we derive the expression (\eref{DE_Seq}) for the survival probability of a single promoter site in an equilibrium of particles on the DNA and in the cytoplasm. Our system is described by two coupled functions; $P_1(z,t|{\rm eq})$ giving the probability density on the DNA and $P_3(z,r,t|{\rm eq})$ the probability density in the bulk. These functions describe the single particle problem where the particle is uniformly distributed over the system initially. Apart from a flat distribution as initial condition, the functions also fullfill a detailed balance relation between them
+Here we derive the expression (\eref{DE_Seq}) for the survival probability of a single promoter site in an equilibrated system of particles on the DNA and in the cytoplasm. Our system is described by two coupled Green's functions; $P_1(z,t|{\rm eq})$ giving the probability density on the DNA and $P_3(z,r,t|{\rm eq})$ the probability density in the bulk. These functions describe a single particle problem where the particle is initially uniformly distributed over the system. Apart from a flat distribution as initial condition, the functions also fullfill a detailed balance relation
 \begin{eqnarray}
- P_1(z,t=0|{\rm eq}) \, k_d & = & P_3(z,r,t=0|{\rm eq}) \, k_a \nonumber \\
+ \frac{1}{L} P_1(z,t=0|{\rm eq}) \, k_d & = & \frac{1}{V} P_3(z,r,t=0|{\rm eq}) \, k_a \nonumber \\
  \frac{1}{L} \, k_d & = & k_a \, \frac{1}{V} 
  \elabel{DB_init}
 \end{eqnarray}
 
-The survival probability of a single promoter on a rod of length $L$ inside a cylinder with radius $R$ and volume $V$ containing $N$ particles in total is given by [REFERENCE] 
+The survival probability of a single promoter on a rod of length $L$, inside a cylinder with radius $R$ and volume $V$ containing $N$ particles in total, is given by \cite{Szabo1989} 
 \begin{eqnarray}
- \mathscr{S}_{N}(t|{\rm eq}) & = & \left( \int_V d{\bf r} P({\bf r},t|{\rm eq}) \right)^N \nonumber\\
-& = & \left( \int_{-L/2}^{L/2} dz \left\{ \frac{1}{L} P_1(z,t|{\rm eq }) +  \int_{\sigma}^{R} \frac{k_a}{k_d} \frac{1}{V} P_3(z,r,t|{\rm eq}) \right\} \right)^N.
+ \mathscr{S}_{N}(t|{\rm eq}) & = & \left( \int_V d{\bf r} \frac{1}{V} P({\bf r},t|{\rm eq}) \right)^N \\
+& = & \left( \int_{-L/2}^{L/2} dz \left\{ \frac{1}{L} P_1(z,t|{\rm eq }) + 2\pi \int_{\sigma}^{R} rdr \frac{k_a}{k_d} \frac{1}{V} P_3(z,r,t|{\rm eq}) \right\} \right)^N.\nonumber
 \end{eqnarray}
 Differentiating with respect to time, pulling out the factor $1/V$, and using the detailed balance relation in \eref{DB_init} gives
 \begin{equation}
- \frac{d\mathscr{S}_{N}(t|{\rm eq})}{dt} = \frac{k_a}{k_d} \frac{N}{V} \left( \int_{-L/2}^{L/2} dz \left\{ \frac{dP_1(z,t|{\rm eq})}{dt} + \int_{\sigma}^{R} \frac{dP_3(z,r,t|{\rm eq})}{dt} \right\} \right) S_{N-1}(t).
+ \frac{d\mathscr{S}_{N}(t|{\rm eq})}{dt} = \frac{k_a}{k_d} \frac{N}{V} \left( \int_{-L/2}^{L/2} dz \left\{ \frac{dP_1(z,t|{\rm eq})}{dt} + 2\pi \int_{\sigma}^{R} rdr \frac{dP_3(z,r,t|{\rm eq})}{dt} \right\} \right) S_{N-1}(t).
 \end{equation}
-Since particles only leave the system at the promoter site, we can rewrite the time derivatives using the radiative influx at the promoter site
+Since particles only leave the system via the promoter site at position $z_0$, we can rewrite the time derivatives using the radiative influx at the promoter site
 \begin{equation}
  \frac{d\mathscr{S}_{{\rm rad}, N}(t|{\rm eq})}{dt} = -\frac{k_a}{k_d} \frac{N}{V}k_+ P_1(z_0,t|{\rm eq}) S_{N-1}(t).
 \end{equation}
