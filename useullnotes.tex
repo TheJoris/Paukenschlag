@@ -1,0 +1,162 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+
+\include{additions}
+%\usepackage[utf8x]{inputenc}
+
+\begin{document}
+
+\section{Usefull notes on $\bar{\xi}$-problem}
+
+NOTE: normalization of Fourier transforms: Forward transform: No normalization. Backward transform: $\frac{1}{2 \pi}$ for every dimension. The product of forward and backward transform needs to be $\frac{1}{2 \pi}$! (wikipedia.nl).
+
+\subsection{General realtions for $P_3$}
+
+Given that:
+
+\begin{equation}
+ \tilde{P}_3(q,{\bf k}) = \frac{k_d \tilde{P}_1(q) - k_a\tilde{P}_3(q)}{s + D_3(q^2 + k^2)} J_{0}(k \sigma ).
+\end{equation}
+Fourier back-transforming both sides of the equation in ${\bf k}$, at $|{\bf r}|=\sigma$,
+\begin{eqnarray}
+ \tilde{P}_3(q) & = & \int \frac{d^2 k}{(2 \pi)^2} {\rm exp}(-i\,{\bf k}\cdot{\bf r}) \delta(|{\bf r}|-\sigma) \tilde{P}_3(q,{\bf k}) \\
+ & = & \frac{k_d \tilde{P}_1(q) - k_a\tilde{P}_3(q)}{2 \pi D_3} \, I_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right) K_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right),
+\end{eqnarray}
+
+So $\tilde{P}_3(q)$ becomes:
+
+\begin{equation}
+ \tilde{P}_3(q) = \frac{\frac{k_d}{2 \pi D_3} I_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right) K_{0} \left( \sigma \sqrt{q^2 + \frac{s}{D_3}}\right) }{1+\frac{k_a}{2 \pi D_3} I_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right) K_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right) } \tilde{P}_1(q) 
+\end{equation}
+From which we write the full $\tilde{P}_3(q,{\bf k})$:
+\begin{equation}
+ \tilde{P}_3(q,{\bf k}) = k_d \left( 1 - \frac{\frac{k_a}{2 \pi D_3} I_{0}\left( \gamma \right) K_{0}( \gamma ) }{1+\frac{k_a}{2 \pi D_3} I_{0}( \gamma ) K_{0}( \gamma ) } \right) \frac{J_{0}(k \sigma) \tilde{P}_1(q)}{{s + D_3(q^2 + k^2)}}
+\end{equation}
+with $\gamma = \sigma \sqrt{q^2 + \frac{s}{D_3}}$. Now, \ldots
+\begin{equation}
+ \tilde{P}_3(q,{\bf k}) = k_d \left( \frac{1}{1+\frac{k_a}{2 \pi D_3} I_{0}( \gamma ) K_{0}( \gamma ) } \right) \frac{J_{0}(k \sigma) \tilde{P}_1(q)}{{s + D_3(q^2 + k^2)}}
+\end{equation}
+The survival probability $\hat{S}_3(s)$ of being in the cytoplasm: $q\to0,{\bf k}\to 0$, becomes
+\begin{equation}
+ \hat{S}_3(s) = \frac{k_d}{1+\frac{k_a}{2 \pi D_3} I_{0}( \sigma \sqrt{\frac{s}{D_3}} ) K_{0}( \sigma \sqrt{\frac{s}{D_3}} ) } \frac{\hat{S}_1(s)}{s}
+\end{equation}
+and, to finalize
+\begin{equation}
+ \lim_{s\to0} s \hat{S}_3(s) = S_3(t\to\infty) =  \frac{k_d}{1+\frac{k_a}{2 \pi D_3} I_{0}( \sigma \sqrt{\frac{s}{D_3}} ) K_{0}( \sigma \sqrt{\frac{s}{D_3}} )} \hat{S}_1(s\to0)
+\end{equation}
+
+\subsection{Solving $P_1$ with uniform initial condition on DNA}
+The Fourier equations are:
+\begin{eqnarray*}
+ s \, \tilde{P}_1(q) - 2 \pi \bar{\xi} \delta(q) & = & - D_1 q^2 \tilde{P}_1(q) - k_+ \tilde{P}_1(z_0) - k_d \tilde{P}_1(q) + k_a \tilde{P}_3(q) \\
+ s \, \tilde{P}_3(q,{\bf k}) & = & - D_3 (q^2 + k^2) \tilde{P}_3(q, {\bf k}) - \left[ k_a \tilde{P}_3(q) - k_d \tilde{P}_1(q) \right] J_{0}(k \sigma). 
+\end{eqnarray*}
+
+For $\hat{P}_1(z_0,s|{\rm eq})$ we have
+\begin{equation}
+ \hat{P}_1(z_0,s|{\rm eq}) = \int \frac{d\,q}{2 \pi} \frac{2 \pi \bar{\xi} \delta (q) - k_+ \hat{P}_1(z_0,s|z_0)}{s + D_1 q^2+k_d F^{-1}(q,s)}
+\end{equation}
+where,
+\begin{equation}
+F(q,s) = 1 + \frac{k_a}{2 \pi D_3} \, I_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right) K_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right).
+\end{equation}
+Solving for $\hat{P}_1(z_0,s|{\rm eq})$,
+\begin{equation}
+ \hat{P}_1(z_0,s|{\rm eq}) = \frac{\frac{\bar{\xi}}{s + k_d F^{-1}(q=0,s)}}{1 + \int \frac{d\,q}{2 \pi} \frac{k_+}{s + D_1 q^2 + k_d F^{-1}(q,s)}}
+\end{equation}
+What is the concentration at the sink, when $F^{-1} \to 0$ as $s\to0$,
+\begin{equation}
+ \lim_{s\to0} s \hat{P}_1(z_0,s|{\rm eq}) = {P}_1(z_0,t\to\infty|{\rm eq}) = \frac{k_D}{k_+ + k_D} \frac{s}{s + F^{-1}(q=0,s\to0)} \bar{\xi} \to 0!
+\end{equation}
+Because last factor tends to zero slowely (Mathematica). So just a flat distribution on the DNA as initial condition does NOT give a steady state influx into the promoter! We need bulk influx.
+
+\subsection{Solving $P_1$ with random initial condition on DNA}
+Initial condition after Fourier is: ${\rm exp}(i q z_1)$. Now, $\hat{P}_1(z_0,s|z_1)$ is:
+\begin{equation}
+ \hat{P}_1(z_0,s\to0|z_1) = \frac{I(z_1)}{\frac{\pi D_1}{\sigma} + k_+ I(z_0)}
+\end{equation}
+where $I(z_0)$ is the standard one, and $I(z_1)$ is
+\begin{equation}
+ I(z_1) = \int_0^{\infty} \frac{dq}{2 \pi} \frac{2 \, {\rm cos}(q z_1)}{s + D_1 q^2 + k_d F^{-1}(q,s)}
+\end{equation}
+
+\subsection{Solving $P_1$ with uniform influx from bulk}
+
+We start by writing down the general result [SOMEREFERENCE] for the survival probability of N particles in a volume V
+\begin{equation}
+ \frac{dS_N(t)}{dt} = -\frac{N}{V} k_{\rm rad, V}(t) S_N(t),
+ \elabel{SN}
+\end{equation}
+where $k_{\rm rad, V}(t)$ is
+\begin{equation}
+ k_{\rm rad, V}(t) = k_+ \int_V P({\bf r_0}, t|{\bf r'}) d{\bf r'}.
+\end{equation}
+Because our system consists of two parts, the integral over the volume $V$, splits into an integral over the DNA and an integral over the cytoplasm
+\begin{gather}
+ \frac{1}{k_+} \frac{N}{V} k_{\rm rad, V}(t) = \frac{N_D}{L} \int_{-L/2}^{L/2} dz' P_a(z_0, t|z') \nonumber \\ +  \frac{N_B}{V_B} \int_{-L/2}^{L/2} dz' \int_{\sigma}^{R} 2\pi r' dr' P_b(z_0, r_0,t|z', r').
+\end{gather}
+In the limit of $N, L, R \to \infty$, we arive at
+\begin{equation}
+ \elabel{krad_inf}
+ \frac{1}{k_+} \bar{c}_{\rm tot} k_{\rm rad}(t) = \bar{\xi} P_a(z_0, t|{\rm eq}) +  \bar{c} P_b(z_0, r_0,t|{\rm eq}).
+\end{equation}
+We continue describing the functions $P_a$ and $P_b$. 
+
+We can find $P_a(z_0,t|{\rm eq})$ by solving the full system of binding to the promoter and exchange between DNA and cytoplasm as described in \eref{DE_full}. But instead of an instantanious point source at the promoter, we now solve for a flat distribution over the whole length of the DNA as initial condition. The Fourier transformed equation describing the behavior on the DNA (cytoplasmic equation for $P_3$ remains unchanged) is
+\begin{equation}
+  s \, \tilde{P}_1(q) - \delta(q) = - D_1 q^2 \tilde{P}_1(q) - k_+ \tilde{P}_1(z_0) - k_d \tilde{P}_1(q) + k_a \tilde{P}_3(q)
+\end{equation}
+We solve this equation for $\hat{P}_1(z_0,s|{\rm eq})$ in the same way as is done in the text, and arive at
+\begin{equation}
+ \elabel{DE_sol_unfrm}
+   \hat{P}_1(z_0,s|{\rm eq}) = \frac{\frac{1}{s + k_d F^{-1}(q=0,s)}}{1 + \int \frac{d\,q}{2 \pi} \frac{k_+}{s + D_1 q^2 + k_d F^{-1}(q,s)}}
+\end{equation}
+The concentration at the promoter site, in the limit of $t \to \infty$, becomes
+\begin{equation}
+ \bar{\xi} \, \lim_{s \to 0} s \hat{P}_1(z_0,s|{\rm eq}) = \bar{\xi} \, \lim_{s \to 0} \frac{k_D}{k_+ + k_D} \frac{s}{s + F^{-1}(q=0,s)} \to 0
+\end{equation}
+Therefore, a system with a uniform concentration of particles on the DNA only as initial condition, gets infinitally diluted and has no steady state influx of particles into the promoter.
+
+$P_b(z_0, r_0, t|{\rm eq})$ starts with no particles on the DNA and a uniform distribution $\bar{c}$ in the cytoplasm. The initial influx $q^{2D}_{\rm rad}(t|{\rm eq})$ from the cytoplasm on the DNA is given by 
+\begin{equation}
+ q_{2D}(t|{\rm eq}) = k_a \int_{\sigma}^{\infty} p^{2D}_{\rm rad}(\sigma,t|r') r' dr'
+\end{equation}
+where $p^{2D}_{\rm rad}(\sigma,t|r')$ is the solution of
+\begin{equation}
+ \pdiff{p^{2D}_{\rm rad}(r,t|r')}{t} = D_3 \nabla^2 p^{2D}_{\rm rad}(r,t|r') 
+\end{equation}
+with boundary condition
+\begin{equation}
+ 2 \pi \sigma D_3 \left. \pdiff{p^{2D}_{\rm rad}(r,t|r')}{r} \right|_{r = \sigma} = k_a p^{2D}_{\rm rad}(\sigma,t|r').
+\end{equation}
+The solution in Laplace space is [INCLUDE r-DEPENDENCE]
+\begin{equation}\hat{p}^{2D}_{\rm rad}(\sigma,s|r') = \frac{K_0(q r_0)}{2 \pi D_3}\left[ I_0(q \sigma) + \frac{q\sigma I_1(q\sigma) - \kappa I_0(q \sigma)}{q\sigma K_1(q\sigma) + \kappa K_0(q \sigma)} \right]
+\end{equation}
+with $\kappa = k_a / 2 \pi D_3$ and $q=\sqrt{s/D_3}$. Integrating over all initial positions and evaluating at the DNA boundary, the expression for the initial DNA influx becomes
+\begin{equation}
+ \hat{q}^{2D}_{\rm rad}(s|{\rm eq}) = k_a \frac{\sigma K_1(q \sigma)}{2 \pi D_3 q}\left[ I_0(q \sigma) + \frac{q\sigma I_1(q\sigma) - \kappa I_0(q \sigma)}{q\sigma K_1(q\sigma) + \kappa K_0(q \sigma)} \right].
+\end{equation}
+The full expression for $P_b$ becomes
+\begin{equation}
+ P_b(z_0,t|{\rm eq}) = \int_0^t dt' \int_{-\infty}^{\infty} dz' q^{2D}_{\rm rad}(t'|{\rm eq}) P_1(z_0,t-t'|z'),
+\end{equation}
+where we 'feed' our solution of \eref{DE_full} with a uniform (in $z$) influx from the cytoplasm. First we Laplace transform this equation such that the convolution in $t$  becomes a product. Integrating out $z'$ in $P_1$ gives us the solution given in \eref{DE_sol_unfrm}. Again, to find the steady state behavior of the concentration at the promoter site, we multiply with $s$ and take the limit $s \to 0$
+\begin{equation}
+ \lim_{s \to 0} s \hat{P}_b(z_0,s|{\rm eq}) = \lim_{s \to 0} s \hat{q}^{2D}_{\rm rad} (s|{\rm eq}) \hat{P}_1(z_0,s|{\rm eq})
+\end{equation}
+Evaluating this limit, we arive at
+\begin{equation}
+ \lim_{t \to \infty} P_b(z_0,t|{\rm eq}) = \frac{k_D}{k_D + k_+} k_a \bar{c} \frac{1}{4 \pi k_d} = \frac{k_D}{k_D + k_+} \bar{\xi}.
+\end{equation}
+Thus, starting with an equlibrium concentration in the cytoplasm, we do arive at a non-zero steady state concentration on the promoter site.
+
+Plugging our results for $P_a$ and $P_b$ in the $t\to\infty$ limit of $k_{\rm rad}(t)$ \eref{krad_inf}, and using this for the equation of the survival probability
+\begin{equation}
+ \lim_{t\to\infty} \left[ \frac{dS(t)}{dt} = -\bar{c} \frac{k_a}{k_d} k_{\rm rad}(t) S(t) \right]
+ \elabel{SN}
+\end{equation}
+
+
+\end{document}
