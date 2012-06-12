@@ -1,16 +1,20 @@
 \section{Conclusions}
 
-So, what can be concluded after reading this thesis?
+An overview of the results in this thesis.
 
 \subsection{Brownian Dynamics}
 By introducing the reaction volume, we have split-up the single step reaction of the old BD algorithm in to two steps. For calculating the acceptance probability we only need to calculate this volume, instead of the much more difficult 'volume` of the old method. This enables us to simulate diffusion in all dimensions and interaction with structures, as is required for \GFRD. The algorithm is still very simple because a reaction is only dependent on the distance between objects and and easy to calculate probability. While, as we have shown, simulates the dynamics reasonable well. Further more, the method enforces detailed balance, such that the average bound times come out correct. Although a reaction occurs in two steps, the performance is slightly better than the old algorithm.
 
 
 
-\subsection{Sink domain in eGFRD}
+\subsection{Promoter site in eGFRD}
+Expanded \GFRD, possibility for future research on transcriptional regulation. 
 
 
 
+\subsection{Deriving the fundamental noise limit in transcription regulation}
+We derived the fundamental lower bound on the noise in transcriptional regulation. In the limit of low concentrations, we were able to exactly solve our model of transcription factors ariving and leaving the promoter site without using any linearization. Comparing the analytical result with novel simulations done with \GFRD, shows that we can correctly predict the temperal noise in the promoter occupancy. From our analytical result, we predict how wel a promoter can infer the transcription factor concentration in the cytoplasm from the promoter state while measuring a time $T$. It turns out this noise is inversely proportional to the number of independent particles which bind to the promoter during the integration time $T$ and the fraction of time the promoter is unoccupied. 
 
-\subsection{Fundamental noise limit}
+Next, we compared our expression for the noise in a promoter with an expression derived by Tka$\check{\rm c}$ik by using a very different method. The important difference is that the noise in Tka$\check{\rm c}$ik's expression is independent of the promoter occupancy, which is likely the result of the linearizations done in his method. Furthermore, we show that we get better quantative agreement with simumalions if we represent the DNA as a cylinder instead of a line. 
 
+Finally, we show that the method by de Ronde to derive the correlation time by using a correlation function for the promoter state is, in the limit of low concentrations, equivalent to the method by van Zon which renormalizes the reaction rates by the average number of rebindings.

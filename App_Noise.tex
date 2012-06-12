@@ -222,33 +222,34 @@ The first equality is the defenition of the Fourier integral in the plane perpen
 \newpage
 \subsection{\alabel{noise:Seq_derived} Deriving the survival probability of a free promoter in equilibrium}
 
-Here we derive the expression (\eref{DE_Seq}) for the survival probability of a single promoter site in an equilibrated system of particles on the DNA and in the cytoplasm. Our system is described by two coupled Green's functions; $P_1(z,t|{\rm eq})$ giving the probability density on the DNA and $P_3(z,r,t|{\rm eq})$ the probability density in the bulk. These functions describe a single particle problem where the particle is initially uniformly distributed over the system. The system is a cylinder with radius $R$ and height $L$, containing a rod (the DNA) allong the central axis spaning the cylinder. By definition, the functions are normalized such that
+Here we derive the expression (\eref{DE_Seq}) for the survival probability of a single promoter site in an equilibrated system of particles on the DNA and in the cytoplasm. Our system is described by two coupled Green's functions; $P_1(z,t|{\rm eq})$ giving the probability density on the DNA and $P_3(z,r,t|{\rm eq})$ the probability density in the bulk. These functions define a single particle problem where the particle is initially uniformly distributed over the system. The system is cylindrical shaped with a radius $R$ and height $L$, containing a rod (the DNA) allong its central axis spanning the cylinder. By definition, $P_1(z,t|{\rm eq})$ and $P_3(z,r,t|{\rm eq})$ are dimensionless quantities with the following normalization
 \begin{equation}
- \frac{1}{L} \left. \int_{-L/2}^{L/2} dz P_1(z,t|{\rm eq})\right|_{t=0} = 1 \:\: , \:\: \left. \frac{2\pi}{V} \int_{-L/2}^{L/2} dz \int_{\sigma}^{R} rdr P_3(z,r,t|{\rm eq})\right|_{t=0} = 1
+ \frac{1}{L} \left. \int_{-L/2}^{L/2} dz P_1(z,t|{\rm eq})\right|_{t=0} = 1 \:\: , \:\: \left. \frac{2\pi}{V} \int_{-L/2}^{L/2} dz \int_{\sigma}^{R} rdr P_3(z,r,t|{\rm eq})\right|_{t=0} = 1.
 \end{equation}
-In order to have the proper normalization on the DNA and in the cytoplasm, we have to solve
-
-
-Apart from a flat distribution as initial condition, the functions also fullfill a detailed balance relation
+These functions, however, don't take into account the time the particle spends on the DNA and in the cytoplasm. To set the proper distribution, we introduce the dimensionless factors $\bar{P}_1$ and $\bar{P}_3$ which give the probability of finding the particle either on the DNA or in the cytoplasm, respectivily. These probabilities have to satisfy a detailed balance relation 
 \begin{eqnarray}
- \frac{1}{L} P_1(z,t=0|{\rm eq}) \, k_d & = & \frac{1}{V} P_3(z,r,t=0|{\rm eq}) \, k_a
+ \frac{1}{L} \, \bar{P}_1 \, k_d & = & \frac{1}{V} \, \bar{P}_3 \, k_a,
  \elabel{DB_init}
 \end{eqnarray}
-
-The survival probability of a single promoter on a rod of length $L$, inside a cylinder with radius $R$ and volume $V$ containing $N$ particles in total, is given by \cite{Szabo1989} 
-\begin{eqnarray}
- \mathscr{S}_{N}(t|{\rm eq}) & = & \left( \int_V d{\bf r} \frac{1}{V} P({\bf r},t|{\rm eq}) \right)^N \\
-& = & \left( \int_{-L/2}^{L/2} dz \left\{ \frac{1}{L} P_1(z,t|{\rm eq }) + 2\pi \int_{\sigma}^{R} rdr \frac{k_a}{k_d} \frac{1}{V} P_3(z,r,t|{\rm eq}) \right\} \right)^N.\nonumber
-\end{eqnarray}
-Differentiating with respect to time, pulling out the factor $1/V$, and using the detailed balance relation in \eref{DB_init} gives
+and have to normalize our system at $t=0$
 \begin{equation}
- \frac{d\mathscr{S}_{N}(t|{\rm eq})}{dt} = \frac{k_a}{k_d} \frac{N}{V} \left( \int_{-L/2}^{L/2} dz \left\{ \frac{dP_1(z,t|{\rm eq})}{dt} + 2\pi \int_{\sigma}^{R} rdr \frac{dP_3(z,r,t|{\rm eq})}{dt} \right\} \right) S_{N-1}(t).
+ \frac{\bar{P}_1}{L} \int_{-L/2}^{L/2} dz P_1(z,t=0|{\rm eq }) + 2\pi \frac{\bar{P}_3}{V} \int_{-L/2}^{L/2}dz \int_{\sigma}^{R}rdr P_3(z,r,t=0|{\rm eq}) = 1.
 \end{equation}
+
+We can write the survival probability of the promoter, surrounded by an equilibrium solution of $N$ particles, as \cite{Szabo1989} 
+\begin{gather}
+ \mathscr{S}_{N}(t|{\rm eq}) = \left( \frac{1}{V'} \int_{V'} d{\bf r} P({\bf r}, t|{\rm eq})\right)^N \\ 
+ = \left( \frac{\bar{P}_1}{L} \int_{-L/2}^{L/2}dz P_1(z,t|{\rm eq }) + 2\pi \frac{\bar{P}_3}{V} \int_{-L/2}^{L/2}dz \int_{\sigma}^{R}rdr P_3(z,r,t|{\rm eq}) \right)^N
+\end{gather}
+Differentiating with respect to time, pulling out the factor $\bar{P}_1/L$, and using the detailed balance relation in \eref{DB_init} gives
+\begin{multline}
+ \frac{d\mathscr{S}_{N}(t|{\rm eq})}{dt} = \bar{P}_1 \frac{N}{L} \left( \int_{-L/2}^{L/2}dz  \frac{dP_1(z,t|{\rm eq})}{dt} \right. \\ +  \left. 2\pi \int_{-L/2}^{L/2}dz \int_{\sigma}^{R}rdr \frac{k_d}{k_a} \frac{dP_3(z,r,t|{\rm eq})}{dt} \right) S_{N-1}(t).
+\end{multline}
 Since particles only leave the system via the promoter site at position $z_0$, we can rewrite the time derivatives using the radiative influx at the promoter site
 \begin{equation}
- \frac{d\mathscr{S}_{{\rm rad}, N}(t|{\rm eq})}{dt} = -\frac{k_a}{k_d} \frac{N}{V}k_+ P_1(z_0,t|{\rm eq}) S_{N-1}(t).
+ \frac{d\mathscr{S}_{{\rm rad}, N}(t|{\rm eq})}{dt} = -\bar{P}_1 \frac{N}{L} \, k_+ P_1(z_0,t|{\rm eq}) S_{N-1}(t).
 \end{equation}
-Taking the limit $L,V \to \infty$ and using that $\frac{k_a}{k_d} \bar{c} = \bar{\xi}$, we arive at the desired result
+Taking the limit $L,N \to \infty$ and using that $\bar{P}_1 \frac{N}{L} = \bar{\xi}$, we arive at the desired result
 \begin{equation}
  \frac{d\mathscr{S}_{{\rm rad}}(t|{\rm eq})}{dt} = - \bar{\xi} k_{\rm rad}(t) S(t).
 \end{equation}
