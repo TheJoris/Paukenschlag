@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1.0
-lastDocument=Conclusion.tex
+lastDocument=newBD.tex
 masterDocument=
 name=MasterThesis
 pkg_extIsRegExp=false
@@ -106,7 +106,7 @@ ReadWrite=true
 
 [item:App_Noise.tex]
 archive=true
-column=30
+column=14
 encoding=UTF-8
 highlight=LaTeX
 line=246
@@ -144,9 +144,29 @@ mode=LaTeX
 open=true
 order=10
 
+[item:DutchSummary.tex]
+archive=true
+column=0
+encoding=
+highlight=
+line=0
+mode=
+open=false
+order=-1
+
+[item:EnglishSummary.tex]
+archive=true
+column=0
+encoding=
+highlight=
+line=0
+mode=
+open=false
+order=-1
+
 [item:Introduction.tex]
 archive=true
-column=353
+column=381
 encoding=UTF-8
 highlight=LaTeX
 line=38
@@ -156,10 +176,10 @@ order=9
 
 [item:Noise.tex]
 archive=true
-column=34
+column=132
 encoding=UTF-8
 highlight=LaTeX
-line=40
+line=230
 mode=LaTeX
 open=true
 order=4
@@ -176,10 +196,10 @@ order=1
 
 [item:ThesisBase.tex]
 archive=true
-column=1
+column=8
 encoding=UTF-8
 highlight=LaTeX
-line=31
+line=41
 mode=LaTeX
 open=true
 order=0
@@ -196,10 +216,10 @@ order=7
 
 [item:eGFRD.tex]
 archive=true
-column=196
+column=395
 encoding=UTF-8
 highlight=LaTeX
-line=59
+line=61
 mode=LaTeX
 open=true
 order=5
@@ -216,16 +236,16 @@ order=-1
 
 [item:newBD.tex]
 archive=true
-column=0
+column=56
 encoding=UTF-8
 highlight=LaTeX
-line=23
+line=188
 mode=LaTeX
 open=true
 order=6
 
 [view-settings,view=0,item:App_Noise.tex]
-CursorColumn=30
+CursorColumn=14
 CursorLine=246
 
 [view-settings,view=0,item:App_Sink.tex]
@@ -241,29 +261,29 @@ CursorColumn=0
 CursorLine=16
 
 [view-settings,view=0,item:Introduction.tex]
-CursorColumn=353
+CursorColumn=381
 CursorLine=38
 
 [view-settings,view=0,item:Noise.tex]
-CursorColumn=34
-CursorLine=40
+CursorColumn=132
+CursorLine=230
 
 [view-settings,view=0,item:Sink.tex]
 CursorColumn=531
 CursorLine=5
 
 [view-settings,view=0,item:ThesisBase.tex]
-CursorColumn=1
-CursorLine=31
+CursorColumn=8
+CursorLine=41
 
 [view-settings,view=0,item:additions.tex]
 CursorColumn=0
 CursorLine=0
 
 [view-settings,view=0,item:eGFRD.tex]
-CursorColumn=196
-CursorLine=59
+CursorColumn=395
+CursorLine=61
 
 [view-settings,view=0,item:newBD.tex]
-CursorColumn=0
-CursorLine=23
+CursorColumn=56
+CursorLine=188

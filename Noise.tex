@@ -220,7 +220,7 @@ Here $P_1(z, t|z_0)$ is the Green's function describing the 1D sliding of the TF
 \end{eqnarray}
 where we explicitly included the initial condition of one particle placed in contact with the promoter site on the DNA. We left away the Laplace variable $s$ and the initial conditions in the function arguments. We continue by Fourier transforming with respect to space
 \begin{eqnarray}
- s \, \tilde{P}_1(q) - 1 & = & - D_1 q^2 \tilde{P}_1(q) - k_+ \tilde{P}_1(z_0) - k_d \tilde{P}_1(q) + k_a \tilde{P}_3(q) \elabel{FDE_dna} \\
+ s \, \tilde{P}_1(q) - 1 & = & - D_1 q^2 \tilde{P}_1(q) - k_+ \hat{P}_1(z_0) - k_d \tilde{P}_1(q) + k_a \tilde{P}_3(q) \elabel{FDE_dna} \\
  s \, \tilde{P}_3(q,{\bf k}) & = & - D_3 (q^2 + k^2) \tilde{P}_3(q, {\bf k}) - \left[ k_a \tilde{P}_3(q) - k_d \tilde{P}_1(q) \right] J_{0}(k \sigma). 
  \elabel{FDE_bulk}
 \end{eqnarray}
@@ -228,24 +228,24 @@ Here $q$ is the spatial Fourier variable conjugate to $z$, and ${\bf k}$ is conj
 \begin{equation}
  \tilde{P}_3(q,{\bf k}) = \frac{k_d \tilde{P}_1(q) - k_a\tilde{P}_3(q)}{s + D_3(q^2 + k^2)} J_{0}(k \sigma ).
 \end{equation}
-Fourier back-transforming both sides of the equation in ${\bf k}$, at $|{\bf r}|=\sigma$,
+Fourier back-transforming both sides of the equation in ${\bf k}$, for $r=\sigma$, where we implicitly integrate over all ${\bf r}$,
 \begin{eqnarray}
  \elabel{FourierBackC}
- \tilde{P}_3(q) & = & \int \frac{d^2 k}{(2 \pi)^2} {\rm exp}(-i\,{\bf k}\cdot{\bf r}) \delta(|{\bf r}|-\sigma) \tilde{P}_3(q,{\bf k}) \\
+ \tilde{P}_3(q) & = & \int \frac{d^2 k}{(2 \pi)^2} {\rm exp}(-i\,{\bf k}\cdot{\bf r}) \frac{\delta(r-\sigma)}{2\pi r} \tilde{P}_3(q,{\bf k}) \\
  & = & \frac{k_d \tilde{P}_1(q) - k_a\tilde{P}_3(q)}{2 \pi D_3} \, I_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right) K_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right),
 \end{eqnarray}
 where $I_0$ and $K_0$ are the zeroth order modified bessel functions of the first and second kind respectivily. Solving the above for $\tilde{P}_3(q)$, and substituting the result into \eref{FDE_dna}, we obtain the solution for $\tilde{P}_1(q)$. Again, back-transforming this equation in $q$ at the position of the promoter $z_0=0$, we find
 \begin{equation}
- \tilde{P}_1(z_0,s|z_0) = \int \frac{d\,q}{2 \pi} \frac{1 - k_+ \tilde{P}_1(z_0,s|z_0)}{s + D_1 q^2+k_d F^{-1}(q,s)}
+ \hat{P}_1(z_0,s|z_0) = \int \frac{d\,q}{2 \pi} \frac{1 - k_+ \hat{P}_1(z_0,s|z_0)}{s + D_1 q^2+k_d F^{-1}(q,s)}
  \elabel{FDE_dna2}
 \end{equation}
 where
 \begin{equation}
 F(q,s) = 1 + \frac{k_a}{2 \pi D_3} \, I_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right) K_{0}\left( \sigma \sqrt{q^2 + \frac{s}{D_3}} \right).
 \end{equation}
-Finally, we can solve \eref{FDE_dna2} for $\tilde{P}_1(z_0, s|z_0)$ to obtain the probability density at the promoter site in Laplace space. In the limit $s \to 0$, our expression becomes
+Finally, we can solve \eref{FDE_dna2} for $\hat{P}_1(z_0, s|z_0)$ to obtain the probability density at the promoter site in Laplace space. In the limit $s \to 0$, our expression becomes
 \begin{equation}
- \lim_{s \to 0} \tilde{P}_1(z_0, s) = \frac{I(\alpha,\beta)}{\pi D_1 / \sigma + k_+ \, I(\alpha,\beta)}
+ \lim_{s \to 0} \hat{P}_1(z_0, s) = \frac{I(\alpha,\beta)}{\pi D_1 / \sigma + k_+ \, I(\alpha,\beta)}
 \end{equation}
 where
 \begin{gather}
