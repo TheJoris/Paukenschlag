@@ -1021,8 +1021,8 @@ set format x "10^{%L}"
 D1=1E-12
 k=1E-3
 
-plot "./newBD1DSsigma.dat" u 1:2 with linespoints ls 2 title "newBD",\
-"./oldBD1DSsigma.dat" using 1:2 with linespoints ls 3 title "oldBD",\
+plot "./newBD1DSsigma.dat" u 1:2 with linespoints ls 2 title "Brownian dynamics, new",\
+"./oldBD1DSsigma.dat" using 1:2 with linespoints ls 3 title "Brownian dynamics by Morelli",\
 Srad(x) with lines ls 1 title "theory"
 
 
@@ -1033,7 +1033,7 @@ set origin .47,.4
 #set xlabel "r/R" font "CMBX10, 10"
 set ylabel "Error[%]"
 set nokey
-set title "Error in newBD and oldBD"
+set title "Error in BD algorithms"
 
 plot "./BD1DSsigma_compare.dat" u 1:(100*(\$3-Srad(\$1))/Srad(\$1)) with linespoints ls 2 title "Error in newBD",\
 "./BD1DSsigma_compare.dat" u 1:(100*(\$2-Srad(\$1))/Srad(\$1)) with linespoints ls 3 title "Error in oldBD"
