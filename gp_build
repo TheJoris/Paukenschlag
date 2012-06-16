@@ -289,8 +289,8 @@ fi
 
 
 
-#Tableaux for saturation vs diffusive on-rate. -LE MACHINE!
-if [[ $plot -eq 5 ]]
+#Tableaux for saturation vs diffusive on-rate, equal concentrations
+if [[ $plot -eq 51 ]]
 then
 
 gnuplot << EOF -persist
@@ -298,7 +298,7 @@ gnuplot << EOF -persist
 $lines3
 
 set terminal postscript eps enhanced color font "Times-Roman, 18"
-set out "TableauxNoiseCmp.eps"
+set out "TableauxNoiseCmpA.eps"
 
 # x = kdD
 # y = kaD
@@ -308,13 +308,13 @@ kdhalf(y)=-y*(kdP*L-kaP*TF0)/(kdP*L**(3))
 
 set key noauto
 
-set size 1,1
+set size 1,1.2
 set origin 0,0
 
 set multiplot
 
-set size .5,.5
-set origin 0.,.0
+set size .5,.6
+set origin 0.5,0.5
 set log x
 set format x "10^{%L}"
 set nokey
@@ -325,16 +325,18 @@ set xtic (1e-2,1e0,1e2,1e4)
 set yrange [0:1]
 set xrange [1e-1:1e4]
 
+set xlabel "k_d"
+
 L=1e-6
 TF0=10
 kaP=1e-4
 kdP=1e2
 
-plot n(x,1e-10) with lines ls 1 title "10^{-10}",\
+plot n(x,1e-10) with lines ls 9 title "10^{-10}",\
 n(x,1e-11) with lines ls 2 title "10^{-11}",\
 n(x,1e-12) with lines ls 3 title "10^{-12}",\
 n(x,1e-13) with lines ls 4 title "10^{-13}",\
-.5 with lines ls 5
+.5 with lines ls 10
 
 set parametric
 
@@ -348,19 +350,19 @@ kdhalf(1e-13),t with lines ls 10
 unset parametric
 
 set log xy
-set size .5,.5
+set size .5,.6
 set origin .0,.5
 set format x "10^{%L}"
 set format y "10^{%L}"
 set nokey
-set title "a) Noise - finite #TF's, with occ."
+set title "a) Noise - variable occupancy"
 #set xtic (1e-2,1e0,1e2,1e4)
 #set ytic (1e0,1e-10,1e-20)
 
 set yrange [.75:400]
 set xrange [1e-1:1e4]
 
-plot "./NoiseCmp_10.dat" with lines ls 1 title "10^{-10}",\
+plot "./NoiseCmp_10.dat" with lines ls 9 title "10^{-10}",\
  "./NoiseCmp_11.dat" with lines ls 2 title "10^{-11}",\
  "./NoiseCmp_12.dat" with lines ls 3 title "10^{-12}",\
  "./NoiseCmp_13.dat" with lines ls 4 title "10^{-13}"
@@ -379,71 +381,133 @@ unset parametric
 
 
 set log xy
-set size .5,.5
-set origin .5,.0
+set size .5,.6
+set origin .25,.0
 set format x "10^{%L}"
 set format y "10^{%L}"
 set nokey
-set title "d) Noise - infinite #TF's, no occ."
+set title "c) Noise - fixed occupancy"
 #set xtic (1e-2,1e0,1e2,1e4)
 #set ytic (1e0,1e-10,1e-20)
 
 set yrange [1e-2:500]
 set xrange [1e-1:1e4]
 
-plot "./NoisekDns_10.dat" with lines ls 1 title "10^{-10}",\
+plot "./NoisekDns_10.dat" with lines ls 9 title "10^{-10}",\
  "./NoisekDns_11.dat" with lines ls 2 title "10^{-11}",\
  "./NoisekDns_12.dat" with lines ls 3 title "10^{-12}",\
  "./NoisekDns_13.dat" with lines ls 4 title "10^{-13}"
 
+EOF
+
+epstopdf TableauxNoiseCmpA.eps
+fi
+
+
+
+
+
+#Tableaux for saturation vs diffusive on-rate, equal particle numbers
+if [[ $plot -eq 52 ]]
+then
+
+gnuplot << EOF -persist
+
+$lines1
+$lines3
+
+set terminal postscript eps enhanced color font "Times-Roman, 18"
+set out "TableauxNoiseCmpB.eps"
+
+set key noauto
+
+XiInf(kdD,kaD)=kaD/kdD*TF0/L**(3)
+XiFin(kdD,kaD)=kaD*TF0/(kdD*L**(3)*(1+kaD/(kdD*L**(2))))
+
+L=1e-6
+TF0=10
+
+set size 1,1.2
+set origin 0,0
+
+set multiplot
+
+set size 0.5,0.6
+set origin 0.0,0.5
+set log xy
+set format x "10^{%L}"
+set nokey
+set title "a) Diffusion limited rates: k_D^p/k_D^r L^{2}"
+set xtics (1e-2,1e0,1e2,1e4)
+
+set xlabel "k_d"
+
+set yrange [.1:100]
+set xrange [1e-1:1e4]
+
+plot "./NoisekD_10.dat" using 1:(1/\$2)with lines ls 9 title "10^{-10}",\
+ "./NoisekD_11.dat" using 1:(1/\$2) with lines ls 2 title "10^{-11}",\
+ "./NoisekD_12.dat" using 1:(1/\$2) with lines ls 3 title "10^{-12}",\
+ "./NoisekD_13.dat" using 1:(1/\$2) with lines ls 4 title "10^{-13}"
+
+
+
 
 
 set log xy
-set size .5,.5
-set origin .5,.5
+set size .5,.6
+set origin 0.5,0.5
+set format x "10^{%L}"
+set format y "10^{%L}"
+set nokey
+set title "b) DNA occupancy, {/Symbol x}"
+#set xtic (1e-2,1e0,1e2,1e4)
+#set ytic (1e0,1e-10,1e-20)
+
+set ytics (1e2,1e4,1e6,1e8,1e10)
+
+set xrange [1e-1:1e4]
+set yrange [1e2:1e10]
+
+plot XiInf(x,1e-10) with lines ls 9 title "10^{-10}",\
+XiInf(x,1e-11) with lines ls 2 title "10^{-11}",\
+XiInf(x,1e-12) with lines ls 3 title "10^{-12}",\
+XiInf(x,1e-13) with lines ls 4 title "10^{-13}",\
+XiFin(x,1e-10) with lines ls 5 title "10^{-10}",\
+XiFin(x,1e-11) with lines ls 6 title "10^{-11}",\
+XiFin(x,1e-12) with lines ls 7 title "10^{-12}",\
+XiFin(x,1e-13) with lines ls 8 title "10^{-13}"
+
+
+
+
+unset ytics
+set ytics
+
+set log xy
+set size .5,.6
+set origin .25,0.0
 set format x "10^{%L}"
 set format y "10^{%L}"
 set key top left
-set title "c) Noise - finite #TF's, no occ."
+set title "c) Noise - fixed occupancy"
 #set xtic (1e-2,1e0,1e2,1e4)
-#set ytic (1e0,1e-10,1e-20)
+#set ytic (1e0,1e1,1e2)
 
 set yrange [3e-1:500]
 set xrange [1e-1:1e4]
 
-plot "./NoisekDs_10.dat" with lines ls 1 title "10^{-10}",\
+plot "./NoisekDs_10.dat" with lines ls 9 title "10^{-10}",\
  "./NoisekDs_11.dat" with lines ls 2 title "10^{-11}",\
  "./NoisekDs_12.dat" with lines ls 3 title "10^{-12}",\
  "./NoisekDs_13.dat" with lines ls 4 title "10^{-13}" 
-#set format y "10^{%L}"
-#set format x "10^{%L}"
-
-#set yrange [-2:2]
-#set xrange [0:1]
-
-#set ytics 2 format "%g"
-#set xtics 2 format "%g"
-#set xlabel "{/Symbol w} [1/s]"
-#set ylabel "P_{n}({/Symbol w})"
-#set rmargin 4
-#set key outside Left samplen 1 spacing 1.2 width -0.5
-
-#set arrow nohead from -6,0 to 0,0 ls 14
-
-#set size 0.4,0.4
-#set origin .12,.1
-#set noytic
-#set noxtic
-#set xtic (1e-1,1e4,1e10)
-#set ytic (1e0,1e-10,1e-20)
-#set noxlabel
-#set noylabel
-#set nokey
 
 EOF
 
-epstopdf TableauxNoiseCmp.eps
+epstopdf TableauxNoiseCmpB.eps
 fi
+
+
 
 
 
