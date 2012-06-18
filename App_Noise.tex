@@ -220,9 +220,9 @@ The first equality is the defenition of the Fourier integral in the plane perpen
 
 
 \newpage
-\subsection{\alabel{noise:Seq_derived} Deriving the survival probability of a free promoter in equilibrium}
+\subsection{\alabel{noise:Seq_derived} Deriving the survival probability of a promoter in equilibrium}
 
-Here we derive the expression (\eref{DE_Seq}) for the survival probability of a single promoter site in an equilibrated system of particles on the DNA and in the cytoplasm. Our system is described by two coupled Green's functions; $P_1(z,t|{\rm eq})$ giving the probability density on the DNA and $P_3(z,r,t|{\rm eq})$ the probability density in the bulk. These functions define a single particle problem where the particle is initially uniformly distributed over the system. The system is cylindrical shaped with a radius $R$ and height $L$, containing a rod (the DNA) allong its central axis spanning the cylinder. By definition, $P_1(z,t|{\rm eq})$ and $P_3(z,r,t|{\rm eq})$ are dimensionless quantities with the following normalization
+Here we derive the expression (\eref{DE_Seq}) for the survival probability of a single promoter site in an equilibrated system of transcription factors on the DNA and in the cytoplasm. Our system is described by two coupled Green's functions; $P_1(z,t|{\rm eq})$ giving the probability density on the DNA and $P_3(z,r,t|{\rm eq})$ the probability density in the bulk. These functions define a single particle problem, where the particle is initially uniformly distributed in space.The system is finite, and is cylindrical shaped with a radius $R$ and height $L$. Inside is a rod (the DNA), lying allong the whole length of the central axis of the cylinder. By definition, $P_1(z,t|{\rm eq})$ and $P_3(z,r,t|{\rm eq})$ are dimensionless quantities with the following normalization
 \begin{equation}
  \frac{1}{L} \left. \int_{-L/2}^{L/2} dz P_1(z,t|{\rm eq})\right|_{t=0} = 1 \:\: , \:\: \left. \frac{2\pi}{V} \int_{-L/2}^{L/2} dz \int_{\sigma}^{R} rdr P_3(z,r,t|{\rm eq})\right|_{t=0} = 1.
 \end{equation}
@@ -245,11 +245,11 @@ Differentiating with respect to time, pulling out the factor $\bar{P}_1/L$, and 
 \begin{multline}
  \frac{d\mathscr{S}_{N}(t|{\rm eq})}{dt} = \bar{P}_1 \frac{N}{L} \left( \int_{-L/2}^{L/2}dz  \frac{dP_1(z,t|{\rm eq})}{dt} \right. \\ +  \left. 2\pi \int_{-L/2}^{L/2}dz \int_{\sigma}^{R}rdr \frac{k_d}{k_a} \frac{dP_3(z,r,t|{\rm eq})}{dt} \right) S_{N-1}(t).
 \end{multline}
-Since particles only leave the system via the promoter site at position $z_0$, we can rewrite the time derivatives using the radiative influx at the promoter site
+Since particles only leave the system via the promoter site positioned at $z_0$, we can rewrite the time derivatives using the radiative influx at the promoter site
 \begin{equation}
  \frac{d\mathscr{S}_{{\rm rad}, N}(t|{\rm eq})}{dt} = -\bar{P}_1 \frac{N}{L} \, k_+ P_1(z_0,t|{\rm eq}) S_{N-1}(t).
 \end{equation}
-Taking the limit $L,N \to \infty$ and using that $\bar{P}_1 \frac{N}{L} = \bar{\xi}$, we arive at the desired result
+Taking the limit $L,N \to \infty$, and using that $\bar{P}_1 \frac{N}{L} = \bar{\xi}$, we arive at the desired result
 \begin{equation}
  \frac{d\mathscr{S}_{{\rm rad}}(t|{\rm eq})}{dt} = - \bar{\xi} k_{\rm rad}(t) S(t).
 \end{equation}
