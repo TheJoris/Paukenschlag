@@ -2,45 +2,16 @@
 {\center \bf Abstract}
 \end{center}
 
-The precision by which a cell can regulate its protein levels is greatly limited by the diffusive arrival of transcription factors to their promoter. In this thesis we derive an analytical expression for this limit, and expand the Green's Function Reaction Dynamics algorithm (GFRD) used for simulating reaction-diffusion systems, to verify our results.
+The precision by which a cell can regulate its protein levels, is greatly limited by the diffusive arrival of transcription factors to their promoter. In this thesis we derive an analytical expression for this limit, and expand the Green's Function Reaction Dynamics algorithm (GFRD) used for simulating reaction-diffusion systems, to verify our results.
 
-We propose two coupled differential equations describing the full dynamics of a transcription factor diffusing in the cytoplasm and allong the DNA, with reversible exhange between the DNA and the cytoplasm. We do not linearize our equations or use any mean fealt approximation. Working in the low concentration limit, we find an exact solution for the temperal noise in the occupancy of a promoter site. 
+We propose two coupled differential equations describing the full dynamics of a transcription factor diffusing in the cytoplasm and along the DNA, with reversible exchange between the DNA and the cytoplasm. We do not linearize our equations or use any mean fielt approximation. Working in the low concentration limit, we find an exact solution for the temperal noise in the occupancy of a promoter site. 
 
 Furthermore, we compare our results with results found earlier by Tka$\check{\rm c}$ik. The primary difference is that his expression for the noise is independent of the occupancy of the promoter, which is likely due to linearizations needed in his method.
 
+To simulate a promoter site in GFRD, we have to take care of two things. Firstly, we modified an existing Brownian dynamics algorithm by Morelli, which is used in GFRD. We made the algorithm mathematically easier, allowing for simulating reaction-diffusion systems in any dimension. The algorithm, however, still enforces the detailed balance relation for a reversible reaction in equilibrium, and therefore correctly simulates the equilibrium quantities of a reaction network. 
 
-We find an optimum in the noise set by the competition between the enhanced cross section due to the bin 
+Secondly, we introduce the promoter site into GFRD, which we represent as as a point-sink located on the DNA. To simulate this in GFRD, we derive a Green's function on a 1D domain containing a sink and two absorbing boundaries. The sink generates an outflux proportional to the intrinsic association rate of the sink and the probability of the transcription factor being at the sink. 
 
-To simulate a promoter site in GFRD, we have to take care of two things. The original Brownian dynamics 
-
-
-Before we can simulate a promoter, we have to modify the original Brownian dynamics algorithm by Morelli used in GFRD. 
+We run a simulation with a single promoter in a box with a low concentration of particles inside, and find that our analytical result correctly predicts the temperal noise in the simulated promoter occupancy.
 
 
-
-
-
-To simulate a promoter in GFRD, we derive a Green's function on a 1D domain with two absorbing boundaries and a unit instantanious source at the starting position of the particle. The promoter is represented with a sink, generating an outflux proportional to the intrinsic rate and the probability of being at the sink. 
-
-Furthermore, we modified an existing Brownian dynamics algorithm by Morelli, 
-
-
-GFRD also needed a new Brownian dynamics algorithm needs Brow  
-
-
-
-
-
-Our analytical result correctly predicts the temperal noise in the promoter occupancy found in our simulations.
-
-The result shows a minimum in the noise set by the time a transcription factor spends on the DNA. 
-
-a competition between the concentration of transcription factors on the DNA, 
-
-
-two minima in the noise caused by a competition between the average promoter occupancy, the arrival rate of transcription factors to the promoter site and enhanced temperal correlations due to 1D diffusion around the promoter. 
-
-similar to what was done by Berg and Percell in their seminal work on the noise in the receptor state. 
-
-
-The noise introduced by the diffusive arrival of transcription factors at the promoter site, sets a lower limit to the noise in the protein levels. 

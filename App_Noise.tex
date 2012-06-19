@@ -95,7 +95,7 @@ And, in the same spirit
 
 
 \subsection{\alabel{noise:backward_eqn} The backward Smoluchowski equation}
-Here we prove that the flux into a sink with a radiation boundary condition, in an equilibrated sytem of particles, is given by
+Here we prove that the flux into a sink with a radiation boundary condition, in an equilibrated system of particles, is given by
 \begin{equation}
  k(t) = k_+ \, S(t|\sigma).
  \elabel{bsm_k}
@@ -115,7 +115,7 @@ where, in the second line, we let the time derivative act on $t'$. Furthermore w
  \pdiff{p(\vect{r},t|\vect{r_0})}{t} & = & \int d\vect{r}' p(\vect{r},t - t'|\vect{r}') \left[ \mathscr{L}_{\vect{r}'}^{\phantom{\dag}} p(\vect{r}',t'|\vect{r_0}) \right] \\
  & = & \int d\vect{r}' \left[ \mathscr{L}_{\vect{r'}}^{\dag} p(\vect{r},t - t'|\vect{r}') \right] \, p(\vect{r}',t'|\vect{r_0}). \elabel{bsm_1}
 \end{eqnarray}
-In the second line we applied integration by parts twice and threw away the boundary terms. If we let the arbitrary timepoint $t'$ go to zero in \eref{bsm_1}, the second Green's function changes into $\delta(\vect{r}-\vect{r}')$ and the integral vanisches. The result is the backward Kolmogorov equation
+In the second line we applied integration by parts twice and threw away the boundary terms. If we let the arbitrary time point $t'$ go to zero in \eref{bsm_1}, the second Green's function changes into $\delta(\vect{r}-\vect{r}')$ and the integral vanishes. The result is the backward Kolmogorov equation
 \begin{eqnarray}
  \elabel{backward_eqn}
  \pdiff{p(\vect{r},t|\vect{r_0})}{t} & = & \mathscr{L}_{\vect{r_0}}^{\dag} p(\vect{r},t|\vect{r_0}) \\
@@ -137,16 +137,16 @@ where $p$ has a radiation boundary at $\sigma$. The time derivative of the influ
 \begin{eqnarray}
  \pdiff{}{t} \left. \int d\vect{r_0} p(\vect{r},t|\vect{r_0}) \right|_{r=\sigma} & = & \mathscr{L}_{\vect{r}} \left. \int d\vect{r_0} p(\vect{r},t|\vect{r_0}) \right|_{r=\sigma}.
 \end{eqnarray}
-When we evaluate \eref{S_eqn} at $r_0=\sigma$, we see, using Kolmogorov \eref{backward_eqn}, that the time derivatives of both quantaties obey the same differential equation. Furthermore, in the limit $t \to 0$, both \eref{bsm_3} and \eref{bsm_k} equal. We conclude that \eref{bsm_k} must hold.
+When we evaluate \eref{S_eqn} at $r_0=\sigma$, we see, using Kolmogorov \eref{backward_eqn}, that the time derivatives of both quantities obey the same differential equation. Furthermore, in the limit $t \to 0$, both \eref{bsm_3} and \eref{bsm_k} equal. We conclude that \eref{bsm_k} must hold.
 
 
 \subsection{\alabel{noise:Seq_approx} Approximating the survival probability in equilibrium}
-We want to approximate the survival probability of a promoter in equilibrium sollution
+We want to approximate the survival probability of a promoter in equilibrium solution
 \begin{equation}
  \mathscr{S}_{\rm rad}(t|{\rm eq}) = {\rm exp}\left(-c \int_0^t k_{{\rm rad}}(t') dt'\right) = {\rm exp}\left(-c k_+ \int_0^t S(t'|z_0) dt'\right)
  \elabel{Seq_app}
 \end{equation}
-such that it can be Laplace transformed, and has correct behaviour in the limit $s\to0$. A small $s$ limit amounts to a large $t$ limit in the time domain, and because the argument of the exponential will diverge for large $t$, a small argument expansion will not work. The reason for the divergence is that $S_{\rm rad}(t|z_0)$ approaches a constant value in the limit $t\to\infty$, which makes the integral diverege. Because $S_{\rm rad}(t|z_0)$ becomes constant, the argument in the exponential scales as a linear function of $t$ to highest order. Written for large times, \eref{Seq_app} is
+such that it can be Laplace transformed, and has correct behavior in the limit $s\to0$. A small $s$ limit amounts to a large $t$ limit in the time domain, and because the argument of the exponential will diverge for large $t$, a small argument expansion will not work. The reason for the divergence is that $S_{\rm rad}(t|z_0)$ approaches a constant value in the limit $t\to\infty$, which makes the integral diverge. Because $S_{\rm rad}(t|z_0)$ becomes constant, the argument in the exponential scales as a linear function of $t$ to highest order. Written for large times, \eref{Seq_app} is
 \begin{equation}
  \mathscr{S}_{\rm rad}(t|{\rm eq}) \sim {\rm exp}\left(-c \left[ \alpha_1 t + \alpha_2 t^{\beta_2} + \ldots \right] \right),
 \end{equation}
@@ -154,12 +154,12 @@ where the powers $\beta_2$ and higher, are smaller than one. For a low concentra
 \begin{equation}
  \mathscr{S}_{\rm rad}(t|{\rm eq}) \sim {\rm exp}\left(-\left[ \alpha_1 x + \alpha_2 c^{1-\beta_2} x^{\beta_2} + \ldots \right] \right).
 \end{equation}
-and in the limit $c\to0$, only the term linear in $t$ remains. We arive at
+and in the limit $c\to0$, only the term linear in $t$ remains. We arrive at
 \begin{equation}
  \lim_{c\to0} \mathscr{S}_{\rm rad}(t|{\rm eq}) = {\rm exp}\left(-c k_+ S_{\rm rad}(\infty|z_0) \, t \right).
  \elabel{Seq_app2}
 \end{equation}
-Another way to appreciate this approximation, is to observe that the time in which the concentration profile reaches steady-state, is dependent on the survival probaility $S(t|z_0)$ only, and not on the concentration (See \eref{bsm_k}). The average time in which the promoter binds with a particle from the bulk, does depend on concentration, and increases with decreasing $c$. Therefore, in the low concentration limit, the time interval in which the system is not in steady-state, compared to the average time in which a TF from the bulk binds to the promoter, becomes vanishingly small. This timescale seperation is illustrated in \fref{SeqApprx}, where we plotted $S(t|\sigma)$ and $\mathscr{S}_{\rm rad}(t|{\rm eq})$.
+Another way to appreciate this approximation, is to observe that the time in which the concentration profile reaches steady-state, is dependent on the survival probability $S(t|z_0)$ only, and not on the concentration (See \eref{bsm_k}). The average time in which the promoter binds with a particle from the bulk, does depend on concentration, and increases with decreasing $c$. Therefore, in the low concentration limit, the time interval in which the system is not in steady-state, compared to the average time in which a TF from the bulk binds to the promoter, becomes vanishingly small. This timescale separation is illustrated in \fref{SeqApprx}, where we plotted $S(t|\sigma)$ and $\mathscr{S}_{\rm rad}(t|{\rm eq})$.
 
 Finally, Laplace transforming \eref{Seq_app2}, we get
 \begin{equation}
@@ -182,7 +182,7 @@ is equal to the $t\to\infty$ limit of the time dependent rate coefficient,
 \begin{figure}[hb!]
 \centering
 \includegraphics[scale=.5]{SeqApprx}
-\caption{\flabel{SeqApprx} Plot showing timescale seperation between the survival probability of a promoter in equilibrium, and with only one TF at contact. TF's come from the bulk in the order of seconds, while a rebinding event takes place in the order of micro seconds, as is shown in the inset. At the timescale $\mathscr{S}_{\rm rad}(t|{\rm eq})$ decays, $S(t|\sigma)$ is constant, showing that the particle which started at contact, has already escaped. The functions are for a receptor, becuase we only have the full solution in time for this system, and not for a promoter.}
+\caption{\flabel{SeqApprx} Plot showing timescale separation between the survival probability of a promoter in equilibrium, and with only one TF at contact. TF's come from the bulk in the order of seconds, while a rebinding event takes place in the order of micro seconds, as is shown in the inset. At the timescale $\mathscr{S}_{\rm rad}(t|{\rm eq})$ decays, $S(t|\sigma)$ is constant, showing that the particle which started at contact, has already escaped. The functions are for a receptor, because we only have the full solution in time for this system, and not for a promoter.}
 \end{figure}
 
 \subsection{\alabel{noise:promtoconc} Relating promoter state noise to fluctuations in concentration}
@@ -206,7 +206,7 @@ and fluctuations in the bulk, using detailed balance, via
 
 
 \subsection{\alabel{noise:delta_int} Fourier transforming $\delta(r-\sigma)$}
-We want evaluate the fourier transform of the delta function used in solving \eref{FDE_bulk}, where we denote the prefactor as an arbitrary function $f$
+We want evaluate the Fourier transform of the delta function used in solving \eref{FDE_bulk}, where we denote the prefactor as an arbitrary function $f$
 \begin{multline}
  \mathscr{F}\left\lbrace \hat{f}(r,z) \frac{\delta(|\mathbf r \mathrm| - \sigma)}{2 \pi \sigma} \right\rbrace 
  = \int_0^{\infty} \int_0^{2 \pi} r\,dr \, d\theta f(r,z) e^{i {\bf k \cdot r}} \frac{\delta(|\mathbf r \mathrm| - \sigma)}{2 \pi \sigma} \\
@@ -214,7 +214,7 @@ We want evaluate the fourier transform of the delta function used in solving \er
  = \int_0^{\infty} r\,dr f(r,z) \left( 2 \pi {\rm J_0}(k r) \right) \frac{\delta(|\mathbf r \mathrm| - \sigma)}{2 \pi \sigma} 
  = f(\sigma, z) {\rm J_0}(k \sigma)
 \end{multline}
-The first equality is the defenition of the Fourier integral in the plane perpendicular to the DNA. In the second line we write out the innerproduct, where the angle bewteen {\bf k} and {\bf r} is shifted w.r.t. $\theta$. Since we integrate the full circle this shift cancels, and we get a Bessel function of the first kind. The integral over $r$ amounts to replacing every accurance of $r$ with $\sigma$.
+The first equality is the definition of the Fourier integral in the plane perpendicular to the DNA. In the second line we write out the inner product, where the angle between {\bf k} and {\bf r} is shifted w.r.t. $\theta$. Since we integrate the full circle this shift cancels, and we get a Bessel function of the first kind. The integral over $r$ amounts to replacing every occurrence of $r$ with $\sigma$.
 
 
 
@@ -222,11 +222,11 @@ The first equality is the defenition of the Fourier integral in the plane perpen
 \newpage
 \subsection{\alabel{noise:Seq_derived} Deriving the survival probability of a promoter in equilibrium}
 
-Here we derive the expression (\eref{DE_Seq}) for the survival probability of a single promoter site in an equilibrated system of transcription factors on the DNA and in the cytoplasm. Our system is described by two coupled Green's functions; $P_1(z,t|{\rm eq})$ giving the probability density on the DNA and $P_3(z,r,t|{\rm eq})$ the probability density in the bulk. These functions define a single particle problem, where the particle is initially uniformly distributed in space.The system is finite, and is cylindrical shaped with a radius $R$ and height $L$. Inside is a rod (the DNA), lying allong the whole length of the central axis of the cylinder. By definition, $P_1(z,t|{\rm eq})$ and $P_3(z,r,t|{\rm eq})$ are dimensionless quantities with the following normalization
+Here we derive the expression (\eref{DE_Seq}) for the survival probability of a single promoter site in an equilibrated system of transcription factors on the DNA and in the cytoplasm. Our system is described by two coupled Green's functions; $P_1(z,t|{\rm eq})$ giving the probability density on the DNA and $P_3(z,r,t|{\rm eq})$ the probability density in the bulk. These functions define a single particle problem, where the particle is initially uniformly distributed in space. The system is finite, and cylindrical shaped with a radius $R$ and height $L$. Inside is a rod (the DNA), lying along the whole length of the central axis of the cylinder. By definition, $P_1(z,t|{\rm eq})$ and $P_3(z,r,t|{\rm eq})$ are dimensionless quantities with the following normalization
 \begin{equation}
  \frac{1}{L} \left. \int_{-L/2}^{L/2} dz P_1(z,t|{\rm eq})\right|_{t=0} = 1 \:\: , \:\: \left. \frac{2\pi}{V} \int_{-L/2}^{L/2} dz \int_{\sigma}^{R} rdr P_3(z,r,t|{\rm eq})\right|_{t=0} = 1.
 \end{equation}
-These functions, however, do not take into account the time the particle spends on the DNA and in the cytoplasm. To set the proper distribution, we introduce the dimensionless factors $\bar{P}_1$ and $\bar{P}_3$ which give the probability of finding the particle either on the DNA or in the cytoplasm, respectivily. These probabilities have to satisfy a detailed balance relation 
+This normalization, however, does not take into account the time the particle spends on the DNA and in the cytoplasm. To set the proper distribution, we introduce the dimensionless factors $\bar{P}_1$ and $\bar{P}_3$ which give the probability of finding the particle either on the DNA or in the cytoplasm, respectively. These probabilities have to satisfy a detailed balance relation 
 \begin{eqnarray}
  \frac{1}{L} \, \bar{P}_1 \, k_d & = & \frac{1}{V} \, \bar{P}_3 \, k_a,
  \elabel{DB_init}
@@ -236,23 +236,24 @@ and have to normalize our system at $t=0$
  \frac{\bar{P}_1}{L} \int_{-L/2}^{L/2} dz P_1(z,t=0|{\rm eq }) + 2\pi \frac{\bar{P}_3}{V} \int_{-L/2}^{L/2}dz \int_{\sigma}^{R}rdr P_3(z,r,t=0|{\rm eq}) = 1.
 \end{equation}
 
-We can relate this single particle problem to the survival probability of the promoter, surrounded by an equilibrium solution of $N$ particles, via \cite{Szabo1989} 
+We can relate this single particle problem to the survival probability of the promoter, surrounded by an equilibrated solution of $N$ particles, via \cite{Szabo1989} 
 \begin{gather}
  \mathscr{S}_{N}(t|{\rm eq}) = \left( \frac{1}{V'} \int_{V'} d{\bf r} P({\bf r}, t|{\rm eq})\right)^N \\ 
- = \left( \frac{\bar{P}_1}{L} \int_{-L/2}^{L/2}dz P_1(z,t|{\rm eq }) + 2\pi \frac{\bar{P}_3}{V} \int_{-L/2}^{L/2}dz \int_{\sigma}^{R}rdr P_3(z,r,t|{\rm eq}) \right)^N
+ = \left( \frac{\bar{P}_1}{L} \int_{-L/2}^{L/2}dz P_1(z,t|{\rm eq }) + 2\pi \frac{\bar{P}_3}{V} \int_{-L/2}^{L/2}dz \int_{\sigma}^{R}rdr P_3(z,r,t|{\rm eq}) \right)^N.
 \end{gather}
-Differentiating with respect to time, pulling out the factor $\bar{P}_1/L$, and using the detailed balance relation in \eref{DB_init} gives
+Thus, the promoter survives, as long as non of the transcription factors in the system have reacted. Differentiating with respect to time, pulling out the factor $\bar{P}_1/L$, and using the detailed balance relation in \eref{DB_init} gives
 \begin{multline}
- \frac{d\mathscr{S}_{N}(t|{\rm eq})}{dt} = \bar{P}_1 \frac{N}{L} \left( \int_{-L/2}^{L/2}dz  \frac{dP_1(z,t|{\rm eq})}{dt} \right. \\ +  \left. 2\pi \int_{-L/2}^{L/2}dz \int_{\sigma}^{R}rdr \frac{k_d}{k_a} \frac{dP_3(z,r,t|{\rm eq})}{dt} \right) S_{N-1}(t).
+ \frac{d\mathscr{S}_{N}(t|{\rm eq})}{dt} = \bar{P}_1 \frac{N}{L} \left( \int_{-L/2}^{L/2}dz  \frac{dP_1(z,t|{\rm eq})}{dt} \right. \\ +  \left. 2\pi \int_{-L/2}^{L/2}dz \int_{\sigma}^{R}rdr \frac{k_d}{k_a} \frac{dP_3(z,r,t|{\rm eq})}{dt} \right) \mathscr{S}_{N-1}(t|{\rm eq}).
 \end{multline}
 Since particles only leave the system via the promoter site positioned at $z_0$, we can rewrite the time derivatives using the radiative influx at the promoter site
 \begin{equation}
- \frac{d\mathscr{S}_{{\rm rad}, N}(t|{\rm eq})}{dt} = -\bar{P}_1 \frac{N}{L} \, k_+ P_1(z_0,t|{\rm eq}) S_{N-1}(t).
+ \frac{d\mathscr{S}_{{\rm rad}, N}(t|{\rm eq})}{dt} = -\bar{P}_1 \frac{N}{L} \, k_+ P_1(z_0,t|{\rm eq}) \mathscr{S}_{N-1}(t|{\rm eq}).
 \end{equation}
-Taking the limit $L,N \to \infty$, and using that $\bar{P}_1 \frac{N}{L} = \bar{\xi}$, we arive at the desired result
+Taking the limit $L,N,R \to \infty$, and using that $\bar{P}_1 \frac{N}{L} = \bar{\xi}$, we arrive at the desired result
 \begin{equation}
- \frac{d\mathscr{S}_{{\rm rad}}(t|{\rm eq})}{dt} = - \bar{\xi} k_{\rm rad}(t) S(t).
+ \frac{d\mathscr{S}_{{\rm rad}}(t|{\rm eq})}{dt} = - \bar{\xi} k_{\rm rad}(t) \mathscr{S}(t|{\rm eq}),
 \end{equation}
+where $\bar{\xi}$ is the concentration on the DNA when the system is in equilibrium.
 
 
 
