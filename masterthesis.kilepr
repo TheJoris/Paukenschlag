@@ -3,8 +3,8 @@ def_graphic_ext=eps
 img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
-kileversion=2.1.0
-lastDocument=EnglishSummary.tex
+kileversion=2.1 beta2
+lastDocument=DutchSummary.tex
 masterDocument=
 name=MasterThesis
 pkg_extIsRegExp=false
@@ -122,13 +122,13 @@ ReadWrite=true
 
 [item:App_Noise.tex]
 archive=true
-column=29
+column=99
 encoding=UTF-8
 highlight=LaTeX
-line=228
+line=243
 mode=LaTeX
 open=true
-order=3
+order=4
 
 [item:App_Sink.tex]
 archive=true
@@ -138,7 +138,7 @@ highlight=LaTeX
 line=0
 mode=LaTeX
 open=true
-order=2
+order=5
 
 [item:App_newBD.tex]
 archive=true
@@ -148,37 +148,37 @@ highlight=LaTeX
 line=14
 mode=LaTeX
 open=true
-order=8
+order=6
 
 [item:Conclusion.tex]
 archive=true
-column=207
-encoding=UTF-8
-highlight=LaTeX
-line=23
-mode=LaTeX
-open=true
-order=10
-
-[item:DutchSummary.tex]
-archive=true
-column=770
-encoding=UTF-8
-highlight=LaTeX
-line=4
-mode=LaTeX
-open=true
-order=11
-
-[item:EnglishSummary.tex]
-archive=true
-column=116
+column=432
 encoding=UTF-8
 highlight=LaTeX
 line=10
 mode=LaTeX
 open=true
-order=12
+order=9
+
+[item:DutchSummary.tex]
+archive=true
+column=345
+encoding=UTF-8
+highlight=LaTeX
+line=8
+mode=LaTeX
+open=true
+order=10
+
+[item:EnglishSummary.tex]
+archive=true
+column=172
+encoding=UTF-8
+highlight=LaTeX
+line=8
+mode=LaTeX
+open=true
+order=11
 
 [item:Introduction.tex]
 archive=true
@@ -188,37 +188,37 @@ highlight=LaTeX
 line=38
 mode=LaTeX
 open=true
-order=9
+order=3
 
 [item:Noise.tex]
 archive=true
-column=700
+column=770
 encoding=UTF-8
 highlight=LaTeX
-line=325
+line=438
 mode=LaTeX
 open=true
-order=4
+order=0
 
 [item:Sink.tex]
 archive=true
-column=14
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=167
+line=63
 mode=LaTeX
 open=true
 order=1
 
 [item:ThesisBase.tex]
 archive=true
-column=8
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=41
+line=27
 mode=LaTeX
 open=true
-order=0
+order=2
 
 [item:additions.tex]
 archive=true
@@ -228,17 +228,17 @@ highlight=LaTeX
 line=0
 mode=LaTeX
 open=true
-order=7
+order=12
 
 [item:eGFRD.tex]
 archive=true
-column=395
+column=722
 encoding=UTF-8
 highlight=LaTeX
-line=61
+line=2
 mode=LaTeX
 open=true
-order=5
+order=8
 
 [item:masterthesis.kilepr]
 archive=true
@@ -252,13 +252,13 @@ order=-1
 
 [item:newBD.tex]
 archive=true
-column=262
+column=124
 encoding=UTF-8
 highlight=LaTeX
-line=167
+line=36
 mode=LaTeX
 open=true
-order=6
+order=7
 
 [view-settings,view=0,item:App_Noise.tex]
 CursorColumn=29

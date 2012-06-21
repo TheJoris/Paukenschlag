@@ -1,4 +1,4 @@
-\documentclass[a4paper,oneside,10pt]{article}
+\documentclass[a4paper,twoside,10pt]{article}
 %\documentclass[aps,preprint,onecolumn,a4paper,superscriptaddress,amsmath,amssymb]{revtex4}
 \usepackage[]{graphicx}
 \usepackage{array}
@@ -11,6 +11,7 @@
 \usepackage[svgnames]{xcolor}
 \usepackage[T1]{fontenc}
 \usepackage{fancyhdr}
+\usepackage{chngpage}
 
 \include{additions}
 
@@ -24,8 +25,13 @@
 
 \begin{document}
 
+%Center title page.
 \thispagestyle{empty}
-\titleGP
+\begin{adjustwidth}[]{}{-1in}% same as above, but this syntax is for the chngpage package
+  \begin{center}
+    \titleGP
+  \end{center}
+\end{adjustwidth}
 \newpage
 
 %Extra empty page
@@ -34,14 +40,14 @@
 \mbox{}
 \newpage 
 
-%Popular Dutch summary of the thesis
-\thispagestyle{empty}
-\include{DutchSummary}
-\newpage
-
 %Scientific abstract of the thesis
 \thispagestyle{empty}
 \include{EnglishSummary}
+\newpage
+
+%Popular Dutch summary of the thesis
+\thispagestyle{empty}
+\include{DutchSummary}
 \newpage
 
 \tableofcontents
