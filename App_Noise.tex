@@ -97,7 +97,7 @@ And, in the same spirit
 \subsection{\alabel{noise:backward_eqn} The backward Smoluchowski equation}
 Here we prove that the flux into a sink with a radiation boundary condition, in an equilibrated system of particles, is given by
 \begin{equation}
- k(t) = k_+ \, S(t|\sigma).
+ k(t) = k_+ \, S(t|z_0).
  \elabel{bsm_k}
 \end{equation}
 To start, we show how to obtain the backward Kolmogorov equation from the forward Smoluchowski equation. The forward equation is defined as
@@ -128,7 +128,7 @@ Integrating both sides to $\vect{r}$ we get
 \end{equation}
 In words, the forward equation tells us what the probability is to end up in $\vec{r}$ at time $t$, given that you started in $\vec{r_0}$ at time zero. The backward equation tells you the probability to have started in $\vec{r}_0$ at time zero, given that you end up in $\vec{r}$ at time $t$. Without a potential, these two Green's functions are equivalent.
 
-To prove \eref{bsm_k}, we show that the initial condition and the time derivative of both the influx and the survival probability $S(t|\sigma)$ are the same. The influx at a radiation boundary from an equilibrium is
+To prove \eref{bsm_k}, we show that the initial condition and the time derivative of both the influx and the survival probability $S(t|z_0)$ are the same. The influx at a radiation boundary from an equilibrium is
 \begin{equation}
  k(t) = k_+ \left. \int d\vect{r_0} p(\vect{r},t|\vect{r_0}) \right|_{r=\sigma}.
  \elabel{bsm_3}
@@ -241,13 +241,13 @@ We can relate this single particle problem to the survival probability of the pr
  \mathscr{S}_{N}(t|{\rm eq}) = \left( \frac{1}{V'} \int_{V'} d{\bf r} P({\bf r}, t|{\rm eq})\right)^N \\ 
  = \left( \frac{\bar{P}_1}{L} \int_{-L/2}^{L/2}dz P_1(z,t|{\rm eq }) + 2\pi \frac{\bar{P}_3}{V} \int_{-L/2}^{L/2}dz \int_{\sigma}^{R}rdr P_3(z,r,t|{\rm eq}) \right)^N.
 \end{gather}
-Thus, the promoter survives, as long as non of the transcription factors in the system have reacted. Differentiating with respect to time, pulling out the factor $\bar{P}_1/L$, and using the detailed balance relation in \eref{DB_init} gives
+Thus, the promoter survives, as long as none of the transcription factors in the system have reacted. Differentiating with respect to time gives
 \begin{multline}
- \frac{d\mathscr{S}_{N}(t|{\rm eq})}{dt} = \bar{P}_1 \frac{N}{L} \left( \int_{-L/2}^{L/2}dz  \frac{dP_1(z,t|{\rm eq})}{dt} \right. \\ +  \left. 2\pi \int_{-L/2}^{L/2}dz \int_{\sigma}^{R}rdr \frac{k_d}{k_a} \frac{dP_3(z,r,t|{\rm eq})}{dt} \right) \mathscr{S}_{N-1}(t|{\rm eq}).
+ \frac{d\mathscr{S}_{N}(t|{\rm eq})}{dt} = N \left( \frac{\bar{P}_1}{L} \int_{-L/2}^{L/2}dz  \frac{dP_1(z,t|{\rm eq})}{dt} \right. \\ +  \left. 2\pi \frac{\bar{P}_3}{V} \int_{-L/2}^{L/2}dz \int_{\sigma}^{R}rdr \frac{dP_3(z,r,t|{\rm eq})}{dt} \right) \mathscr{S}_{N-1}(t|{\rm eq}).
 \end{multline}
-Since particles only leave the system via the promoter site positioned at $z_0$, we can rewrite the time derivatives using the radiative influx at the promoter site
+Since particles only leave the system via the promoter site positioned at $z_0$, we can rewrite the time derivative of the single particle problem as the radiative influx at the promoter site
 \begin{equation}
- \frac{d\mathscr{S}_{{\rm rad}, N}(t|{\rm eq})}{dt} = -\bar{P}_1 \frac{N}{L} \, k_+ P_1(z_0,t|{\rm eq}) \mathscr{S}_{N-1}(t|{\rm eq}).
+ \frac{d\mathscr{S}_{{\rm rad}, N}(t|{\rm eq})}{dt} = N \left( -\frac{\bar{P}_1}{L} \, k_+ P_1(z_0,t|{\rm eq}) \right) \mathscr{S}_{N-1}(t|{\rm eq}).
 \end{equation}
 Taking the limit $L,N,R \to \infty$, and using that $\bar{P}_1 \frac{N}{L} = \bar{\xi}$, we arrive at the desired result
 \begin{equation}

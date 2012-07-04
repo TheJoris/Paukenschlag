@@ -53,7 +53,7 @@ set style line 16 lw 4 lt 1 lc rgb '#FF0000'
 set style line 17 lw 2 lt 2 lc rgb '#FF040E'
 set style line 18 lw 2 lt 1 lc rgb '#006868'
 set style line 19 lw 4 lt 2 lc rgb '#68FFAA'
-set style line 20 lw 2 lt 1 lc rgb '#FFE9E5'
+set style line 20 lw 2 lt 1 lc rgb '#FFFFFF'
 "
 
 lines3=\
@@ -295,6 +295,7 @@ then
 
 gnuplot << EOF -persist
 
+$lines2
 $lines3
 
 set terminal postscript eps enhanced color font "Times-Roman, 18"
@@ -314,7 +315,7 @@ set origin 0,0
 set multiplot
 
 set size .5,.6
-set origin 0.5,0.5
+set origin 0.5,0.55
 set log x
 set format x "10^{%L}"
 set nokey
@@ -351,7 +352,7 @@ unset parametric
 
 set log xy
 set size .5,.6
-set origin .0,.5
+set origin .0,.55
 set format x "10^{%L}"
 set format y "10^{%L}"
 set nokey
@@ -382,7 +383,7 @@ unset parametric
 
 set log xy
 set size .5,.6
-set origin .25,.0
+set origin .5,.0
 set format x "10^{%L}"
 set format y "10^{%L}"
 set nokey
@@ -393,10 +394,35 @@ set title "c) Noise - fixed occupancy"
 set yrange [1e-2:500]
 set xrange [1e-1:1e4]
 
-plot "./NoisekDns_10.dat" with lines ls 9 title "10^{-10}",\
- "./NoisekDns_11.dat" with lines ls 2 title "10^{-11}",\
- "./NoisekDns_12.dat" with lines ls 3 title "10^{-12}",\
- "./NoisekDns_13.dat" with lines ls 4 title "10^{-13}"
+plot "./NoisekDns_10.dat" with lines ls 9 title "k_a = 10^{-10}",\
+ "./NoisekDns_11.dat" with lines ls 2 title "= 10^{-11}",\
+ "./NoisekDns_12.dat" with lines ls 3 title "= 10^{-12}",\
+ "./NoisekDns_13.dat" with lines ls 4 title "= 10^{-13}"
+
+
+
+
+set size .5,.6
+set origin 0.,.0
+set nokey
+set notitle
+set key outside center
+set noxtic
+set noytic
+set noborder
+set noxlabel
+set noylabel
+#set xtic (1e-2,1e0,1e2,1e4)
+#set ytic (1e0,1e-10,1e-20)
+
+set yrange [1E3:1E4]
+set xrange [1E1:1E2]
+
+plot "./NoisekDns_10.dat" with lines ls 9 title "k_a = 10^{-10}",\
+ "./NoisekDns_11.dat" with lines ls 2 title "= 10^{-11}",\
+ "./NoisekDns_12.dat" with lines ls 3 title "= 10^{-12}",\
+ "./NoisekDns_13.dat" with lines ls 4 title "= 10^{-13}"
+
 
 EOF
 
@@ -665,10 +691,10 @@ set key top left
 
 #set arrow nohead from -6,0 to 0,0 ls 14
 
-plot "./newBD2D_rdenssim_1.dat" with points pt 1 ps 2 title "t_{sim} = 10^{-1} {/Symbol t}",\
-"./newBD2D_rdenssim_2.dat" with points pt 4 ps 2 title "t_{sim} = 10^{-2} {/Symbol t}",\
-"./newBD2D_rdenssim_3.dat" with points pt 6 ps 2 title "t_{sim} = 10^{-3} {/Symbol t}",\
-"./newBD2D_rdenssim_4.dat" with points pt 10 ps 2 title "t_{sim} = 10^{-4} {/Symbol t}",\
+plot "./newBD2D_rdenssim_1.dat" with points pt 1 ps 2 title "{/Times=23 t_{sim} = 10^{-1} {/Symbol t}}",\
+"./newBD2D_rdenssim_2.dat" with points pt 4 ps 2 title "{/Times=23 t_{sim} = 10^{-2} {/Symbol t}}",\
+"./newBD2D_rdenssim_3.dat" with points pt 6 ps 2 title "{/Times=23 t_{sim} = 10^{-3} {/Symbol t}}",\
+"./newBD2D_rdenssim_4.dat" with points pt 10 ps 2 title "{/Times=23 t_{sim} = 10^{-4} {/Symbol t}}",\
 "./BD2D_rdensana_1.dat" with lines ls 1 notitle,\
 "./BD2D_rdensana_2.dat" with lines ls 2 notitle,\
 "./BD2D_rdensana_3.dat" with lines ls 3 notitle,\
@@ -685,6 +711,8 @@ set xtic (1,1.5,2,2.5,3)
 #set xlabel "r/R" font "CMBX10, 10"
 #set ylabel "p_{irr}" font "CMBX10, 10"
 set key top right 
+
+
 
 plot "./BD2D_rdensana_1.dat" with lines ls 1 title "{/Times=13 t_{sim} = 10^{-1} {/Symbol t}}",\
 "./newBD2D_rdenssim_1.dat" with points pt 4 ps 1 title "{/Times=13 {/Symbol D} t = 10^{-5} {/Symbol t}}",\
@@ -709,7 +737,7 @@ gnuplot << EOF -persist
 $lines1
 $lines3
 
-set terminal postscript eps enhanced color font "Times-Roman, 18"
+set terminal postscript eps enhanced color font "Times-Roman, 20"
 set out "newBD1Dirr_rdens_compare.eps"
 
 set size 1,1
@@ -737,34 +765,35 @@ set key top left
 
 #set arrow nohead from -6,0 to 0,0 ls 14
 
-R=1
 
-plot "./newBD1Dirr_rdenssim_1.dat" u (\$1-R):2 with points pt 1 ps 2 title "t_{sim} = 10^{1} {/Symbol t}",\
-"./newBD1Dirr_rdenssim_2.dat" u (\$1-R):2 with points pt 4 ps 2 title "t_{sim} = 10^{0} {/Symbol t}",\
-"./newBD1Dirr_rdenssim_3.dat" u (\$1-R):2 with points pt 6 ps 2 title "t_{sim} = 10^{-1} {/Symbol t}",\
-"./newBD1Dirr_rdenssim_4.dat" u (\$1-R):2 with points pt 10 ps 2 title "t_{sim} = 10^{-2} {/Symbol t}",\
+R=1
+plot "./newBD1Dirr_rdenssim_1.dat" u (\$1-R):2 with points pt 1 ps 2 title "{/Times=22 t_{sim} = 10^{1} {/Symbol t}}",\
+"./newBD1Dirr_rdenssim_2.dat" u (\$1-R):2 with points pt 4 ps 2 title "{/Times=22 t_{sim} = 10^{0} {/Symbol t}}",\
+"./newBD1Dirr_rdenssim_3.dat" u (\$1-R):2 with points pt 6 ps 2 title "{/Times=22 t_{sim} = 10^{-1} {/Symbol t}}",\
+"./newBD1Dirr_rdenssim_4.dat" u (\$1-R):2 with points pt 10 ps 2 title "{/Times=22 t_{sim} = 10^{-2} {/Symbol t}}",\
 "./BD1Dirr_rdensana_1.dat" with lines ls 1 notitle,\
 "./BD1Dirr_rdensana_2.dat" with lines ls 2 notitle,\
 "./BD1Dirr_rdensana_3.dat" with lines ls 3 notitle,\
 "./BD1Dirr_rdensana_4.dat" with lines ls 4 notitle
 
 set nolog y
-set size 0.5,0.5
-set origin .48,.48
+set size 0.5,0.6
+set origin .48,.35
 set format y "10^{%L}"
 set yrange [0:.8e6]
 set xrange [1:15]
-set ytic (1e4,.7e6)
-#set xtic (0,1,2,3,5,10,15)
+set ytic (1e4,.7e6) 
 #set xlabel "r/R" font "CMBX10, 10"
 #set ylabel "p_{irr}" font "CMBX10, 10"
 set key top right
+set xlabel "{/Times=18 r/R}"
+set ylabel "{/Times=18 p_{1D, rad}}"
 set title "{/Symbol D} t = 10^{-5} {/Symbol t}, t_{sim}=10^{1} {/Symbol t}"
 
 plot "./BD1Dirr_rdensana_1a.dat" with lines ls 1 notitle,\
-"./newBD1Dirr_rdenssim_1.dat" u (\$1-R):2 with points pt 4 ps 1 title "{/Times=13 {/Symbol D} t = 10^{-5} {/Symbol t}}",\
-"./newBD1Dirr_rdenssim_1b.dat" u (\$1-R):2 with points pt 1 ps 1 title "{/Times=13 {/Symbol D} t = 10^{-6} {/Symbol t}}",\
-"./newBD1Dirr_rdenssim_1c.dat" u (\$1-R):2 with points pt 3 ps 1 title "{/Times=13 {/Symbol D} t = 10^{-7} {/Symbol t}}"
+"./newBD1Dirr_rdenssim_1.dat" u (\$1-R):2 with points pt 4 ps 1 notitle "{/Times=13 {/Symbol D} t = 10^{-5} {/Symbol t}}",\
+"./newBD1Dirr_rdenssim_1b.dat" u (\$1-R):2 with points pt 1 ps 1 notitle "{/Times=13 {/Symbol D} t = 10^{-6} {/Symbol t}}",\
+"./newBD1Dirr_rdenssim_1c.dat" u (\$1-R):2 with points pt 3 ps 1 notitle "{/Times=13 {/Symbol D} t = 10^{-7} {/Symbol t}}"
 
 EOF
 
@@ -783,7 +812,7 @@ gnuplot << EOF -persist
 $lines1
 $lines3
 
-set terminal postscript eps enhanced color font "Times-Roman, 18"
+set terminal postscript eps enhanced color font "Times-Roman, 20"
 set out "newBD1Drev_rdens_compare.eps"
 
 set size 1,1
@@ -814,10 +843,10 @@ set key top right
 
 R=1
 
-plot "./newBD1Drev_rdenssim_1.dat" u (\$1-R):2 with points pt 1 ps 2 title "t_{sim} = 10^{1} {/Symbol t}",\
-"./newBD1Drev_rdenssim_2.dat" u (\$1-R):2 with points pt 4 ps 2 title "t_{sim} = 10^{0} {/Symbol t}",\
-"./newBD1Drev_rdenssim_3.dat" u (\$1-R):2 with points pt 6 ps 2 title "t_{sim} = 10^{-1} {/Symbol t}",\
-"./newBD1Drev_rdenssim_4.dat" u (\$1-R):2 with points pt 10 ps 2 title "t_{sim} = 10^{-2} {/Symbol t}",\
+plot "./newBD1Drev_rdenssim_1.dat" u (\$1-R):2 with points pt 1 ps 2 title "{/Times=22 t_{sim} = 10^{1} {/Symbol t}}",\
+"./newBD1Drev_rdenssim_2.dat" u (\$1-R):2 with points pt 4 ps 2 title "{/Times=22 t_{sim} = 10^{0} {/Symbol t}}",\
+"./newBD1Drev_rdenssim_3.dat" u (\$1-R):2 with points pt 6 ps 2 title "{/Times=22 t_{sim} = 10^{-1} {/Symbol t}}",\
+"./newBD1Drev_rdenssim_4.dat" u (\$1-R):2 with points pt 10 ps 2 title "{/Times=22 t_{sim} = 10^{-2} {/Symbol t}}",\
 "./BD1Drev_rdensana_1.dat" with lines ls 1 notitle,\
 "./BD1Drev_rdensana_2.dat" with lines ls 2 notitle,\
 "./BD1Drev_rdensana_3.dat" with lines ls 3 notitle,\
@@ -827,7 +856,7 @@ set nolog y
 set noxlabel
 #set noylabel
 set size 0.35,0.35
-set origin .33,.1
+set origin .35,.12
 set format y "10^{%L}"
 set yrange [0:1e8]
 set xrange [0:15]
@@ -858,7 +887,7 @@ gnuplot << EOF -persist
 $lines1
 $lines3
 
-set terminal postscript eps enhanced color font "Times-Roman, 18"
+set terminal postscript eps enhanced color font "Times-Roman, 20"
 set out "BD1Dirr_rdens_compare.eps"
 
 set size 1,1
@@ -888,18 +917,18 @@ set key top left
 
 R=1
 
-plot "./newBD1Dirr_rdenssim_1.dat" u (\$1-R):2 with lines ls 9 title "t_{sim} = 10^{1} {/Symbol t}",\
-"./newBD1Dirr_rdenssim_2.dat" u (\$1-R):2 with lines ls 2 title "t_{sim} = 10^{0} {/Symbol t}",\
-"./newBD1Dirr_rdenssim_3.dat" u (\$1-R):2 with lines ls 3 title "t_{sim} = 10^{-1} {/Symbol t}",\
-"./newBD1Dirr_rdenssim_4.dat" u (\$1-R):2 with lines ls 4 title "t_{sim} = 10^{-2} {/Symbol t}",\
+plot "./newBD1Dirr_rdenssim_1.dat" u (\$1-R):2 with lines ls 9 title "{/Times=22 t_{sim} = 10^{1} {/Symbol t}}",\
+"./newBD1Dirr_rdenssim_2.dat" u (\$1-R):2 with lines ls 2 title "{/Times=22 t_{sim} = 10^{0} {/Symbol t}}",\
+"./newBD1Dirr_rdenssim_3.dat" u (\$1-R):2 with lines ls 3 title "{/Times=22 t_{sim} = 10^{-1} {/Symbol t}}",\
+"./newBD1Dirr_rdenssim_4.dat" u (\$1-R):2 with lines ls 4 title "{/Times=22 t_{sim} = 10^{-2} {/Symbol t}}",\
 "./oldBD1Dirr_rdenssim_1.dat" u (\$1-R):2 with linespoints ls 5 notitle,\
 "./oldBD1Dirr_rdenssim_2.dat" u (\$1-R):2 with linespoints ls 6 notitle,\
 "./oldBD1Dirr_rdenssim_3.dat" u (\$1-R):2 with linespoints ls 7 notitle,\
 "./oldBD1Dirr_rdenssim_4.dat" u (\$1-R):2 with linespoints ls 8 notitle
 
 set nolog y
-set size 0.5,0.5
-set origin .47,.47
+set size 0.5,0.6
+set origin .47,.35
 set format y "10^{%L}"
 set yrange [0:.8e6]
 set xrange [1:15]
@@ -910,9 +939,9 @@ set ytic (1e4,.7e6)
 set key top right
 set title "{/Symbol D} t = 10^{-5} {/Symbol t}, t_{sim}=10^{1} {/Symbol t}"
 
-plot "./BD1Dirr_rdensana_1a.dat" u (\$1):2 with lines ls 10 title "P_{1D, Rad}",\
-"./newBD1Dirr_rdenssim_1.dat" u (\$1-R):2 with lines ls 9 title "newBD",\
-"./oldBD1Dirr_rdenssim_1.dat" u (\$1-R):2 with linespoints ls 1 title "oldBD"
+plot "./BD1Dirr_rdensana_1a.dat" u (\$1):2 with lines ls 10 title "{/Times=13 P_{1D, Rad}}",\
+"./newBD1Dirr_rdenssim_1.dat" u (\$1-R):2 with lines ls 9 title "{/Times=13 newBD}",\
+"./oldBD1Dirr_rdenssim_1.dat" u (\$1-R):2 with linespoints ls 1 title "{/Times=13 oldBD}"
 
 EOF
 
@@ -931,7 +960,7 @@ gnuplot << EOF -persist
 $lines1
 $lines3
 
-set terminal postscript eps enhanced color font "Times-Roman, 18"
+set terminal postscript eps enhanced color font "Times-Roman, 20"
 set out "BD1Drev_rdens_compare.eps"
 
 set size 1,1
@@ -961,10 +990,10 @@ set key top right
 
 R=1
 
-plot "./newBD1Drev_rdenssim_1.dat" u (\$1-R):2 with lines ls 9 title "t_{sim} = 10^{1} {/Symbol t}",\
-"./newBD1Drev_rdenssim_2.dat" u (\$1-R):2 with lines ls 2 title "t_{sim} = 10^{0} {/Symbol t}",\
-"./newBD1Drev_rdenssim_3.dat" u (\$1-R):2 with lines ls 3 title "t_{sim} = 10^{-1} {/Symbol t}",\
-"./newBD1Drev_rdenssim_4.dat" u (\$1-R):2 with lines ls 4 title "t_{sim} = 10^{-2} {/Symbol t}",\
+plot "./newBD1Drev_rdenssim_1.dat" u (\$1-R):2 with lines ls 9 title "{/Times=22  t_{sim} = 10^{1} {/Symbol t}}",\
+"./newBD1Drev_rdenssim_2.dat" u (\$1-R):2 with lines ls 2 title "{/Times=22  t_{sim} = 10^{0} {/Symbol t}}",\
+"./newBD1Drev_rdenssim_3.dat" u (\$1-R):2 with lines ls 3 title "{/Times=22  t_{sim} = 10^{-1} {/Symbol t}}",\
+"./newBD1Drev_rdenssim_4.dat" u (\$1-R):2 with lines ls 4 title "{/Times=22  t_{sim} = 10^{-2} {/Symbol t}}",\
 "./oldBD1Drev_rdenssim_1.dat" u (\$1-R):2 with linespoints ls 5 notitle,\
 "./oldBD1Drev_rdenssim_2.dat" u (\$1-R):2 with linespoints ls 6 notitle,\
 "./oldBD1Drev_rdenssim_3.dat" u (\$1-R):2 with linespoints ls 7 notitle,\
@@ -986,7 +1015,7 @@ $lines3
 
 gnuplot << EOF -persist
 
-set terminal postscript eps enhanced color font "Times-Roman, 18"
+set terminal postscript eps enhanced color font "Times-Roman, 20"
 set out "newBD1D_pbound_default.eps"
 
 set size 1,1
@@ -1015,13 +1044,13 @@ R=2e-9
 c=1/(5e-8-1.5*R)
 kd=5e4
 #plot "./Results.dat"
-plot "./newBD1D_pbound_default.dat" using 2:3 ls 7 title "simulations",\
-"./newBD1D_pbound_DBerror.dat" using 2:3 with linespoints ls 5 title "simulations, at contact",\
-n(x) with lines ls 1 title "theory"
+plot "./newBD1D_pbound_default.dat" using 2:3 ls 7 title "{/Times=22 simulations}",\
+"./newBD1D_pbound_DBerror.dat" using 2:3 with linespoints ls 5 title "{/Times=22 simulations, at contact}",\
+n(x) with lines ls 1 title "{/Times=22 theory}"
 
 set font "Times-Roman, 13"
 set size 0.45,0.45
-set origin .5,.16
+set origin .5,.2
 unset log x
 set format x "{/Times=13 %g}"
 set format y "{/Times=13 %g}"
@@ -1160,4 +1189,45 @@ plot "./BD1D_pbound_perf.dat" u 1:(\$3/(1-\$2)) with linespoints ls 1 title "new
 EOF
 
 epstopdf BD1D_performance.eps
+fi
+
+
+
+
+
+#Noise comparison analytic/simulation
+if [[ $plot -eq 100 ]]
+then
+
+$lines1
+$lines2
+
+gnuplot << EOF -persist
+
+set terminal postscript eps enhanced color font "Times-Roman, 18"
+set out "NoisePlotFull2.eps"
+
+#$lines2
+
+#set yrange [-2:2]
+set xrange [0:1]
+
+#set ytics 2 format "%g"
+#set xtics 2 format "%g"
+set xlabel "n"
+set ylabel "2 {/Symbol s}_n^2 {/Symbol t}_c"
+set key top left
+
+#set arrow nohead from -6,0 to 0,0 ls 14
+
+#plot "./Results.dat"
+plot "./NoiseResult.dat" using 2:4:(sqrt(\$3)):(sqrt(\$5)) with xyerrorbars ls 18 title "Simulated",\
+"./NoisePlotJ_ana.dat" with lines ls 16 title "Theory",\
+"./NoisePlotB_ana.dat" with lines ls 13 title "Theory Gasper"
+#"./Result.dat" using 2:4 with lines notitle,\
+#"./RecAverage.dat" using 2:(10*\$4):(sqrt(\$3)):(10*sqrt(\$5)) with xyerrorbars notitle
+
+EOF
+
+epstopdf NoisePlotFull2.eps
 fi

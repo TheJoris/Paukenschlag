@@ -159,4 +159,19 @@ Plugging our results for $P_a$ and $P_b$ in the $t\to\infty$ limit of $k_{\rm ra
 \end{equation}
 
 
+
+\subsection{Deriving the power spectrum for a promoter site}
+
+Since 
+\begin{equation}
+ P_n(\omega) = 2 Re[ \hat{C}_n(s \to i\omega) ] = f[\hat{S}(s|z_0)],
+\end{equation}
+what is $\hat{S}(s|z_0)$? Whell. from the above we can write:
+\begin{eqnarray}
+ \hat{S}(s|z_0) & = & \hat{S}_1(s|z_0) + \hat{S}_3(s|z_0) \\
+ & = & \left( 1 + \frac{1}{s} \frac{k_d}{1+\frac{k_a}{2 \pi D_3} I_0(\gamma') K_0(\gamma')}\right)\hat{S}_1(s|z_0) \\
+ & = & \frac{1}{s} \left( 1 + k_+ \bar{P}_1(z_0,s|z_0) \right) 
+\end{eqnarray}
+
+
 \end{document}

@@ -32,7 +32,7 @@ These conditions, together with the diffusion equation,
 \end{equation}
 define the solution. 
 
-There are two events possible in this domain; either the particle escapes through the outer boundary, or it undergoes a monomolecular reaction, where one particle species changes into another; $X\rightarrow Y$. To continue, we have to determine which of these events is going to take place and when it will happen. The time at which a certain event might happen, called the tentative next-event time, is proportional to the propensity $q_{\rm event}(t)$ of this event happening. First, a monomolecular reaction is modeled as a Poisson process with a rate $k$, and its propensity is
+There are two events possible in this domain: either the particle escapes through the outer boundary, or it undergoes a monomolecular reaction, where one particle species changes into another, $X\rightarrow Y$. To continue, we have to determine which of these events is going to take place and when it will happen. The time at which a certain event might happen, called the tentative next-event time, is proportional to the propensity $q_{\rm event}(t)$ of this event happening. First, a monomolecular reaction is modeled as a Poisson process with a rate $k$, and its propensity is
 \begin{equation}
  q_{\rm mon}(t) = -k\, {\rm exp}(-k t).
 \end{equation}
@@ -59,7 +59,7 @@ To determine which event will happen, we draw a tentative next-event time for ea
 
 
 \subsection{Pair domains}
-The pair domain contains two particles A and B. To find a Green's function for it, we split the problem into two separate problems: one is the diffusion of the center of mass vector ${\bf R}$ of the pair, and the other is the inter-particle vector ${\bf r}$ between the particles. For a derivation, see the supplementary material of \cite{Takahashi2010}. The pair domain now consists of two subdomains, where the domain for ${\bf R}$ describes the diffusive movement of the domain containing ${\bf r}$. See \fref{gfrd_pair}. The ${\bf R}$ vector starts in the center of its domain, and can only escape at a tentative time $t_{{\bf R},\,{\rm escape}}$, calculated in the same way as for the single domain. 
+The pair domain contains two particles A and B. To find a Green's function for it, we split the problem into two separate problems: one is the diffusion of the center of mass vector ${\bf R}$ of the pair, and the other is the propagation of the inter-particle vector ${\bf r}$ between the particles. For a derivation, see the supplementary material of \cite{Takahashi2010}. The pair domain now consists of two subdomains, where the domain for ${\bf R}$ describes the diffusive movement of the domain containing ${\bf r}$. See \fref{gfrd_pair}. The ${\bf R}$ vector starts in the center of its domain, and can only escape at a tentative time $t_{{\bf R},\,{\rm escape}}$, calculated in the same way as for the single domain. 
 
 The ${\bf r}$-domain can generate two events; either an escape when the inter-particle vector moves outside its domain, $|{\bf r}|\geq  r_{\rm max}$, or a reaction when the particles are in contact: $|{\bf r}|=\sigma$. The possibility of escape is again imposed with an absorbing boundary at the outer radius. For a reaction, we impose a radiation boundary at the inner radius, $\sigma$, of the domain. A radiation boundary models a reaction by stating that when the particles are in contact, they react with a rate $k_+$. The domain describing the inter particle vector, is thus defined by the conditions
 \setlength{\jot}{10pt}
@@ -88,11 +88,11 @@ Finally, to choose an event, while allowing for monomolecular reactions with tim
 \end{figure}
 
 \subsection{Propagation of the domains}
-After initialization, every domain $i$ has an event and the time $t_i$ the event takes place. All the event's are in a scheduler, sorted by event time. Every round, the event with the smallest next-event time is executed. First, the particle in the 'active' domain is placed at a position depending on the event: 
+After initialization, every domain $i$ has an event and the time $t_i$ the event takes place. All the event's are in a scheduler, sorted by event time. Every round, the event with the smallest next-event time is executed. First, the particle(s) in the 'active' domain is placed at a position depending on the event: 
 \begin{itemize}
  \item {\bf Escape} {\it (single)}: Placed on the boundary, where the angle's are chosen randomly.
  \item {\bf Monomolecular reaction} {\it (single)}: At a position inside the domain, proportional to $p({\bf r},\Delta t|{\bf r_0})$.
- \item {\bf Monomolecular reaction} {\it (pair)}: At a position inside both the sub domains, proportional to $p({\bf r},\Delta t|{\bf r_0})$ and $p({\bf R},\Delta t|{\bf R_0})$.
+ \item {\bf Monomolecular reaction} {\it (pair)}: At a position inside both sub domains, proportional to $p({\bf r},\Delta t|{\bf r_0})$ and $p({\bf R},\Delta t|{\bf R_0})$.
  \item {\bf R-escape} {\it (pair)}: Placed on the boundary of the {\bf R}-domain, and proportional to $p({\bf r},\Delta t|{\bf r_0})$ inside the {\bf r}-domain.
  \item {\bf r-escape} {\it (pair)}: Placed on the boundary of the {\bf r}-domain, and proportional to $p({\bf R},\Delta t|{\bf R_0})$ inside the {\bf R}-domain. 
  \item {\bf Bimolecular reaction}: Both particles are replaced by one which is positioned proportional to $p({\bf R},\Delta t|{\bf R_0})$ in the {\bf R}-domain.

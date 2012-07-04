@@ -4,7 +4,7 @@
 
 The precision by which a cell can regulate its protein levels, is greatly limited by the diffusive arrival of transcription factors to their promoter. In this thesis we derive an analytical expression for this limit, and expand the Green's Function Reaction Dynamics algorithm (GFRD) used for simulating reaction-diffusion systems, to verify our results.
 
-We propose two coupled differential equations describing the full dynamics of a transcription factor diffusing in the cytoplasm and along the DNA, with reversible exchange between the DNA and the cytoplasm. We do not linearize our equations or use any mean fielt approximation. Working in the low concentration limit, we find an exact solution for the temperal noise in the occupancy of a promoter site. 
+We propose two coupled differential equations describing the full dynamics of a transcription factor diffusing in the cytoplasm and along the DNA, with reversible exchange between the DNA and the cytoplasm. We do not linearize our equations or use any mean field approximation. Working in the low concentration limit, we find an exact solution for the temporal noise in the occupancy of a promoter site. 
 
 Furthermore, we compare our results with results found earlier by Tka$\check{\rm c}$ik. The primary difference is that his expression for the noise is independent of the occupancy of the promoter, which is likely due to linearizations needed in his method.
 
@@ -12,6 +12,6 @@ To simulate a promoter site in GFRD, we have to take care of two things. Firstly
 
 Secondly, we introduce the promoter site into GFRD, which we represent as as a point-sink located on the DNA. To simulate this in GFRD, we derive a Green's function on a 1D domain containing a sink and two absorbing boundaries. The sink generates an outflux proportional to the intrinsic association rate of the sink and the probability of the transcription factor being at the sink. 
 
-We run a simulation with a single promoter in a box with a low concentration of particles inside, and find that our analytical result correctly predicts the temperal noise in the simulated promoter occupancy.
+We run a simulation with a single promoter in a box with a low concentration of particles inside, and find that our analytical result correctly predicts the temporal noise in the simulated promoter occupancy.
 
 
