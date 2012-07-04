@@ -378,13 +378,13 @@ The first important difference is the extra factor $(1-\bar{n})$ in the diffusio
 
 The second difference with our model is that Tka$\check{\rm c}$ik represents the DNA as a line instead of a cylinder as we did. Physically, such a representation is clearly wrong, because the probability of a point particle finding a line is zero. As a result, the Fourier back-transform analogous to \eref{FourierBackC} diverges. To circumvent this problem, the upper boundary of the integral in \cite{Tkacik2009} is cut-off at one over the smallest length scale in the system: $\pi/\sigma$. It is however not clear how well throwing away the higher frequencies compensates for the erroneous geometry. In our derivation (\eref{FDE_bulk}), we give the DNA a finite thickness, and the divergence in \eref{FourierBackC} does not occur. 
 
-To find the effect of the cutoff, we looked at two different models for the transciption factor dynamics: one where the DNA is represented as a cylinder and one where the DNA is a line and we need the cutoff. Although representing the DNA as a cylinder gives a better quantitative agreement with simulation results, the line approximation is qualitatively similar as shown in \fref{GaspervsJoris}.
+To find the effect of the cutoff on the noise, we looked at two different models for the transciption factor dynamics: one where the DNA is represented as a cylinder and one where the DNA is a line and we need the cutoff. Although representing the DNA as a cylinder gives a better quantitative agreement with simulation results, the line approximation is qualitatively similar as is shown in \fref{GaspervsJoris}.
 
 
 \begin{figure}
 \centering
 \includegraphics[scale=.75]{GaspervsJoris}
-\caption{\flabel{GaspervsJoris} Comparing the promoter noise level as defined in \eref{PowPro}, for a system where the DNA is represented as a cylinder (solid) with a system where the DNA is a line and we need a cutoff at $\pi/\sigma$ (dotted). The curve with cut-off is equal to Eq. 68 in \cite{Tkacik2009}, if we include the extra $(1-\bar{n})$ factor in the diffusion part.}
+\caption{\flabel{GaspervsJoris} Comparing the promoter noise level as defined in \eref{PowPro}, for a system where the DNA is represented as a cylinder (solid) with a system where the DNA is a line and we need a cutoff at $\pi/\sigma$ (dotted). The curve with cut-off is equal to Eq. 68 in \cite{Tkacik2009}, when we include the extra $(1-\bar{n})$ factor in the diffusion part.}
 \end{figure}
 
 In the final act of his paper, Tka$\check{\rm c}$ik compares the concentration noise level of a promoter with a receptor; Fig. 2 in \cite{Tkacik2009}. Because his expression for the noise is independent of the occupancy the noise has no minimum, similar to \fref{TableauxNoiseCmpA} (c). Our result is therefore qualitatively very different from that of Tka$\check{\rm c}$ik.
@@ -449,7 +449,7 @@ The rate at which transcription factors bind to the promoter from the well mixed
 \begin{equation}
  k_{\rm on} = \left( \frac{1}{1 + \frac{k_a}{k_d} \frac{L_{\rm DNA}}{V}} \right) \frac{k_a}{k_d} \frac{k_D k_+}{k_+ + k_D} \quad {\rm and} \quad k_{\rm off} = \frac{k_- k_D}{k_+ + k_D}.
 \end{equation}
-Here $L_{\rm DNA}$ is the length of the DNA the TF's can bind to and diffuse on and $V$ is the volume of the system. Now, the propensity for a single transcription factor to bind to the promoter is
+Here $L_{\rm DNA}$ is the length of the DNA the TF's can bind to and diffuse on and $V$ is the volume of the system. Now, the propensity $c$ for a single transcription factor to bind to the promoter is
 \begin{equation}
  c = \frac{1}{V} k_{\rm on},
 \end{equation}
